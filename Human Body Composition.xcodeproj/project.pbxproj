@@ -8,24 +8,22 @@
 
 /* Begin PBXBuildFile section */
 		92C733D02750038100A566D1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C733CF2750038100A566D1 /* AppDelegate.swift */; };
-		92C733D22750038100A566D1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C733D12750038100A566D1 /* SceneDelegate.swift */; };
-		92C733D42750038100A566D1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C733D32750038100A566D1 /* ViewController.swift */; };
-		92C733D72750038100A566D1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92C733D52750038100A566D1 /* Main.storyboard */; };
+		92C733D42750038100A566D1 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C733D32750038100A566D1 /* StartViewController.swift */; };
 		92C733DA2750038100A566D1 /* Human_Body_Composition.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 92C733D82750038100A566D1 /* Human_Body_Composition.xcdatamodeld */; };
 		92C733DC2750038400A566D1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92C733DB2750038400A566D1 /* Assets.xcassets */; };
 		92C733DF2750038400A566D1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92C733DD2750038400A566D1 /* LaunchScreen.storyboard */; };
+		92C733E92750848C00A566D1 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C733E82750848C00A566D1 /* User.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		92C733CC2750038100A566D1 /* Human Body Composition.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Human Body Composition.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		92C733CF2750038100A566D1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		92C733D12750038100A566D1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		92C733D32750038100A566D1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		92C733D62750038100A566D1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		92C733D32750038100A566D1 /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		92C733D92750038100A566D1 /* Human_Body_Composition.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Human_Body_Composition.xcdatamodel; sourceTree = "<group>"; };
 		92C733DB2750038400A566D1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		92C733DE2750038400A566D1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		92C733E02750038400A566D1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		92C733E82750848C00A566D1 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,16 +56,55 @@
 		92C733CE2750038100A566D1 /* Human Body Composition */ = {
 			isa = PBXGroup;
 			children = (
-				92C733CF2750038100A566D1 /* AppDelegate.swift */,
-				92C733D12750038100A566D1 /* SceneDelegate.swift */,
-				92C733D32750038100A566D1 /* ViewController.swift */,
-				92C733D52750038100A566D1 /* Main.storyboard */,
-				92C733DB2750038400A566D1 /* Assets.xcassets */,
-				92C733DD2750038400A566D1 /* LaunchScreen.storyboard */,
-				92C733E02750038400A566D1 /* Info.plist */,
-				92C733D82750038100A566D1 /* Human_Body_Composition.xcdatamodeld */,
+				92C733E62750105000A566D1 /* App */,
+				92C733E72750845D00A566D1 /* ViewControllers */,
+				92C733EC27508D9400A566D1 /* Sourses */,
+				92C733EB27508D7900A566D1 /* CoreData */,
+				92C733EA2750849D00A566D1 /* Models */,
 			);
 			path = "Human Body Composition";
+			sourceTree = "<group>";
+		};
+		92C733E62750105000A566D1 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				92C733E02750038400A566D1 /* Info.plist */,
+				92C733DD2750038400A566D1 /* LaunchScreen.storyboard */,
+				92C733CF2750038100A566D1 /* AppDelegate.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		92C733E72750845D00A566D1 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				92C733D32750038100A566D1 /* StartViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		92C733EA2750849D00A566D1 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				92C733E82750848C00A566D1 /* User.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		92C733EB27508D7900A566D1 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				92C733D82750038100A566D1 /* Human_Body_Composition.xcdatamodeld */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		92C733EC27508D9400A566D1 /* Sourses */ = {
+			isa = PBXGroup;
+			children = (
+				92C733DB2750038400A566D1 /* Assets.xcassets */,
+			);
+			path = Sourses;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -130,7 +167,6 @@
 			files = (
 				92C733DF2750038400A566D1 /* LaunchScreen.storyboard in Resources */,
 				92C733DC2750038400A566D1 /* Assets.xcassets in Resources */,
-				92C733D72750038100A566D1 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -141,24 +177,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				92C733E92750848C00A566D1 /* User.swift in Sources */,
 				92C733DA2750038100A566D1 /* Human_Body_Composition.xcdatamodeld in Sources */,
-				92C733D42750038100A566D1 /* ViewController.swift in Sources */,
+				92C733D42750038100A566D1 /* StartViewController.swift in Sources */,
 				92C733D02750038100A566D1 /* AppDelegate.swift in Sources */,
-				92C733D22750038100A566D1 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		92C733D52750038100A566D1 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				92C733D62750038100A566D1 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		92C733DD2750038400A566D1 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -295,10 +323,9 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = B9UD5PWR3N;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Human Body Composition/Info.plist";
+				INFOPLIST_FILE = "Human Body Composition/App/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -323,10 +350,9 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = B9UD5PWR3N;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Human Body Composition/Info.plist";
+				INFOPLIST_FILE = "Human Body Composition/App/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
