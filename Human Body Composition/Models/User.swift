@@ -35,6 +35,7 @@ class User {
             return 0
         }
     }
+    
     private var sumOfCrease: Double {
         firstCrease + secondCrease + thirdCrease
     }

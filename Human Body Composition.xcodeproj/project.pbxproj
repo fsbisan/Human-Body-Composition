@@ -7,8 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		92AC0D24276CF2BB00B03551 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92AC0D23276CF2BB00B03551 /* StartViewController.swift */; };
+		92AC0D26276DF97100B03551 /* CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92AC0D25276DF97100B03551 /* CustomLabel.swift */; };
+		92AC0D28276E192700B03551 /* BodyCreases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92AC0D27276E192700B03551 /* BodyCreases.swift */; };
 		92C733D02750038100A566D1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C733CF2750038100A566D1 /* AppDelegate.swift */; };
-		92C733D42750038100A566D1 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C733D32750038100A566D1 /* StartViewController.swift */; };
+		92C733D42750038100A566D1 /* UserInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C733D32750038100A566D1 /* UserInfoViewController.swift */; };
 		92C733DA2750038100A566D1 /* Human_Body_Composition.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 92C733D82750038100A566D1 /* Human_Body_Composition.xcdatamodeld */; };
 		92C733DC2750038400A566D1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92C733DB2750038400A566D1 /* Assets.xcassets */; };
 		92C733DF2750038400A566D1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92C733DD2750038400A566D1 /* LaunchScreen.storyboard */; };
@@ -16,9 +19,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		92AC0D23276CF2BB00B03551 /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
+		92AC0D25276DF97100B03551 /* CustomLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
+		92AC0D27276E192700B03551 /* BodyCreases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyCreases.swift; sourceTree = "<group>"; };
 		92C733CC2750038100A566D1 /* Human Body Composition.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Human Body Composition.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		92C733CF2750038100A566D1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		92C733D32750038100A566D1 /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
+		92C733D32750038100A566D1 /* UserInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoViewController.swift; sourceTree = "<group>"; };
 		92C733D92750038100A566D1 /* Human_Body_Composition.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Human_Body_Composition.xcdatamodel; sourceTree = "<group>"; };
 		92C733DB2750038400A566D1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		92C733DE2750038400A566D1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -78,7 +84,10 @@
 		92C733E72750845D00A566D1 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				92C733D32750038100A566D1 /* StartViewController.swift */,
+				92C733D32750038100A566D1 /* UserInfoViewController.swift */,
+				92AC0D23276CF2BB00B03551 /* StartViewController.swift */,
+				92AC0D25276DF97100B03551 /* CustomLabel.swift */,
+				92AC0D27276E192700B03551 /* BodyCreases.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -177,9 +186,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				92AC0D24276CF2BB00B03551 /* StartViewController.swift in Sources */,
+				92AC0D28276E192700B03551 /* BodyCreases.swift in Sources */,
+				92AC0D26276DF97100B03551 /* CustomLabel.swift in Sources */,
 				92C733E92750848C00A566D1 /* User.swift in Sources */,
 				92C733DA2750038100A566D1 /* Human_Body_Composition.xcdatamodeld in Sources */,
-				92C733D42750038100A566D1 /* StartViewController.swift in Sources */,
+				92C733D42750038100A566D1 /* UserInfoViewController.swift in Sources */,
 				92C733D02750038100A566D1 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
