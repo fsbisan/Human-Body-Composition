@@ -11,9 +11,12 @@ class ResultViewController: UIViewController {
     
     var user: User!
     
-    private lazy var sexLabel: CustomLabel = {
-        let textField = CustomLabel(text: "Ваш пол", width: 200, height: 50)
-        return textField
+    private lazy var resultLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Процент жира в организме: \(user.fatBodyMass)"
+        label.numberOfLines = 0
+        label.textAlignment = .justified
+        return label
     }()
     
     private func setupSubviews(_ subviews: UIView...) {
@@ -23,22 +26,20 @@ class ResultViewController: UIViewController {
     }
     
     private func setConstraints() {
-        sexLabel.translatesAutoresizingMaskIntoConstraints = false
+        resultLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate ([
-            sexLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 200),
-            sexLabel.leadingAnchor.constraint(equalTo:  view.leadingAnchor, constant: 20),
-            sexLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
+            resultLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 200),
+            resultLabel.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.4),
+            resultLabel.leadingAnchor.constraint(equalTo:  view.leadingAnchor, constant: 20),
+            resultLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
         ])
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
             view.backgroundColor = UIColor(red: 0.5, green: 0.9, blue: 0.5, alpha: 1)
-        setupSubviews(sexLabel)
-        sexLabel.text = "Ura, \(user.name)"
+        setupSubviews(resultLabel)
+        setConstraints()
     }
-    
-    // MARK: - Navigation
-    
 }

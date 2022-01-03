@@ -43,19 +43,22 @@ class UserInfoViewController: UIViewController {
     
     // MARK: UILabels
     
-    private lazy var sexLabel: CustomLabel = {
-        let textField = CustomLabel(text: "Ваш пол", width: 200, height: 50)
-        return textField
+    private lazy var sexLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Ваш пол"
+        return label
     }()
     
-    private lazy var ageLabel: CustomLabel = {
-        let textField = CustomLabel(text: "Ваш возраст(полных лет)", width: 200, height: 50)
-        return textField
+    private lazy var ageLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Ваш возраст"
+        return label
     }()
     
-    private lazy var weightLabel: CustomLabel = {
-        let textField = CustomLabel(text: "Ваш вес, кг", width: 200, height: 50)
-        return textField
+    private lazy var weightLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Ваш вес, кг"
+        return label
     }()
     
     // MARK: UIButtons

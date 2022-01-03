@@ -21,8 +21,9 @@ class BodyCreases: UIViewController {
         }
     }
     
-    private lazy var titleLabel: CustomLabel = {
-        let label = CustomLabel(text: labelText, width: 200, height: 200)
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = labelText
         label.numberOfLines = 0
         label.textAlignment = .justified
         
@@ -50,8 +51,8 @@ class BodyCreases: UIViewController {
         
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
-            titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
-            titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40)
+            titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
         ])
         
         creaseTextField.translatesAutoresizingMaskIntoConstraints = false
