@@ -9,8 +9,23 @@ import UIKit
 
 class BodyCreases: UIViewController {
     
+    private var numberOfCrease = 1
+    private var labelText: String {
+        switch numberOfCrease {
+        case 1:
+            return "Введите размер складки на животе"
+        case 2:
+            return "Введите размер складки на груди"
+        default:
+            return "Введите размер сладки на трицепсе"
+        }
+    }
+    
     private lazy var titleLabel: CustomLabel = {
-        let label = CustomLabel(text: "Введите размер складки на животе", width: 200, height: 100)
+        let label = CustomLabel(text: labelText, width: 200, height: 200)
+        label.numberOfLines = 0
+        label.textAlignment = .justified
+        
         return label
     }()
     
@@ -34,7 +49,7 @@ class BodyCreases: UIViewController {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 40),
+            titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
             titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
             titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40)
         ])
@@ -57,7 +72,7 @@ class BodyCreases: UIViewController {
     }
     
     private func setupNavigationBar() {
-        title = "Толщина складки"
+        title = "Толщины складок"
         
         let navBarAppearance = UINavigationBarAppearance()
         
@@ -69,6 +84,15 @@ class BodyCreases: UIViewController {
         
         navigationController?.navigationBar.standardAppearance = navBarAppearance
         navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+    }
+    
+    private func goNext(){
+        let rootVC = ResultViewController()
+        let userCreaseNavVC = UINavigationController(rootViewController: rootVC)
+        userCreaseNavVC.modalPresentationStyle = .fullScreen
+        rootVC.user = User()
+        rootVC.user.name = "Tom"
+        present(userCreaseNavVC, animated: true)
     }
     
     private lazy var nextButton: UIButton = {
@@ -89,6 +113,16 @@ class BodyCreases: UIViewController {
     }
     
     @objc private func nextCrease() {
+        if numberOfCrease < 2 {
+            numberOfCrease += 1
+            titleLabel.text = labelText
+        } else if numberOfCrease == 2 {
+            nextButton.setTitle("Готово", for: .normal)
+            numberOfCrease += 1
+            titleLabel.text = labelText
+        } else {
+            goNext()
+        }
     }
     
     override func viewDidLoad() {
@@ -99,3 +133,5 @@ class BodyCreases: UIViewController {
         setConstraints()
     }
 }
+
+
