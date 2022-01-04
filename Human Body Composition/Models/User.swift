@@ -14,25 +14,31 @@ enum Sex {
 
 class User {
     var name = ""
-    private let sex = Sex.male
-    private let age = 0.0
+    var sex = Sex.male
+    var age = 0.0
     private var isTeen: Bool {
         age < 18 ? true : false
     }
+    var weight = 1.0
     
-    private let firstCrease = 0.0
-    private let secondCrease = 0.0
-    private let thirdCrease = 0.0
+    var firstCrease = 1.0
+    var secondCrease = 1.0
+    var thirdCrease = 1.0
     
     var fatBodyMass: Double {
         switch (sex, isTeen) {
-        case (let sex, true):
+        case (.male, true):
             let mass = getFatBodyMass(sex: sex)
             return mass
         case (.male, false):
-            return 0
+            let mass = getFatBodyMass(sex: sex)
+            return mass
         case (.female, false):
-            return 0
+            let mass = getFatBodyMass(sex: sex)
+            return mass
+        case (.female, true):
+            let mass = getFatBodyMass(sex: sex)
+            return mass
         }
     }
     
@@ -52,3 +58,4 @@ class User {
         }
     }
 }
+

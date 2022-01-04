@@ -13,7 +13,7 @@ class ResultViewController: UIViewController {
     
     private lazy var resultLabel: UILabel = {
         let label = UILabel()
-        label.text = "Процент жира в организме: \(user.fatBodyMass)"
+        label.text = "Процент жира в организме: " + String(format: "%.2f", user.fatBodyMass)
         label.numberOfLines = 0
         label.textAlignment = .justified
         return label

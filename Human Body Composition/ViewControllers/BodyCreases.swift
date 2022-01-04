@@ -7,7 +7,7 @@
 
 import UIKit
 
-class BodyCreases: UIViewController {
+class BodyCreases: UIViewController, UITextFieldDelegate {
     
     private var numberOfCrease = 1
     private var labelText: String {
@@ -25,7 +25,17 @@ class BodyCreases: UIViewController {
         let label = UILabel()
         label.text = labelText
         label.numberOfLines = 0
-        label.textAlignment = .justified
+        label.textAlignment = .center
+        
+        return label
+    }()
+    
+    private lazy var alertLabel: UILabel = {
+        let label = UILabel()
+        label.text = "неверный формат данных!"
+        label.textColor = .red
+        label.numberOfLines = 1
+        label.textAlignment = .center
         
         return label
     }()
@@ -46,6 +56,8 @@ class BodyCreases: UIViewController {
         return textField
     }()
     
+    var user: User!
+    
     private func setConstraints() {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         
@@ -54,19 +66,28 @@ class BodyCreases: UIViewController {
             titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
         ])
+       
         
         creaseTextField.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            creaseTextField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 40),
+            creaseTextField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20),
             creaseTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
             creaseTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40)
+        ])
+        
+        alertLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            alertLabel.topAnchor.constraint(equalTo: creaseTextField.bottomAnchor, constant: 10),
+            alertLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            alertLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
         ])
         
         nextButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            nextButton.topAnchor.constraint(equalTo: creaseTextField.bottomAnchor, constant: 40),
+            nextButton.topAnchor.constraint(equalTo: alertLabel.bottomAnchor, constant: 20),
             nextButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
             nextButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40)
         ])
@@ -91,8 +112,7 @@ class BodyCreases: UIViewController {
         let rootVC = ResultViewController()
         let userCreaseNavVC = UINavigationController(rootViewController: rootVC)
         userCreaseNavVC.modalPresentationStyle = .fullScreen
-        rootVC.user = User()
-        rootVC.user.name = "Tom"
+        rootVC.user = user
         present(userCreaseNavVC, animated: true)
     }
     
@@ -114,23 +134,50 @@ class BodyCreases: UIViewController {
     }
     
     @objc private func nextCrease() {
-        if numberOfCrease < 2 {
+        switch numberOfCrease {
+        case 1:
+            guard validateData() else { return }
             numberOfCrease += 1
             titleLabel.text = labelText
-        } else if numberOfCrease == 2 {
+        case 2:
+            guard let crease = creaseTextField.text else { return }
+            if let crease = Double(crease) {
+                user.secondCrease = crease
+            }
             nextButton.setTitle("Готово", for: .normal)
             numberOfCrease += 1
             titleLabel.text = labelText
-        } else {
+        default:
+            guard let crease = creaseTextField.text else { return }
+            if let crease = Double(crease) {
+                user.thirdCrease = crease
+            }
             goNext()
         }
+    }
+    private func validateData() -> Bool {
+        guard let text = creaseTextField.text else { return false }
+        let trimText = text.trimmingCharacters(in: .whitespaces)
+        if let number = Double(trimText) {
+            user.firstCrease = number
+            alertLabel.isHidden = true
+            return true
+        } else {
+            alertLabel.isHidden = false
+            return false
+        }
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        validateData()
     }
     
     override func viewDidLoad() {
        super.viewDidLoad()
         view.backgroundColor = UIColor(red: 0.5, green: 0.9, blue: 0.5, alpha: 1)
         setupNavigationBar()
-        setSubViews(titleLabel, creaseTextField, nextButton)
+        setSubViews(titleLabel, creaseTextField, nextButton, alertLabel)
+        alertLabel.isHidden = true
         setConstraints()
     }
 }

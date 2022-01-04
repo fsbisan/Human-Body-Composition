@@ -9,11 +9,11 @@ import UIKit
 
 class UserInfoViewController: UIViewController {
     
-    let user = User()
+    var user = User()
     
     // MARK: UISegmentedControls
     
-    private lazy var segmentedControl: UISegmentedControl = {
+    private lazy var sexSegmentedControl: UISegmentedControl = {
         let menuArray = ["мужчина", "женщина"]
         let segmentedControl = UISegmentedControl(items: menuArray )
         return segmentedControl
@@ -79,7 +79,28 @@ class UserInfoViewController: UIViewController {
     // MARK: @objc Functions
     
     @objc private func goNext(){
+        
+        guard let age = ageTextField.text else { return }
+        if let age = Double(age) {
+            user.age = age
+        }
+        
+        guard let weight = weightTextField.text else { return }
+        if let weight = Double(weight) {
+            user.weight = weight
+        }
+        
+        switch sexSegmentedControl.selectedSegmentIndex {
+        case 0:
+            user.sex = .male
+        case 1:
+            user.sex = .female
+        default:
+            print("Не выбран пол по умолчанию мужской")
+        }
+        
         let rootVC = BodyCreases()
+        rootVC.user = user
         let userCreaseNavVC = UINavigationController(rootViewController: rootVC)
         userCreaseNavVC.modalPresentationStyle = .fullScreen
         present(userCreaseNavVC, animated: true)
@@ -122,18 +143,18 @@ class UserInfoViewController: UIViewController {
             sexLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
         ])
         
-        segmentedControl.translatesAutoresizingMaskIntoConstraints = false
+        sexSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate ([
-            segmentedControl.topAnchor.constraint(equalTo: sexLabel.bottomAnchor, constant: 20),
-            segmentedControl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
-            segmentedControl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40)
+            sexSegmentedControl.topAnchor.constraint(equalTo: sexLabel.bottomAnchor, constant: 20),
+            sexSegmentedControl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
+            sexSegmentedControl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40)
         ])
         
         ageLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            ageLabel.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 40),
+            ageLabel.topAnchor.constraint(equalTo: sexSegmentedControl.bottomAnchor, constant: 40),
             ageLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             ageLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
             
@@ -177,7 +198,7 @@ class UserInfoViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 0.6, green: 1, blue: 0.6, alpha: 1)
         setupNavigationBar()
-        setupSubviews(ageTextField, segmentedControl, nextButton, sexLabel, ageLabel, weightLabel, weightTextField)
+        setupSubviews(ageTextField, sexSegmentedControl, nextButton, sexLabel, ageLabel, weightLabel, weightTextField)
         setConstraints()
     }
 }
