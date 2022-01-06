@@ -15,6 +15,8 @@ class BodyCreases: UIViewController, UITextFieldDelegate {
     
     // MARK: Private Properties
     
+    private var creaseIsValid = false
+    
     private var numberOfCrease = 1
     private var labelText: String {
         switch numberOfCrease {
@@ -38,12 +40,13 @@ class BodyCreases: UIViewController, UITextFieldDelegate {
         return label
     }()
     
-    private lazy var alertLabel: UILabel = {
+    private lazy var alertCreaseLabel: UILabel = {
         let label = UILabel()
         label.text = "неверный формат данных!"
         label.textColor = .red
         label.numberOfLines = 1
         label.textAlignment = .center
+        label.isHidden = true
         
         return label
     }()
@@ -56,6 +59,8 @@ class BodyCreases: UIViewController, UITextFieldDelegate {
         textField.placeholder = "размер складки в мм"
         textField.borderStyle = .roundedRect
         textField.backgroundColor = UIColor(red: 1, green: 1, blue: 0.6, alpha: 1)
+        textField.addTarget(self, action: #selector(handleCreaseTextChange), for: .editingChanged)
+        textField.keyboardType = .numberPad
         
         return textField
     }()
@@ -71,6 +76,7 @@ class BodyCreases: UIViewController, UITextFieldDelegate {
         button.setTitleColor(.black, for: .normal)
         button.layer.cornerRadius = 4
         button.addTarget(self, action: #selector(nextCrease), for: .touchUpInside)
+        button.isEnabled = false
         
         return button
     }()
@@ -81,9 +87,9 @@ class BodyCreases: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 0.5, green: 0.9, blue: 0.5, alpha: 1)
         setupNavigationBar()
-        setSubViews(titleLabel, creaseTextField, nextButton, alertLabel)
-        alertLabel.isHidden = true
+        setSubViews(titleLabel, creaseTextField, nextButton, alertCreaseLabel)
         setConstraints()
+        setButtonActiveAbility()
     }
     
     // MARK: Private Methods
@@ -111,18 +117,18 @@ class BodyCreases: UIViewController, UITextFieldDelegate {
             creaseTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40)
         ])
         
-        alertLabel.translatesAutoresizingMaskIntoConstraints = false
+        alertCreaseLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            alertLabel.topAnchor.constraint(equalTo: creaseTextField.bottomAnchor, constant: 10),
-            alertLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            alertLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
+            alertCreaseLabel.topAnchor.constraint(equalTo: creaseTextField.bottomAnchor, constant: 10),
+            alertCreaseLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            alertCreaseLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
         ])
         
         nextButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            nextButton.topAnchor.constraint(equalTo: alertLabel.bottomAnchor, constant: 20),
+            nextButton.topAnchor.constraint(equalTo: alertCreaseLabel.bottomAnchor, constant: 20),
             nextButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
             nextButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40)
         ])
@@ -143,7 +149,7 @@ class BodyCreases: UIViewController, UITextFieldDelegate {
         navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
     }
     
-    private func goNext(){
+    private func goToNextView(){
         let rootVC = ResultViewController()
         let userCreaseNavVC = UINavigationController(rootViewController: rootVC)
         userCreaseNavVC.modalPresentationStyle = .fullScreen
@@ -151,17 +157,30 @@ class BodyCreases: UIViewController, UITextFieldDelegate {
         present(userCreaseNavVC, animated: true)
     }
     
-    private func validateData() -> Bool {
-        guard let text = creaseTextField.text else { return false }
-        let trimText = text.trimmingCharacters(in: .whitespaces)
-        if let number = Double(trimText) {
-            user.firstCrease = number
-            alertLabel.isHidden = true
-            return true
+//    private func validateData() -> Bool {
+//        guard let text = creaseTextField.text else { return false }
+//        let trimText = text.trimmingCharacters(in: .whitespaces)
+//        if let number = Double(trimText) {
+//            user.firstCrease = number
+//            alertCreaseLabel.isHidden = true
+//            return true
+//        } else {
+//            alertCreaseLabel.isHidden = false
+//            return false
+//        }
+//    }
+    
+    private func showAlertingLabel(_ isValidData: Bool) {
+        if isValidData {
+            alertCreaseLabel.isHidden = false
+            alertCreaseLabel.text = "размер корректен"
+            alertCreaseLabel.textColor = .blue
         } else {
-            alertLabel.isHidden = false
-            return false
+            alertCreaseLabel.isHidden = false
+            alertCreaseLabel.text =  "не корректный размер"
+            alertCreaseLabel.textColor = .red
         }
+        setButtonActiveAbility()
     }
     // MARK: OBJC Methods
     
@@ -172,9 +191,12 @@ class BodyCreases: UIViewController, UITextFieldDelegate {
     @objc private func nextCrease() {
         switch numberOfCrease {
         case 1:
-            guard validateData() else { return }
             numberOfCrease += 1
             titleLabel.text = labelText
+            creaseTextField.text = ""
+            creaseIsValid = false
+            alertCreaseLabel.isHidden = true
+            setButtonActiveAbility()
         case 2:
             guard let crease = creaseTextField.text else { return }
             if let crease = Double(crease) {
@@ -183,12 +205,47 @@ class BodyCreases: UIViewController, UITextFieldDelegate {
             nextButton.setTitle("Готово", for: .normal)
             numberOfCrease += 1
             titleLabel.text = labelText
+            creaseTextField.text = ""
+            creaseIsValid = false
+            alertCreaseLabel.isHidden = true
+            setButtonActiveAbility()
         default:
             guard let crease = creaseTextField.text else { return }
             if let crease = Double(crease) {
                 user.thirdCrease = crease
             }
-            goNext()
+            goToNextView()
+        }
+    }
+    
+    @objc private func handleCreaseTextChange() {
+        guard let text = creaseTextField.text else { return }
+        if let creaseNumber = Double(text) {
+            switch creaseNumber {
+            case 2...60:
+                user.age = creaseNumber
+                creaseIsValid = true
+                showAlertingLabel(creaseIsValid)
+            default:
+                user.age = 0
+                creaseIsValid = false
+                showAlertingLabel(creaseIsValid)
+            }
+        } else {
+            creaseIsValid = false
+            showAlertingLabel(creaseIsValid)
+        }
+    }
+    
+    @objc private func setButtonActiveAbility () {
+        if creaseIsValid {
+            nextButton.isEnabled = true
+            nextButton.setTitleColor(.black, for: .normal)
+            nextButton.backgroundColor = UIColor(red: 0.3, green: 0.7, blue: 0.3, alpha: 1)
+        } else {
+            nextButton.isEnabled = false
+            nextButton.backgroundColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
+            nextButton.setTitleColor(.gray, for: .normal)
         }
     }
 }

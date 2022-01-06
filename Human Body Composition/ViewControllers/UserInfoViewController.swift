@@ -101,7 +101,7 @@ class UserInfoViewController: UIViewController {
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
         button.setTitleColor(.black, for: .normal)
         button.layer.cornerRadius = 4
-        button.addTarget(self, action: #selector(goNext), for: .touchUpInside)
+        button.addTarget(self, action: #selector(goToNextView), for: .touchUpInside)
         
         return button
     }()
@@ -122,12 +122,11 @@ class UserInfoViewController: UIViewController {
     // MARK: Private Methods
     
     private func showAlertingLabel(_ isValidData: Bool, label: UILabel) {
+        label.isHidden = false
         if isValidData {
-            label.isHidden = false
             label.text = label == alertAgeLabel ? "возраст корректный" : "вес корректный"
-            label.textColor = .green
+            label.textColor = .blue
         } else {
-            label.isHidden = false
             label.text = label == alertAgeLabel ? "не корректный возраст" : "не корректный вес"
             label.textColor = .red
         }
@@ -237,35 +236,40 @@ class UserInfoViewController: UIViewController {
     
     @objc private func handleAgeTextChange() {
         guard let text = ageTextField.text else { return }
-        guard let ageNumber = Double(text) else { return showAlertingLabel(false, label: alertAgeLabel)}
-        switch ageNumber {
-        case 10...150:
-            user.age = ageNumber
-            ageIsValid = true
-            showAlertingLabel(true, label: alertAgeLabel)
-        default:
+        if let ageNumber = Double(text) {
+            switch ageNumber {
+            case 10...150:
+                user.age = ageNumber
+                ageIsValid = true
+            default:
+                user.age = 0
+                ageIsValid = false
+            }
+            showAlertingLabel(ageIsValid, label: alertAgeLabel)
+        } else {
             ageIsValid = false
-            user.age = 0
-            showAlertingLabel(false, label: alertAgeLabel)
+            showAlertingLabel(ageIsValid, label: alertAgeLabel)
         }
     }
     
     @objc private func handleWeightTextChange() {
         guard let text = weightTextField.text else { return }
-        guard let weightNumber = Double(text) else { return showAlertingLabel(false, label: alertWeightLabel)}
-        switch weightNumber {
-        case 40...200:
-            user.weight = weightNumber
-            weightIsValid = true
-            showAlertingLabel(true, label: alertWeightLabel)
-        default:
+        if let weightNumber = Double(text) {
+            switch weightNumber {
+            case 40...200:
+                user.weight = weightNumber
+                weightIsValid = true
+            default:
+                weightIsValid = false
+            }
+            showAlertingLabel(weightIsValid, label: alertWeightLabel)
+        } else {
             weightIsValid = false
-            showAlertingLabel(false, label: alertWeightLabel)
+            showAlertingLabel(weightIsValid, label: alertWeightLabel)
         }
     }
     
-    @objc private func goNext(){
-        
+    @objc private func goToNextView() {
         guard let weight = weightTextField.text else { return }
         if let weight = Double(weight) {
             user.weight = weight

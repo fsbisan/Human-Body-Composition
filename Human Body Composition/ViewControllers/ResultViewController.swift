@@ -9,7 +9,6 @@ import UIKit
 
 class ResultViewController: UIViewController {
     
-    
     // MARK: Public Properties
     
     var user: User!
