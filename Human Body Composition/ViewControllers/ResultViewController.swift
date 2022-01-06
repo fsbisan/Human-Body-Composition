@@ -9,15 +9,33 @@ import UIKit
 
 class ResultViewController: UIViewController {
     
+    
+    // MARK: Public Properties
+    
     var user: User!
+    
+    // MARK: UIButtons
     
     private lazy var resultLabel: UILabel = {
         let label = UILabel()
+        
         label.text = "Процент жира в организме: " + String(format: "%.2f", user.fatBodyMass)
         label.numberOfLines = 0
         label.textAlignment = .justified
+        
         return label
     }()
+    
+    // MARK: Override Methods
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = UIColor(red: 0.5, green: 0.9, blue: 0.5, alpha: 1)
+        setupSubviews(resultLabel)
+        setConstraints()
+    }
+    
+    // MARK: Private Methods
     
     private func setupSubviews(_ subviews: UIView...) {
         subviews.forEach { subview in
@@ -26,6 +44,7 @@ class ResultViewController: UIViewController {
     }
     
     private func setConstraints() {
+        
         resultLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate ([
@@ -36,10 +55,4 @@ class ResultViewController: UIViewController {
         ])
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-            view.backgroundColor = UIColor(red: 0.5, green: 0.9, blue: 0.5, alpha: 1)
-        setupSubviews(resultLabel)
-        setConstraints()
-    }
 }

@@ -9,11 +9,22 @@ import UIKit
 
 class UserInfoViewController: UIViewController {
     
+    // MARK: Public Properties
+    
+    var user = User()
+    
+    // MARK: Private Properties
+    
+    private var ageIsValid = false
+    private var weightIsValid = false
+    
     // MARK: UISegmentedControls
     
     private lazy var sexSegmentedControl: UISegmentedControl = {
         let menuArray = ["мужчина", "женщина"]
         let segmentedControl = UISegmentedControl(items: menuArray )
+        segmentedControl.selectedSegmentIndex = 0
+        
         return segmentedControl
     }()
     
@@ -27,6 +38,7 @@ class UserInfoViewController: UIViewController {
         textField.backgroundColor = UIColor(red: 1, green: 1, blue: 0.6, alpha: 1)
         textField.addTarget(self, action: #selector(handleAgeTextChange), for: .editingChanged)
         textField.keyboardType = .numberPad
+        
         return textField
     }()
     
@@ -94,22 +106,20 @@ class UserInfoViewController: UIViewController {
         return button
     }()
     
-    // MARK: @objc methods
+    // MARK: Override Methods
     
-    @objc private func handleAgeTextChange() {
-        guard let text = ageTextField.text else { return }
-        guard let ageNumber = Double(text) else { return showAlertingLabel(false, label: alertAgeLabel)}
-        switch ageNumber {
-        case 10...150:
-            user.age = ageNumber
-            ageIsValid = true
-            showAlertingLabel(true, label: alertAgeLabel)
-        default:
-            ageIsValid = false
-            user.age = 0
-            showAlertingLabel(false, label: alertAgeLabel)
-        }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = UIColor(red: 0.6, green: 1, blue: 0.6, alpha: 1)
+        setupNavigationBar()
+        setupSubviews(ageTextField, sexSegmentedControl, nextButton, sexLabel, ageLabel, weightLabel, weightTextField, alertAgeLabel, alertWeightLabel)
+        alertAgeLabel.isHidden = true
+        nextButton.isEnabled = false
+        setButtonActiveAbility()
+        setConstraints()
     }
+    
+    // MARK: Private Methods
     
     private func showAlertingLabel(_ isValidData: Bool, label: UILabel) {
         if isValidData {
@@ -121,51 +131,8 @@ class UserInfoViewController: UIViewController {
             label.text = label == alertAgeLabel ? "не корректный возраст" : "не корректный вес"
             label.textColor = .red
         }
-        setButtonActivAbility()
+        setButtonActiveAbility()
     }
-    
-    @objc private func handleWeightTextChange() {
-        guard let text = weightTextField.text else { return }
-        guard let weightNumber = Double(text) else { return showAlertingLabel(false, label: alertWeightLabel)}
-            switch weightNumber {
-            case 40...200:
-                user.weight = weightNumber
-                weightIsValid = true
-                showAlertingLabel(true, label: alertWeightLabel)
-            default:
-                weightIsValid = false
-                showAlertingLabel(false, label: alertWeightLabel)
-            }
-    }
-    
-    @objc private func goNext(){
-        
-        guard let weight = weightTextField.text else { return }
-        if let weight = Double(weight) {
-            user.weight = weight
-        }
-        
-        switch sexSegmentedControl.selectedSegmentIndex {
-        case 0:
-            user.sex = .male
-        case 1:
-            user.sex = .female
-        default:
-            print("Не выбран пол, по умолчанию мужской")
-        }
-        
-        let rootVC = BodyCreases()
-        rootVC.user = user
-        let userCreaseNavVC = UINavigationController(rootViewController: rootVC)
-        userCreaseNavVC.modalPresentationStyle = .fullScreen
-        present(userCreaseNavVC, animated: true)
-    }
-    
-    @objc private func close(){
-        dismiss(animated: true)
-    }
-    
-    // MARK: Private Functions
     
     private func setupNavigationBar() {
         title = "Введите данные"
@@ -185,18 +152,6 @@ class UserInfoViewController: UIViewController {
     private func setupSubviews(_ subviews: UIView...) {
         subviews.forEach { subview in
             view.addSubview(subview)
-        }
-    }
-    
-    @objc private func setButtonActivAbility () {
-        if ageIsValid, weightIsValid {
-            nextButton.isEnabled = true
-            nextButton.setTitleColor(.black, for: .normal)
-            nextButton.backgroundColor = UIColor(red: 0.3, green: 0.7, blue: 0.3, alpha: 1)
-        } else {
-            nextButton.isEnabled = false
-            nextButton.backgroundColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
-            nextButton.setTitleColor(.gray, for: .normal)
         }
     }
     
@@ -277,26 +232,75 @@ class UserInfoViewController: UIViewController {
             nextButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40)
         ])
     }
-    // MARK: Private Properties
     
-    private var ageIsValid = false
-    private var weightIsValid = false
+    // MARK: @objc methods
     
-    
-    // MARK: Public Properties
-    
-    var user = User()
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = UIColor(red: 0.6, green: 1, blue: 0.6, alpha: 1)
-        setupNavigationBar()
-        setupSubviews(ageTextField, sexSegmentedControl, nextButton, sexLabel, ageLabel, weightLabel, weightTextField, alertAgeLabel, alertWeightLabel)
-        alertAgeLabel.isHidden = true
-        nextButton.isEnabled = false
-        setButtonActivAbility()
-        setConstraints()
+    @objc private func handleAgeTextChange() {
+        guard let text = ageTextField.text else { return }
+        guard let ageNumber = Double(text) else { return showAlertingLabel(false, label: alertAgeLabel)}
+        switch ageNumber {
+        case 10...150:
+            user.age = ageNumber
+            ageIsValid = true
+            showAlertingLabel(true, label: alertAgeLabel)
+        default:
+            ageIsValid = false
+            user.age = 0
+            showAlertingLabel(false, label: alertAgeLabel)
+        }
     }
+    
+    @objc private func handleWeightTextChange() {
+        guard let text = weightTextField.text else { return }
+        guard let weightNumber = Double(text) else { return showAlertingLabel(false, label: alertWeightLabel)}
+        switch weightNumber {
+        case 40...200:
+            user.weight = weightNumber
+            weightIsValid = true
+            showAlertingLabel(true, label: alertWeightLabel)
+        default:
+            weightIsValid = false
+            showAlertingLabel(false, label: alertWeightLabel)
+        }
+    }
+    
+    @objc private func goNext(){
+        
+        guard let weight = weightTextField.text else { return }
+        if let weight = Double(weight) {
+            user.weight = weight
+        }
+        
+        switch sexSegmentedControl.selectedSegmentIndex {
+        case 1:
+            user.sex = .female
+        default:
+            user.sex = .male
+        }
+        
+        let rootVC = BodyCreases()
+        rootVC.user = user
+        let userCreaseNavVC = UINavigationController(rootViewController: rootVC)
+        userCreaseNavVC.modalPresentationStyle = .fullScreen
+        present(userCreaseNavVC, animated: true)
+    }
+    
+    @objc private func close(){
+        dismiss(animated: true)
+    }
+    
+    @objc private func setButtonActiveAbility () {
+        if ageIsValid, weightIsValid {
+            nextButton.isEnabled = true
+            nextButton.setTitleColor(.black, for: .normal)
+            nextButton.backgroundColor = UIColor(red: 0.3, green: 0.7, blue: 0.3, alpha: 1)
+        } else {
+            nextButton.isEnabled = false
+            nextButton.backgroundColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
+            nextButton.setTitleColor(.gray, for: .normal)
+        }
+    }
+    
 }
 
 extension UserInfoViewController: UITextFieldDelegate {
@@ -305,31 +309,5 @@ extension UserInfoViewController: UITextFieldDelegate {
         view.endEditing(true)
     }
 }
-//extension String {
-//
-//    enum ValidityType {
-//        case age
-//        case weight
-//    }
-//    enum Regex: String {
-//        case age = "[0-9]{2,2}"
-//    }
-//
-//    func isValid(_ validityType: ValidityType) -> Bool {
-//
-//        let format = "SELF MATCHES %@"
-//        var regex = ""
-//
-//        switch validityType {
-//        case .age:
-//            regex = Regex.age.rawValue
-//        case .weight:
-//            regex = Regex.age.rawValue
-//
-//        }
-//
-//        return NSPredicate(format: format, regex).evaluate(with: self)
-// }
-//    }
 
 

@@ -9,6 +9,12 @@ import UIKit
 
 class BodyCreases: UIViewController, UITextFieldDelegate {
     
+    // MARK: Public Properties
+    
+    var user: User!
+    
+    // MARK: Private Properties
+    
     private var numberOfCrease = 1
     private var labelText: String {
         switch numberOfCrease {
@@ -20,6 +26,8 @@ class BodyCreases: UIViewController, UITextFieldDelegate {
             return "Введите размер сладки на трицепсе"
         }
     }
+    
+    // MARK: UILabels
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -40,11 +48,7 @@ class BodyCreases: UIViewController, UITextFieldDelegate {
         return label
     }()
     
-    private func setSubViews(_ subviews: UIView...) {
-        subviews.forEach { subview in
-            view.addSubview(subview)
-        }
-    }
+    // MARK: UITextFields
     
     private lazy var creaseTextField: UITextField = {
         let textField = UITextField()
@@ -56,7 +60,39 @@ class BodyCreases: UIViewController, UITextFieldDelegate {
         return textField
     }()
     
-    var user: User!
+    // MARK: UIButtons
+    
+    private lazy var nextButton: UIButton = {
+        let button = UIButton()
+        
+        button.backgroundColor = UIColor(red: 0.3, green: 0.7, blue: 0.3, alpha: 1)
+        button.setTitle("Далее", for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+        button.setTitleColor(.black, for: .normal)
+        button.layer.cornerRadius = 4
+        button.addTarget(self, action: #selector(nextCrease), for: .touchUpInside)
+        
+        return button
+    }()
+    
+    // MARK: Override Methods
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = UIColor(red: 0.5, green: 0.9, blue: 0.5, alpha: 1)
+        setupNavigationBar()
+        setSubViews(titleLabel, creaseTextField, nextButton, alertLabel)
+        alertLabel.isHidden = true
+        setConstraints()
+    }
+    
+    // MARK: Private Methods
+    
+    private func setSubViews(_ subviews: UIView...) {
+        subviews.forEach { subview in
+            view.addSubview(subview)
+        }
+    }
     
     private func setConstraints() {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -66,7 +102,6 @@ class BodyCreases: UIViewController, UITextFieldDelegate {
             titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
         ])
-       
         
         creaseTextField.translatesAutoresizingMaskIntoConstraints = false
         
@@ -99,7 +134,7 @@ class BodyCreases: UIViewController, UITextFieldDelegate {
         let navBarAppearance = UINavigationBarAppearance()
         
         navBarAppearance.backgroundColor = UIColor(red: 0.6, green: 1, blue: 0.6, alpha: 1)
-       
+        
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             title: "Назад", style: .plain, target: self, action: #selector(close)
         )
@@ -116,21 +151,22 @@ class BodyCreases: UIViewController, UITextFieldDelegate {
         present(userCreaseNavVC, animated: true)
     }
     
-    private lazy var nextButton: UIButton = {
-        let button = UIButton()
-        
-        button.backgroundColor = UIColor(red: 0.3, green: 0.7, blue: 0.3, alpha: 1)
-        button.setTitle("Далее", for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
-        button.setTitleColor(.black, for: .normal)
-        button.layer.cornerRadius = 4
-        button.addTarget(self, action: #selector(nextCrease), for: .touchUpInside)
-        
-        return button
-    }()
+    private func validateData() -> Bool {
+        guard let text = creaseTextField.text else { return false }
+        let trimText = text.trimmingCharacters(in: .whitespaces)
+        if let number = Double(trimText) {
+            user.firstCrease = number
+            alertLabel.isHidden = true
+            return true
+        } else {
+            alertLabel.isHidden = false
+            return false
+        }
+    }
+    // MARK: OBJC Methods
     
     @objc private func close() {
-       dismiss(animated: true)
+        dismiss(animated: true)
     }
     
     @objc private func nextCrease() {
@@ -154,31 +190,6 @@ class BodyCreases: UIViewController, UITextFieldDelegate {
             }
             goNext()
         }
-    }
-    private func validateData() -> Bool {
-        guard let text = creaseTextField.text else { return false }
-        let trimText = text.trimmingCharacters(in: .whitespaces)
-        if let number = Double(trimText) {
-            user.firstCrease = number
-            alertLabel.isHidden = true
-            return true
-        } else {
-            alertLabel.isHidden = false
-            return false
-        }
-    }
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        validateData()
-    }
-    
-    override func viewDidLoad() {
-       super.viewDidLoad()
-        view.backgroundColor = UIColor(red: 0.5, green: 0.9, blue: 0.5, alpha: 1)
-        setupNavigationBar()
-        setSubViews(titleLabel, creaseTextField, nextButton, alertLabel)
-        alertLabel.isHidden = true
-        setConstraints()
     }
 }
 

@@ -9,6 +9,8 @@ import UIKit
 
 class StartViewController: UIViewController {
     
+    // MARK: UIButtons
+    
     private lazy var startCalculateButton: UIButton = {
         let button = UIButton()
         
@@ -31,9 +33,11 @@ class StartViewController: UIViewController {
         button.setTitleColor(.black, for: .normal)
         button.layer.cornerRadius = 4
         button.addTarget(self, action: #selector(goNextVC), for: .touchUpInside)
-
+        
         return button
     }()
+    
+    // MARK: Private Methods
     
     private func setupSubviews(_ subviews: UIView...) {
         subviews.forEach { subview in
@@ -41,14 +45,7 @@ class StartViewController: UIViewController {
         }
     }
     
-    @objc private func goNextVC(){
-        let rootVC = UserInfoViewController()
-        let userInfoNavVC = UINavigationController(rootViewController: rootVC)
-        userInfoNavVC.modalPresentationStyle = .fullScreen
-        present(userInfoNavVC, animated: true)
-    }
-    
-    private func setConstraints() { 
+    private func setConstraints() {
         startCalculateButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate ([
@@ -65,6 +62,17 @@ class StartViewController: UIViewController {
             registrationButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
         ])
     }
+    
+    // MARK: OBJC Methods
+    
+    @objc private func goNextVC(){
+        let rootVC = UserInfoViewController()
+        let userInfoNavVC = UINavigationController(rootViewController: rootVC)
+        userInfoNavVC.modalPresentationStyle = .fullScreen
+        present(userInfoNavVC, animated: true)
+    }
+    
+    // MARK: Override Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()

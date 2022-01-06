@@ -13,17 +13,21 @@ enum Sex {
 }
 
 class User {
+    
+    // MARK: Public Properties
+    
     var name = ""
     var sex = Sex.male
     var age = 0.0
-    private var isTeen: Bool {
-        age < 18 ? true : false
-    }
     var weight = 1.0
     
     var firstCrease = 1.0
     var secondCrease = 1.0
     var thirdCrease = 1.0
+    
+    private var isTeen: Bool {
+        age < 18 ? true : false
+    }
     
     var fatBodyMass: Double {
         switch (sex, isTeen) {
@@ -41,6 +45,8 @@ class User {
             return mass
         }
     }
+    
+    // MARK: Private Methods
     
     private var sumOfCrease: Double {
         firstCrease + secondCrease + thirdCrease
