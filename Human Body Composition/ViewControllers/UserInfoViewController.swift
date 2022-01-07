@@ -93,16 +93,9 @@ class UserInfoViewController: UIViewController {
     
     // MARK: UIButtons
     
-    private lazy var nextButton: UIButton = {
-        let button = UIButton()
-        
-        button.backgroundColor = UIColor(red: 0.3, green: 0.7, blue: 0.3, alpha: 1)
-        button.setTitle("Далее", for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
-        button.setTitleColor(.black, for: .normal)
-        button.layer.cornerRadius = 4
+    private lazy var nextButton: CustomButton = {
+        let button = CustomButton(title: "Далее")
         button.addTarget(self, action: #selector(goToNextView), for: .touchUpInside)
-        
         return button
     }()
     

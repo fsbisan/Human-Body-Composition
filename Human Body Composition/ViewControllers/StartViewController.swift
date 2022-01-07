@@ -11,29 +11,16 @@ class StartViewController: UIViewController {
     
     // MARK: UIButtons
     
-    private lazy var startCalculateButton: UIButton = {
-        let button = UIButton()
-        
-        button.backgroundColor = UIColor(red: 0.3, green: 0.7, blue: 0.3, alpha: 1)
-        button.setTitle("Начать расчёт", for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
-        button.setTitleColor(.black, for: .normal)
-        button.layer.cornerRadius = 4
+    private lazy var startCalculateButton: CustomButton = {
+        let button = CustomButton(title: "Начать расчёт")
         button.addTarget(self, action: #selector(goNextVC), for: .touchUpInside)
-        
         return button
     }()
     
-    private lazy var registrationButton: UIButton = {
-        let button = UIButton()
-        
-        button.backgroundColor = UIColor(red: 0.7, green: 0.3, blue: 0.3, alpha: 1)
-        button.setTitle("Зарегистрироваться", for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
-        button.setTitleColor(.black, for: .normal)
-        button.layer.cornerRadius = 4
+    private lazy var registrationButton: CustomButton = {
+        let button = CustomButton(title: "Зарегистрироваться")
+        button.backgroundColor = ButtonColors.colorForRegButton.associatedColor
         button.addTarget(self, action: #selector(goNextVC), for: .touchUpInside)
-        
         return button
     }()
     
