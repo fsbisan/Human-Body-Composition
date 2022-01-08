@@ -208,10 +208,10 @@ class BodyCreases: UIViewController, UITextFieldDelegate {
         if creaseIsValid {
             nextButton.isEnabled = true
             nextButton.setTitleColor(.black, for: .normal)
-            nextButton.backgroundColor = UIColor(red: 0.3, green: 0.7, blue: 0.3, alpha: 1)
+            nextButton.backgroundColor = MyCustomColors.colorForActiveState.associatedColor
         } else {
             nextButton.isEnabled = false
-            nextButton.backgroundColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
+            nextButton.backgroundColor = MyCustomColors.colorForUnActiveState.associatedColor
             nextButton.setTitleColor(.gray, for: .normal)
         }
     }

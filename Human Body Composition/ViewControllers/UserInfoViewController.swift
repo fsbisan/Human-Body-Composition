@@ -23,6 +23,8 @@ class UserInfoViewController: UIViewController {
     private lazy var sexSegmentedControl: UISegmentedControl = {
         let menuArray = ["мужчина", "женщина"]
         let segmentedControl = UISegmentedControl(items: menuArray )
+        segmentedControl.backgroundColor = MyCustomColors.colorForActiveState.associatedColor
+        segmentedControl.selectedSegmentTintColor = MyCustomColors.bgColorForTF.associatedColor
         segmentedControl.selectedSegmentIndex = 0
         
         return segmentedControl
@@ -89,6 +91,7 @@ class UserInfoViewController: UIViewController {
         nextButton.isEnabled = false
         setButtonActiveAbility()
         setConstraints()
+        setGradientBackground()
     }
     
     // MARK: Private Methods
@@ -97,7 +100,7 @@ class UserInfoViewController: UIViewController {
         label.isHidden = false
         if isValidData {
             label.text = label == alertAgeLabel ? "возраст корректный" : "вес корректный"
-            label.textColor = .blue
+            label.textColor = MyCustomColors.colorForActiveState.associatedColor
         } else {
             label.text = label == alertAgeLabel ? "не корректный возраст" : "не корректный вес"
             label.textColor = .red
@@ -269,20 +272,31 @@ class UserInfoViewController: UIViewController {
         if ageIsValid, weightIsValid {
             nextButton.isEnabled = true
             nextButton.setTitleColor(.black, for: .normal)
-            nextButton.backgroundColor = UIColor(red: 0.3, green: 0.7, blue: 0.3, alpha: 1)
+            nextButton.backgroundColor = MyCustomColors.colorForActiveState.associatedColor
         } else {
             nextButton.isEnabled = false
-            nextButton.backgroundColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
+            nextButton.backgroundColor = MyCustomColors.colorForUnActiveState.associatedColor
             nextButton.setTitleColor(.gray, for: .normal)
         }
     }
-    
 }
 
 extension UserInfoViewController: UITextFieldDelegate {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         view.endEditing(true)
+    }
+    
+    func setGradientBackground() {
+        let colorTop =  UIColor(red: 200/255, green: 255/255, blue: 200/255, alpha: 1.0).cgColor
+        let colorBottom = UIColor(red: 100/255, green: 255/255, blue: 100/255, alpha: 1.0).cgColor
+
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = [colorTop, colorBottom]
+        gradientLayer.locations = [0.0, 1.0]
+        gradientLayer.frame = self.view.bounds
+
+        self.view.layer.insertSublayer(gradientLayer, at:0)
     }
 }
 

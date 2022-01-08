@@ -12,14 +12,8 @@ class StartViewController: UIViewController {
     // MARK: UIButtons
     
     private lazy var startCalculateButton: CustomButton = {
-        let button = CustomButton(title: "Начать расчёт")
-        button.addTarget(self, action: #selector(goNextVC), for: .touchUpInside)
-        return button
-    }()
-    
-    private lazy var registrationButton: CustomButton = {
-        let button = CustomButton(title: "Зарегистрироваться")
-        button.backgroundColor = MyCustomColors.colorForRegButton.associatedColor
+        let button = CustomButton(title: "Расчитать ИМТ")
+        button.layer.cornerRadius = 25
         button.addTarget(self, action: #selector(goNextVC), for: .touchUpInside)
         return button
     }()
@@ -36,23 +30,16 @@ class StartViewController: UIViewController {
         startCalculateButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate ([
-            startCalculateButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 200),
-            startCalculateButton.leadingAnchor.constraint(equalTo:  view.leadingAnchor, constant: 20),
-            startCalculateButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
-        ])
-        
-        registrationButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate ([
-            registrationButton.topAnchor.constraint(equalTo: startCalculateButton.bottomAnchor, constant: 40),
-            registrationButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            registrationButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
+            startCalculateButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 300),
+            startCalculateButton.leadingAnchor.constraint(equalTo:  view.leadingAnchor, constant: 60),
+            startCalculateButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -60),
+            startCalculateButton.heightAnchor.constraint(equalToConstant: 100)
         ])
     }
     
     // MARK: OBJC Methods
     
-    @objc private func goNextVC(){
+    @objc private func goNextVC() {
         let rootVC = UserInfoViewController()
         let userInfoNavVC = UINavigationController(rootViewController: rootVC)
         userInfoNavVC.modalPresentationStyle = .fullScreen
@@ -63,9 +50,22 @@ class StartViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = MyCustomColors.bgColorForView.associatedColor
-        setupSubviews(startCalculateButton, registrationButton)
+        setupSubviews(startCalculateButton)
         setConstraints()
+        setGradientBackground()
     }
-    
+}
+
+extension StartViewController {
+    func setGradientBackground() {
+        let colorTop =  UIColor(red: 200/255, green: 255/255, blue: 200/255, alpha: 1.0).cgColor
+        let colorBottom = UIColor(red: 100/255, green: 255/255, blue: 100/255, alpha: 1.0).cgColor
+
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = [colorTop, colorBottom]
+        gradientLayer.locations = [0.0, 1.0]
+        gradientLayer.frame = self.view.bounds
+
+        self.view.layer.insertSublayer(gradientLayer, at:0)
+    }
 }

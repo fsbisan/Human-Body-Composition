@@ -54,6 +54,10 @@ class CustomTextField: UITextField {
         borderStyle = .roundedRect
         backgroundColor = MyCustomColors.bgColorForTF.associatedColor
         keyboardType = .numberPad
+        layer.shadowRadius = 1
+        layer.shadowColor = UIColor.blue.cgColor
+        layer.shadowOffset = .zero
+        layer.shadowOpacity = 0.3
     }
     
     required init?(coder: NSCoder) {
@@ -71,7 +75,7 @@ enum MyCustomColors {
     
     var associatedColor: UIColor {
         switch self {
-        case .colorForActiveState: return UIColor(red: 0.3, green: 0.7, blue: 0.3, alpha: 1)
+        case .colorForActiveState: return UIColor(red: 0.3, green: 0.6, blue: 1.0, alpha: 0.5)
         case .colorForUnActiveState: return UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
         case .colorForRegButton: return UIColor(red: 0.7, green: 0.3, blue: 0.3, alpha: 1)
         case .bgColorForTF: return UIColor(red: 1, green: 1, blue: 0.6, alpha: 1)
