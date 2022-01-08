@@ -30,64 +30,43 @@ class UserInfoViewController: UIViewController {
     
     // MARK: UITextFields
     
-    lazy var ageTextField: UITextField = {
-        let textField = UITextField()
-        
-        textField.placeholder = "Введите ваш возраст"
-        textField.borderStyle = .roundedRect
-        textField.backgroundColor = UIColor(red: 1, green: 1, blue: 0.6, alpha: 1)
+    lazy var ageTextField: CustomTextField = {
+        let textField = CustomTextField(placeholder: "Введите ваш возраст")
         textField.addTarget(self, action: #selector(handleAgeTextChange), for: .editingChanged)
-        textField.keyboardType = .numberPad
-        
         return textField
     }()
     
-    private lazy var weightTextField: UITextField = {
-        let textField = UITextField()
-        
-        textField.placeholder = "Введите ваш вес, кг"
-        textField.borderStyle = .roundedRect
-        textField.backgroundColor = UIColor(red: 1, green: 1, blue: 0.6, alpha: 1)
+    private lazy var weightTextField: CustomTextField = {
+        let textField = CustomTextField(placeholder: "Введите ваш вес")
         textField.addTarget(self, action: #selector(handleWeightTextChange), for: .editingChanged)
         textField.keyboardType = .decimalPad
-        
         return textField
     }()
     
     // MARK: UILabels
     
-    private lazy var sexLabel: UILabel = {
-        let label = UILabel()
-        label.textAlignment = .center
-        label.text = "Ваш пол"
+    private lazy var sexLabel: CustomLabel = {
+        let label = CustomLabel(text: "Пол")
         return label
     }()
     
-    private lazy var ageLabel: UILabel = {
-        let label = UILabel()
-        label.textAlignment = .center
-        label.text = "Ваш возраст"
+    private lazy var ageLabel: CustomLabel = {
+        let label = CustomLabel(text: "Возраст")
         return label
     }()
     
-    private lazy var alertAgeLabel: UILabel = {
-        let label = UILabel()
-        label.text = ""
-        label.textAlignment = .center
+    private lazy var alertAgeLabel: CustomLabel = {
+        let label = CustomLabel(text: "")
         return label
     }()
     
-    private lazy var weightLabel: UILabel = {
-        let label = UILabel()
-        label.textAlignment = .center
-        label.text = "Ваш вес, кг"
+    private lazy var weightLabel: CustomLabel = {
+        let label = CustomLabel(text: "Вес")
         return label
     }()
     
-    private lazy var alertWeightLabel: UILabel = {
-        let label = UILabel()
-        label.text = ""
-        label.textAlignment = .center
+    private lazy var alertWeightLabel: CustomLabel = {
+        let label = CustomLabel(text: "")
         return label
     }()
     
@@ -103,7 +82,7 @@ class UserInfoViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(red: 0.6, green: 1, blue: 0.6, alpha: 1)
+        view.backgroundColor = MyCustomColors.bgColorForView.associatedColor
         setupNavigationBar()
         setupSubviews(ageTextField, sexSegmentedControl, nextButton, sexLabel, ageLabel, weightLabel, weightTextField, alertAgeLabel, alertWeightLabel)
         alertAgeLabel.isHidden = true

@@ -19,7 +19,7 @@ class StartViewController: UIViewController {
     
     private lazy var registrationButton: CustomButton = {
         let button = CustomButton(title: "Зарегистрироваться")
-        button.backgroundColor = ButtonColors.colorForRegButton.associatedColor
+        button.backgroundColor = MyCustomColors.colorForRegButton.associatedColor
         button.addTarget(self, action: #selector(goNextVC), for: .touchUpInside)
         return button
     }()
@@ -63,7 +63,7 @@ class StartViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(red: 0.6, green: 1, blue: 0.6, alpha: 1)
+        view.backgroundColor = MyCustomColors.bgColorForView.associatedColor
         setupSubviews(startCalculateButton, registrationButton)
         setConstraints()
     }

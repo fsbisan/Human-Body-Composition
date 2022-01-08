@@ -32,52 +32,32 @@ class BodyCreases: UIViewController, UITextFieldDelegate {
     // MARK: UILabels
     
     private lazy var titleLabel: UILabel = {
-        let label = UILabel()
-        label.text = labelText
+        let label = CustomLabel(text: labelText)
         label.numberOfLines = 0
-        label.textAlignment = .center
-        
         return label
     }()
     
-    private lazy var alertCreaseLabel: UILabel = {
-        let label = UILabel()
-        label.text = "неверный формат данных!"
+    private lazy var alertCreaseLabel: CustomLabel = {
+        let label = CustomLabel(text: "")
         label.textColor = .red
-        label.numberOfLines = 1
-        label.textAlignment = .center
         label.isHidden = true
-        
         return label
     }()
     
     // MARK: UITextFields
     
-    private lazy var creaseTextField: UITextField = {
-        let textField = UITextField()
-        
-        textField.placeholder = "размер складки в мм"
-        textField.borderStyle = .roundedRect
-        textField.backgroundColor = UIColor(red: 1, green: 1, blue: 0.6, alpha: 1)
+    private lazy var creaseTextField: CustomTextField = {
+        let textField = CustomTextField(placeholder: "Размер складки в мм")
         textField.addTarget(self, action: #selector(handleCreaseTextChange), for: .editingChanged)
-        textField.keyboardType = .numberPad
-        
         return textField
     }()
     
     // MARK: UIButtons
     
-    private lazy var nextButton: UIButton = {
-        let button = UIButton()
-        
-        button.backgroundColor = UIColor(red: 0.3, green: 0.7, blue: 0.3, alpha: 1)
-        button.setTitle("Далее", for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
-        button.setTitleColor(.black, for: .normal)
-        button.layer.cornerRadius = 4
+    private lazy var nextButton: CustomButton = {
+        let button = CustomButton(title: "Далее")
         button.addTarget(self, action: #selector(nextCrease), for: .touchUpInside)
         button.isEnabled = false
-        
         return button
     }()
     
@@ -85,7 +65,7 @@ class BodyCreases: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(red: 0.5, green: 0.9, blue: 0.5, alpha: 1)
+        view.backgroundColor = MyCustomColors.bgColorForView.associatedColor
         setupNavigationBar()
         setSubViews(titleLabel, creaseTextField, nextButton, alertCreaseLabel)
         setConstraints()
@@ -156,20 +136,7 @@ class BodyCreases: UIViewController, UITextFieldDelegate {
         rootVC.user = user
         present(userCreaseNavVC, animated: true)
     }
-    
-//    private func validateData() -> Bool {
-//        guard let text = creaseTextField.text else { return false }
-//        let trimText = text.trimmingCharacters(in: .whitespaces)
-//        if let number = Double(trimText) {
-//            user.firstCrease = number
-//            alertCreaseLabel.isHidden = true
-//            return true
-//        } else {
-//            alertCreaseLabel.isHidden = false
-//            return false
-//        }
-//    }
-    
+      
     private func showAlertingLabel(_ isValidData: Bool) {
         if isValidData {
             alertCreaseLabel.isHidden = false
