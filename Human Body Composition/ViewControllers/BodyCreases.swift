@@ -16,10 +16,9 @@ class BodyCreases: UIViewController, UITextFieldDelegate {
     // MARK: Private Properties
     
     private var creaseIsValid = false
-    
-    private var numberOfCrease = 1
+    private var creaseNumber = 1
     private var labelText: String {
-        switch numberOfCrease {
+        switch creaseNumber {
         case 1:
             return "Введите размер складки на животе"
         case 2:
@@ -37,7 +36,7 @@ class BodyCreases: UIViewController, UITextFieldDelegate {
         return label
     }()
     
-    private lazy var alertCreaseLabel: CustomLabel = {
+    private let alertCreaseLabel: CustomLabel = {
         let label = CustomLabel(text: "")
         label.textColor = .red
         label.isHidden = true
@@ -46,7 +45,7 @@ class BodyCreases: UIViewController, UITextFieldDelegate {
     
     // MARK: UITextFields
     
-    private lazy var creaseTextField: CustomTextField = {
+    private let creaseTextField: CustomTextField = {
         let textField = CustomTextField(placeholder: "Размер складки в мм")
         textField.addTarget(self, action: #selector(handleCreaseTextChange), for: .editingChanged)
         return textField
@@ -54,7 +53,7 @@ class BodyCreases: UIViewController, UITextFieldDelegate {
     
     // MARK: UIButtons
     
-    private lazy var nextButton: CustomButton = {
+    private let nextButton: CustomButton = {
         let button = CustomButton(title: "Далее")
         button.addTarget(self, action: #selector(nextCrease), for: .touchUpInside)
         button.isEnabled = false
@@ -84,7 +83,7 @@ class BodyCreases: UIViewController, UITextFieldDelegate {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
+            titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100),
             titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
         ])
@@ -156,9 +155,9 @@ class BodyCreases: UIViewController, UITextFieldDelegate {
     }
     
     @objc private func nextCrease() {
-        switch numberOfCrease {
+        switch creaseNumber {
         case 1:
-            numberOfCrease += 1
+            creaseNumber += 1
             titleLabel.text = labelText
             creaseTextField.text = ""
             creaseIsValid = false
@@ -170,7 +169,7 @@ class BodyCreases: UIViewController, UITextFieldDelegate {
                 user.secondCrease = crease
             }
             nextButton.setTitle("Готово", for: .normal)
-            numberOfCrease += 1
+            creaseNumber += 1
             titleLabel.text = labelText
             creaseTextField.text = ""
             creaseIsValid = false
@@ -192,12 +191,11 @@ class BodyCreases: UIViewController, UITextFieldDelegate {
             case 2...60:
                 user.age = creaseNumber
                 creaseIsValid = true
-                showAlertingLabel(creaseIsValid)
             default:
                 user.age = 0
                 creaseIsValid = false
-                showAlertingLabel(creaseIsValid)
             }
+            showAlertingLabel(creaseIsValid)
         } else {
             creaseIsValid = false
             showAlertingLabel(creaseIsValid)

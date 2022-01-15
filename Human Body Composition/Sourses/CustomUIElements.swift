@@ -17,7 +17,7 @@ class CustomButton: UIButton {
         super.init(frame: .zero)
         backgroundColor = MyCustomColors.colorForActiveState.associatedColor
         setTitle(title, for: .normal)
-        titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+        titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
         setTitleColor(.black, for: .normal)
         layer.cornerRadius = 4
     }
@@ -77,8 +77,8 @@ enum MyCustomColors {
         switch self {
         case .colorForActiveState: return UIColor(red: 0.3, green: 0.6, blue: 1.0, alpha: 0.5)
         case .colorForUnActiveState: return UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
-        case .colorForRegButton: return UIColor(red: 0.7, green: 0.3, blue: 0.3, alpha: 1)
-        case .bgColorForTF: return UIColor(red: 1, green: 1, blue: 0.6, alpha: 1)
+        case .colorForRegButton: return UIColor(red: 255/178, green: 255/76, blue: 255/76, alpha: 1)
+        case .bgColorForTF: return UIColor(red: 255/255, green: 255/255, blue: 0.6, alpha: 1)
         case .bgColorForView: return UIColor(red: 0.5, green: 0.9, blue: 0.5, alpha: 1)
         }
     }

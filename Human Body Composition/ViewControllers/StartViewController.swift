@@ -11,7 +11,7 @@ class StartViewController: UIViewController {
     
     // MARK: UIButtons
     
-    private lazy var startCalculateButton: CustomButton = {
+    private let startCalculateButton: CustomButton = {
         let button = CustomButton(title: "Расчитать ИМТ")
         button.layer.cornerRadius = 25
         button.addTarget(self, action: #selector(goNextVC), for: .touchUpInside)
@@ -30,7 +30,7 @@ class StartViewController: UIViewController {
         startCalculateButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate ([
-            startCalculateButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 300),
+            startCalculateButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 200),
             startCalculateButton.leadingAnchor.constraint(equalTo:  view.leadingAnchor, constant: 60),
             startCalculateButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -60),
             startCalculateButton.heightAnchor.constraint(equalToConstant: 100)

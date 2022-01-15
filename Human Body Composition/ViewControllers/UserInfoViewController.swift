@@ -20,7 +20,7 @@ class UserInfoViewController: UIViewController {
     
     // MARK: UISegmentedControls
     
-    private lazy var sexSegmentedControl: UISegmentedControl = {
+    private let sexSegmentedControl: UISegmentedControl = {
         let menuArray = ["мужчина", "женщина"]
         let segmentedControl = UISegmentedControl(items: menuArray )
         segmentedControl.backgroundColor = MyCustomColors.colorForActiveState.associatedColor
@@ -32,13 +32,13 @@ class UserInfoViewController: UIViewController {
     
     // MARK: UITextFields
     
-    lazy var ageTextField: CustomTextField = {
+     let ageTextField: CustomTextField = {
         let textField = CustomTextField(placeholder: "Введите ваш возраст")
         textField.addTarget(self, action: #selector(handleAgeTextChange), for: .editingChanged)
         return textField
     }()
     
-    private lazy var weightTextField: CustomTextField = {
+    private let weightTextField: CustomTextField = {
         let textField = CustomTextField(placeholder: "Введите ваш вес")
         textField.addTarget(self, action: #selector(handleWeightTextChange), for: .editingChanged)
         textField.keyboardType = .decimalPad
@@ -47,34 +47,34 @@ class UserInfoViewController: UIViewController {
     
     // MARK: UILabels
     
-    private lazy var sexLabel: CustomLabel = {
-        let label = CustomLabel(text: "Пол")
-        return label
-    }()
-    
-    private lazy var ageLabel: CustomLabel = {
+//    private let sexLabel: CustomLabel = {
+//        let label = CustomLabel(text: "Пол")
+//        return label
+//    }()
+//
+    private let ageLabel: CustomLabel = {
         let label = CustomLabel(text: "Возраст")
         return label
     }()
     
-    private lazy var alertAgeLabel: CustomLabel = {
+    private let alertAgeLabel: CustomLabel = {
         let label = CustomLabel(text: "")
         return label
     }()
     
-    private lazy var weightLabel: CustomLabel = {
+    private let weightLabel: CustomLabel = {
         let label = CustomLabel(text: "Вес")
         return label
     }()
     
-    private lazy var alertWeightLabel: CustomLabel = {
+    private let alertWeightLabel: CustomLabel = {
         let label = CustomLabel(text: "")
         return label
     }()
     
     // MARK: UIButtons
     
-    private lazy var nextButton: CustomButton = {
+    private let nextButton: CustomButton = {
         let button = CustomButton(title: "Далее")
         button.addTarget(self, action: #selector(goToNextView), for: .touchUpInside)
         return button
@@ -86,7 +86,7 @@ class UserInfoViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = MyCustomColors.bgColorForView.associatedColor
         setupNavigationBar()
-        setupSubviews(ageTextField, sexSegmentedControl, nextButton, sexLabel, ageLabel, weightLabel, weightTextField, alertAgeLabel, alertWeightLabel)
+        setupSubviews(ageTextField, sexSegmentedControl, nextButton, ageLabel, weightLabel, weightTextField, alertAgeLabel, alertWeightLabel)
         alertAgeLabel.isHidden = true
         nextButton.isEnabled = false
         setButtonActiveAbility()
@@ -131,18 +131,18 @@ class UserInfoViewController: UIViewController {
     
     private func setConstraints() {
         
-        sexLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate ([
-            sexLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
-            sexLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            sexLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
-        ])
+//        sexLabel.translatesAutoresizingMaskIntoConstraints = false
+//
+//        NSLayoutConstraint.activate ([
+//            sexLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
+//            sexLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+//            sexLabel.widthAnchor.constraint(equalToConstant: 50)
+//        ])
         
         sexSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate ([
-            sexSegmentedControl.topAnchor.constraint(equalTo: sexLabel.bottomAnchor, constant: 20),
+            sexSegmentedControl.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100),
             sexSegmentedControl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
             sexSegmentedControl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40)
         ])

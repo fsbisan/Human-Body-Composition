@@ -61,7 +61,7 @@ class ResultViewController: UIViewController {
         resultLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate ([
-            resultLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 200),
+            resultLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 200),
             resultLabel.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.4),
             resultLabel.leadingAnchor.constraint(equalTo:  view.leadingAnchor, constant: 20),
             resultLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
