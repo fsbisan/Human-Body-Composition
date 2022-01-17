@@ -17,6 +17,9 @@ class UserInfoViewController: UIViewController {
     
     private var ageIsValid = false
     private var weightIsValid = false
+    private var firstCreaseIsValid = false
+    private var secondCreaseIsValid = false
+    private var thirdCreaseIsValid = false
     
     // MARK: UISegmentedControls
     
@@ -34,7 +37,7 @@ class UserInfoViewController: UIViewController {
     
      let ageTextField: CustomTextField = {
         let textField = CustomTextField(placeholder: "Введите ваш возраст")
-        textField.addTarget(self, action: #selector(handleAgeTextChange), for: .editingChanged)
+        textField.addTarget(self, action: #selector(validateTextAgeTF), for: .editingChanged)
         return textField
     }()
     
@@ -45,14 +48,27 @@ class UserInfoViewController: UIViewController {
         return textField
     }()
     
+    private let firstCreaseTextField: CustomTextField = {
+        let textField = CustomTextField(placeholder: "Размер складки в мм")
+        textField.addTarget(self, action: #selector(handleCreaseTextChange), for: .editingChanged)
+        return textField
+    }()
+    
+    private let secondCreaseTextField: CustomTextField = {
+        let textField = CustomTextField(placeholder: "Размер складки в мм")
+        textField.addTarget(self, action: #selector(handleCreaseTextChange), for: .editingChanged)
+        return textField
+    }()
+    
+    private let thirdCreaseTextField: CustomTextField = {
+        let textField = CustomTextField(placeholder: "Размер складки в мм")
+        textField.addTarget(self, action: #selector(handleCreaseTextChange), for: .editingChanged)
+        return textField
+    }()
+    
     // MARK: UILabels
     
-//    private let sexLabel: CustomLabel = {
-//        let label = CustomLabel(text: "Пол")
-//        return label
-//    }()
-//
-    private let ageLabel: CustomLabel = {
+    private lazy var ageLabel: CustomLabel = {
         let label = CustomLabel(text: "Возраст")
         return label
     }()
@@ -62,19 +78,58 @@ class UserInfoViewController: UIViewController {
         return label
     }()
     
-    private let weightLabel: CustomLabel = {
+    private lazy var weightLabel: CustomLabel = {
         let label = CustomLabel(text: "Вес")
         return label
     }()
     
-    private let alertWeightLabel: CustomLabel = {
+    private lazy var alertWeightLabel: CustomLabel = {
         let label = CustomLabel(text: "")
+        return label
+    }()
+    
+    private lazy var firstCreaseLabel: CustomLabel = {
+        let label = CustomLabel(text: "Введите складку на животе")
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    private lazy var secondCreaseLabel: CustomLabel = {
+        let label = CustomLabel(text: "Введите складку на груди")
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    private lazy var thirdCreaseLabel: CustomLabel = {
+        let label = CustomLabel(text: "Введите складку на бедре")
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    private lazy var alertFirstCreaseLabel: CustomLabel = {
+        let label = CustomLabel(text: "")
+        label.textColor = .red
+        label.isHidden = true
+        return label
+    }()
+    
+    private lazy var alertSecondCreaseLabel: CustomLabel = {
+        let label = CustomLabel(text: "")
+        label.textColor = .red
+        label.isHidden = true
+        return label
+    }()
+    
+    private lazy var alertThirdCreaseLabel: CustomLabel = {
+        let label = CustomLabel(text: "")
+        label.textColor = .red
+        label.isHidden = true
         return label
     }()
     
     // MARK: UIButtons
     
-    private let nextButton: CustomButton = {
+    private lazy var nextButton: CustomButton = {
         let button = CustomButton(title: "Далее")
         button.addTarget(self, action: #selector(goToNextView), for: .touchUpInside)
         return button
@@ -86,7 +141,12 @@ class UserInfoViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = MyCustomColors.bgColorForView.associatedColor
         setupNavigationBar()
-        setupSubviews(ageTextField, sexSegmentedControl, nextButton, ageLabel, weightLabel, weightTextField, alertAgeLabel, alertWeightLabel)
+        setupSubviews(ageTextField, sexSegmentedControl, nextButton,
+                      ageLabel, weightLabel, weightTextField,
+                      alertAgeLabel, alertWeightLabel,
+                      firstCreaseLabel, firstCreaseTextField,
+                      alertFirstCreaseLabel, secondCreaseLabel, secondCreaseTextField,
+                      alertSecondCreaseLabel, thirdCreaseLabel, thirdCreaseTextField, alertThirdCreaseLabel)
         alertAgeLabel.isHidden = true
         nextButton.isEnabled = false
         setButtonActiveAbility()
@@ -131,18 +191,10 @@ class UserInfoViewController: UIViewController {
     
     private func setConstraints() {
         
-//        sexLabel.translatesAutoresizingMaskIntoConstraints = false
-//
-//        NSLayoutConstraint.activate ([
-//            sexLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
-//            sexLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-//            sexLabel.widthAnchor.constraint(equalToConstant: 50)
-//        ])
-        
         sexSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate ([
-            sexSegmentedControl.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100),
+            sexSegmentedControl.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40),
             sexSegmentedControl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
             sexSegmentedControl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40)
         ])
@@ -198,10 +250,85 @@ class UserInfoViewController: UIViewController {
             alertWeightLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
         ])
         
+        firstCreaseLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            firstCreaseLabel.topAnchor.constraint(equalTo: alertWeightLabel.bottomAnchor, constant: 10),
+            firstCreaseLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            firstCreaseLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
+            
+        ])
+        
+        firstCreaseTextField.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate ([
+            firstCreaseTextField.topAnchor.constraint(equalTo: firstCreaseLabel.bottomAnchor, constant: 20),
+            firstCreaseTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
+            firstCreaseTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40)
+        ])
+        
+        alertFirstCreaseLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            alertFirstCreaseLabel.topAnchor.constraint(equalTo: firstCreaseTextField.bottomAnchor, constant: 10),
+            alertFirstCreaseLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            alertFirstCreaseLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
+        ])
+        
+        secondCreaseLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            secondCreaseLabel.topAnchor.constraint(equalTo: alertFirstCreaseLabel.bottomAnchor, constant: 10),
+            secondCreaseLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            secondCreaseLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
+            
+        ])
+        
+        secondCreaseTextField.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate ([
+            secondCreaseTextField.topAnchor.constraint(equalTo: secondCreaseLabel.bottomAnchor, constant: 20),
+            secondCreaseTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
+            secondCreaseTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40)
+        ])
+        
+        alertSecondCreaseLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            alertSecondCreaseLabel.topAnchor.constraint(equalTo: secondCreaseTextField.bottomAnchor, constant: 10),
+            alertSecondCreaseLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            alertSecondCreaseLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
+        ])
+        
+       thirdCreaseLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            thirdCreaseLabel.topAnchor.constraint(equalTo: alertSecondCreaseLabel.bottomAnchor, constant: 10),
+            thirdCreaseLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            thirdCreaseLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
+            
+        ])
+        
+        thirdCreaseTextField.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate ([
+            thirdCreaseTextField.topAnchor.constraint(equalTo: thirdCreaseLabel.bottomAnchor, constant: 20),
+            thirdCreaseTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
+            thirdCreaseTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40)
+        ])
+        
+        alertThirdCreaseLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            alertThirdCreaseLabel.topAnchor.constraint(equalTo: thirdCreaseTextField.bottomAnchor, constant: 10),
+            alertThirdCreaseLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            alertThirdCreaseLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
+        ])
+        
         nextButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate ([
-            nextButton.topAnchor.constraint(equalTo: alertWeightLabel.bottomAnchor, constant: 20),
+            nextButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
             nextButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
             nextButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40)
         ])
@@ -209,7 +336,7 @@ class UserInfoViewController: UIViewController {
     
     // MARK: @objc methods
     
-    @objc private func handleAgeTextChange() {
+    @objc private func validateTextAgeTF() {
         guard let text = ageTextField.text else { return }
         if let ageNumber = Double(text) {
             switch ageNumber {
@@ -224,6 +351,24 @@ class UserInfoViewController: UIViewController {
         } else {
             ageIsValid = false
             showAlertingLabel(ageIsValid, label: alertAgeLabel)
+        }
+    }
+    
+    @objc private func handleCreaseTextChange() {
+        guard let text = firstCreaseTextField.text else { return }
+        if let creaseNumber = Double(text) {
+            switch creaseNumber {
+            case 2...60:
+                user.age = creaseNumber
+                firstCreaseIsValid = true
+            default:
+                user.age = 0
+                firstCreaseIsValid = false
+            }
+//            showAlertingLabel(firstCreaseIsValid)
+        } else {
+            firstCreaseIsValid = false
+//            showAlertingLabel(firstCreaseIsValid)
         }
     }
     
@@ -257,7 +402,7 @@ class UserInfoViewController: UIViewController {
             user.sex = .male
         }
         
-        let rootVC = BodyCreases()
+        let rootVC = ResultViewController()
         rootVC.user = user
         let userCreaseNavVC = UINavigationController(rootViewController: rootVC)
         userCreaseNavVC.modalPresentationStyle = .fullScreen
