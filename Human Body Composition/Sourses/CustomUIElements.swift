@@ -32,6 +32,9 @@ class CustomLabel: UILabel {
         super.init(frame: frame)
     }
     
+    var correctText = ""
+    var incorrectText = ""
+    
     init(text: String) {
         super.init(frame: .zero)
         textAlignment = .center

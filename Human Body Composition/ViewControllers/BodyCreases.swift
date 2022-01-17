@@ -47,7 +47,7 @@ class BodyCreases: UIViewController, UITextFieldDelegate {
     
     private let creaseTextField: CustomTextField = {
         let textField = CustomTextField(placeholder: "Размер складки в мм")
-        textField.addTarget(self, action: #selector(handleCreaseTextChange), for: .editingChanged)
+
         return textField
     }()
     
