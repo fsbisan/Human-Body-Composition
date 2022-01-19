@@ -123,7 +123,6 @@ class BodyCreases: UIViewController, UITextFieldDelegate {
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             title: "Назад", style: .plain, target: self, action: #selector(close)
         )
-        
         navigationController?.navigationBar.standardAppearance = navBarAppearance
         navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
     }
