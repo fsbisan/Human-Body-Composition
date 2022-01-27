@@ -28,8 +28,8 @@ class UserInfoViewController: UIViewController {
         let segmentedControl = UISegmentedControl(items: menuArray )
         segmentedControl.backgroundColor = MyCustomColors.colorForActiveState.associatedColor
         segmentedControl.selectedSegmentTintColor = MyCustomColors.bgColorForTF.associatedColor
-        segmentedControl.addTarget(self, action: #selector(toggleSex), for: .valueChanged)
         segmentedControl.selectedSegmentIndex = 0
+        segmentedControl.addTarget(self, action: #selector(toggleSex), for: .valueChanged)
         
         return segmentedControl
     }()
@@ -95,6 +95,7 @@ class UserInfoViewController: UIViewController {
     
     private lazy var firstCreaseLabel: CustomLabel = {
         let label = CustomLabel(text: "Введите складку на животе")
+        label.textAlignment = .left
         label.numberOfLines = 0
         return label
     }()
@@ -140,6 +141,14 @@ class UserInfoViewController: UIViewController {
         return button
     }()
     
+    private lazy var showFirstCreaseInstructionButton: UIButton = {
+        let button = UIButton()
+//        button.backgroundColor = MyCustomColors.colorForActiveState.associatedColor
+
+        button.setImage(UIImage(systemName: "trash"), for: .normal)
+        return button
+    }()
+    
     // MARK: Override Methods
     
     override func viewDidLoad() {
@@ -151,7 +160,8 @@ class UserInfoViewController: UIViewController {
                       alertAgeLabel, alertWeightLabel,
                       firstCreaseLabel, firstCreaseTextField,
                       alertFirstCreaseLabel, secondCreaseLabel, secondCreaseTextField,
-                      alertSecondCreaseLabel, thirdCreaseLabel, thirdCreaseTextField, alertThirdCreaseLabel)
+                      alertSecondCreaseLabel, thirdCreaseLabel, thirdCreaseTextField,
+                      alertThirdCreaseLabel, showFirstCreaseInstructionButton)
         alertAgeLabel.isHidden = true
         nextButton.isEnabled = false
         updateButtonActivityState()
@@ -213,6 +223,7 @@ class UserInfoViewController: UIViewController {
             ageLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
         ])
         
+        
         ageTextField.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate ([
@@ -257,8 +268,15 @@ class UserInfoViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             firstCreaseLabel.topAnchor.constraint(equalTo: alertWeightLabel.bottomAnchor, constant: 16),
-            firstCreaseLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            firstCreaseLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
+            firstCreaseLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
+        ])
+        
+        showFirstCreaseInstructionButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            showFirstCreaseInstructionButton.topAnchor.constraint(equalTo: firstCreaseLabel.topAnchor),
+            showFirstCreaseInstructionButton.leadingAnchor.constraint(equalTo: firstCreaseLabel.trailingAnchor, constant: 10),
+            showFirstCreaseInstructionButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40)
         ])
         
         firstCreaseTextField.translatesAutoresizingMaskIntoConstraints = false
