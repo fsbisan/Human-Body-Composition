@@ -143,8 +143,8 @@ class UserInfoViewController: UIViewController {
     
     private lazy var showFirstCreaseInstructionButton: UIButton = {
         let button = UIButton()
-//        button.backgroundColor = MyCustomColors.colorForActiveState.associatedColor
 
+        button.addTarget(self, action: #selector(showInstructionVC), for: .touchUpInside)
         button.setImage(UIImage(systemName: "trash"), for: .normal)
         return button
     }()
@@ -470,6 +470,11 @@ class UserInfoViewController: UIViewController {
             nextButton.backgroundColor = MyCustomColors.colorForUnActiveState.associatedColor
             nextButton.setTitleColor(.gray, for: .normal)
         }
+    }
+    
+    @objc private func showInstructionVC() {
+        let rootVC = InstructionViewController()
+        present(rootVC, animated: true)
     }
 }
 
