@@ -145,7 +145,23 @@ class UserInfoViewController: UIViewController {
         let button = UIButton()
 
         button.addTarget(self, action: #selector(showInstructionVC), for: .touchUpInside)
-        button.setImage(UIImage(systemName: "trash"), for: .normal)
+        button.setImage(UIImage(systemName: "questionmark.circle"), for: .normal)
+        return button
+    }()
+    
+    private lazy var showSecondCreaseInstructionButton: UIButton = {
+        let button = UIButton()
+
+        button.addTarget(self, action: #selector(showInstructionVC), for: .touchUpInside)
+        button.setImage(UIImage(systemName: "questionmark.circle"), for: .normal)
+        return button
+    }()
+    
+    private lazy var showThirdCreaseInstructionButton: UIButton = {
+        let button = UIButton()
+
+        button.addTarget(self, action: #selector(showInstructionVC), for: .touchUpInside)
+        button.setImage(UIImage(systemName: "questionmark.circle"), for: .normal)
         return button
     }()
     
