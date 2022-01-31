@@ -102,12 +102,14 @@ class UserInfoViewController: UIViewController {
     
     private lazy var secondCreaseLabel: CustomLabel = {
         let label = CustomLabel(text: "Введите складку на груди")
+        label.textAlignment = .left
         label.numberOfLines = 0
         return label
     }()
     
     private lazy var thirdCreaseLabel: CustomLabel = {
         let label = CustomLabel(text: "Введите складку на бедре")
+        label.textAlignment = .left
         label.numberOfLines = 0
         return label
     }()
@@ -177,7 +179,7 @@ class UserInfoViewController: UIViewController {
                       firstCreaseLabel, firstCreaseTextField,
                       alertFirstCreaseLabel, secondCreaseLabel, secondCreaseTextField,
                       alertSecondCreaseLabel, thirdCreaseLabel, thirdCreaseTextField,
-                      alertThirdCreaseLabel, showFirstCreaseInstructionButton)
+                      alertThirdCreaseLabel, showFirstCreaseInstructionButton, showSecondCreaseInstructionButton, showThirdCreaseInstructionButton)
         alertAgeLabel.isHidden = true
         nextButton.isEnabled = false
         updateButtonActivityState()
@@ -315,8 +317,15 @@ class UserInfoViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             secondCreaseLabel.topAnchor.constraint(equalTo: alertFirstCreaseLabel.bottomAnchor, constant: 16),
-            secondCreaseLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            secondCreaseLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
+            secondCreaseLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40)
+        ])
+        
+        showSecondCreaseInstructionButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            showSecondCreaseInstructionButton.topAnchor.constraint(equalTo: secondCreaseLabel.topAnchor),
+            showSecondCreaseInstructionButton.leadingAnchor.constraint(equalTo: secondCreaseLabel.trailingAnchor, constant: 10),
+            showSecondCreaseInstructionButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40)
         ])
         
         secondCreaseTextField.translatesAutoresizingMaskIntoConstraints = false
@@ -339,8 +348,15 @@ class UserInfoViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             thirdCreaseLabel.topAnchor.constraint(equalTo: alertSecondCreaseLabel.bottomAnchor, constant: 16),
-            thirdCreaseLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            thirdCreaseLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
+            thirdCreaseLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
+        ])
+        
+        showThirdCreaseInstructionButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            showThirdCreaseInstructionButton.topAnchor.constraint(equalTo: thirdCreaseLabel.topAnchor),
+            showThirdCreaseInstructionButton.leadingAnchor.constraint(equalTo: thirdCreaseLabel.trailingAnchor, constant: 10),
+            showThirdCreaseInstructionButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40)
         ])
         
         thirdCreaseTextField.translatesAutoresizingMaskIntoConstraints = false
