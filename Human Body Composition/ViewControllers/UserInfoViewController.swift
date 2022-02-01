@@ -504,8 +504,9 @@ class UserInfoViewController: UIViewController {
         }
     }
     
-    @objc private func showInstructionVC() {
+    @objc private func showInstructionVC(for bodyCreaseNumber: String) {
         let rootVC = InstructionViewController()
+        rootVC.nameOfBodyCrease = bodyCreaseNumber
         present(rootVC, animated: true)
     }
 }
