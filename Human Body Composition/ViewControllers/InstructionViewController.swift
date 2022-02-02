@@ -44,17 +44,7 @@ class InstructionViewController: UIViewController {
     
     // MARK: Private Properties
     
-    var nameOfBodyCrease = ""
-    
-    private var instructionsText: String {
-        switch nameOfBodyCrease {
-        case "stomach": return InstructionTexts.stomach.rawValue
-        case "breast": return InstructionTexts.breast.rawValue
-        case "hip": return InstructionTexts.hip.rawValue
-        case "arm": return InstructionTexts.arm.rawValue
-        default: return InstructionTexts.leg.rawValue
-        }
-    }
+    var instructionsText: InstructionTexts!
    
     // MARK: UIButtons
     
@@ -75,7 +65,7 @@ class InstructionViewController: UIViewController {
     // MARK: UILabels
     
     private lazy var instructionLabel: CustomLabel = {
-        let label = CustomLabel(text: instructionsText)
+        let label = CustomLabel(text: instructionsText.rawValue)
         label.textAlignment = .justified
         label.numberOfLines = 0
         return label

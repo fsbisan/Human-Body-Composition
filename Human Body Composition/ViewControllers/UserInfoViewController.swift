@@ -143,27 +143,30 @@ class UserInfoViewController: UIViewController {
         return button
     }()
     
-    private lazy var showFirstCreaseInstructionButton: UIButton = {
-        let button = UIButton()
+    private lazy var showFirstCreaseInstructionButton: CustomButton = {
+        let button = CustomButton()
 
-        button.addTarget(self, action: #selector(showInstructionVC), for: .touchUpInside)
+        button.addTarget(self, action: #selector(showInstructionVC(sender:)), for: .touchUpInside)
         button.setImage(UIImage(systemName: "questionmark.circle"), for: .normal)
+        button.instructionTextToSend = InstructionTexts.stomach
         return button
     }()
     
-    private lazy var showSecondCreaseInstructionButton: UIButton = {
-        let button = UIButton()
+    private lazy var showSecondCreaseInstructionButton: CustomButton = {
+        let button = CustomButton()
 
         button.addTarget(self, action: #selector(showInstructionVC), for: .touchUpInside)
         button.setImage(UIImage(systemName: "questionmark.circle"), for: .normal)
+        button.instructionTextToSend = InstructionTexts.breast
         return button
     }()
     
-    private lazy var showThirdCreaseInstructionButton: UIButton = {
-        let button = UIButton()
+    private lazy var showThirdCreaseInstructionButton: CustomButton = {
+        let button = CustomButton()
 
         button.addTarget(self, action: #selector(showInstructionVC), for: .touchUpInside)
         button.setImage(UIImage(systemName: "questionmark.circle"), for: .normal)
+        button.instructionTextToSend = InstructionTexts.leg
         return button
     }()
     
@@ -504,12 +507,13 @@ class UserInfoViewController: UIViewController {
         }
     }
     
-    @objc private func showInstructionVC(for bodyCreaseNumber: String) {
+    @objc private func showInstructionVC(sender: CustomButton) {
         let rootVC = InstructionViewController()
-        rootVC.nameOfBodyCrease = bodyCreaseNumber
+        rootVC.instructionsText = sender.instructionTextToSend
         present(rootVC, animated: true)
     }
 }
+
 
 extension UserInfoViewController: UITextFieldDelegate {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

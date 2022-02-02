@@ -21,6 +21,7 @@ class CustomButton: UIButton {
         setTitleColor(.black, for: .normal)
         layer.cornerRadius = 4
     }
+    var instructionTextToSend = InstructionTexts.stomach
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
