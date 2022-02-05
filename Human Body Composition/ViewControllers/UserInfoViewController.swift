@@ -7,6 +7,20 @@
 
 import UIKit
 
+enum FirstCreaseLabelText: String {
+    case forMale = "складка на животе"
+    case forFemale = "складка на боку"
+}
+
+enum SecondCreaseLabelText: String {
+    case forMale = " складка груди"
+    case forFemale = "складка на трицепсе"
+}
+
+enum ThirdCreaseLabelText: String {
+    case forMale = "складка на бедре"
+}
+
 class UserInfoViewController: UIViewController {
     
     // MARK: Public Properties
@@ -20,6 +34,10 @@ class UserInfoViewController: UIViewController {
     private var firstCreaseIsValid = false
     private var secondCreaseIsValid = false
     private var thirdCreaseIsValid = false
+    
+    private var firstCreaseText = "введите складку на животе"
+    private var secondCreaseText = "Введите складку на груди"
+    private var thirdCreaseText = "Введите складку на бедре"
     
     // MARK: UISegmentedControls
     
@@ -94,21 +112,21 @@ class UserInfoViewController: UIViewController {
     }()
     
     private lazy var firstCreaseLabel: CustomLabel = {
-        let label = CustomLabel(text: "Введите складку на животе")
+        let label = CustomLabel(text: FirstCreaseLabelText.forMale.rawValue)
         label.textAlignment = .left
         label.numberOfLines = 0
         return label
     }()
     
     private lazy var secondCreaseLabel: CustomLabel = {
-        let label = CustomLabel(text: "Введите складку на груди")
+        let label = CustomLabel(text: SecondCreaseLabelText.forMale.rawValue)
         label.textAlignment = .left
         label.numberOfLines = 0
         return label
     }()
     
     private lazy var thirdCreaseLabel: CustomLabel = {
-        let label = CustomLabel(text: "Введите складку на бедре")
+        let label = CustomLabel(text: ThirdCreaseLabelText.forMale.rawValue)
         label.textAlignment = .left
         label.numberOfLines = 0
         return label
@@ -477,8 +495,12 @@ class UserInfoViewController: UIViewController {
         switch sexSegmentedControl.selectedSegmentIndex {
         case 1:
             user.sex = .female
+            firstCreaseLabel.text = FirstCreaseLabelText.forFemale.rawValue
+            secondCreaseLabel.text = SecondCreaseLabelText.forFemale.rawValue
         default:
             user.sex = .male
+            firstCreaseLabel.text = FirstCreaseLabelText.forMale.rawValue
+            secondCreaseLabel.text = SecondCreaseLabelText.forMale.rawValue
         }
     }
     
