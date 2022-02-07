@@ -38,7 +38,7 @@ class CustomLabel: UILabel {
     
     init(text: String) {
         super.init(frame: .zero)
-        textAlignment = .center
+        textAlignment = .left
         self.text = text
     }
     
