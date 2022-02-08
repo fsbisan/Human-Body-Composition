@@ -44,6 +44,8 @@ class UserInfoViewController: UIViewController {
     private let sexSegmentedControl: UISegmentedControl = {
         let menuArray = ["мужчина", "женщина"]
         let segmentedControl = UISegmentedControl(items: menuArray )
+        let font = UIFont.systemFont(ofSize: 18)
+        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.font: font], for: .normal)
         segmentedControl.backgroundColor = MyCustomColors.colorForActiveState.associatedColor
         segmentedControl.selectedSegmentTintColor = MyCustomColors.bgColorForTF.associatedColor
         segmentedControl.selectedSegmentIndex = 0
@@ -73,10 +75,16 @@ class UserInfoViewController: UIViewController {
             stackView.addArrangedSubview(subview)
         }
     }
+    let scrollView = UIScrollView()
+    
+    func setupScrollView(){
+        scrollView.addSubview(mainStackView)
+    }
     
     private func setupMainStackView(arrangedSubviews: UIView...) {
         mainStackView.axis = .vertical
-        mainStackView.distribution = .equalCentering
+        mainStackView.distribution = .fill
+        mainStackView.spacing = 20
         mainStackView.alignment = .fill
         
         arrangedSubviews.forEach { subview in
@@ -164,7 +172,7 @@ class UserInfoViewController: UIViewController {
     
     private lazy var alertFirstCreaseLabel: CustomLabel = {
         let label = CustomLabel(text: "")
-        label.font = UIFont.italicSystemFont(ofSize: 14)
+        label.font = UIFont.systemFont(ofSize: 16, weight: .light)
         label.correctText = "размер складки корректен"
         label.incorrectText = "не корректный размер складки"
         return label
@@ -225,7 +233,8 @@ class UserInfoViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = MyCustomColors.bgColorForView.associatedColor
         setupNavigationBar()
-        setupSubviews(mainStackView)
+        setupSubviews(scrollView)
+        setupScrollView()
         alertAgeLabel.isHidden = true
         nextButton.isEnabled = false
         updateButtonActivityState()
@@ -285,24 +294,34 @@ class UserInfoViewController: UIViewController {
     private func setConstraints() {
         
         mainStackView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            mainStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
-            mainStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
-            mainStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            mainStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
+            
+            scrollView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            scrollView.widthAnchor.constraint(equalTo: view.widthAnchor),
+            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            mainStackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 20),
+            mainStackView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+            mainStackView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 20),
+            mainStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            
+            sexSegmentedControl.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05),
             
             ageTextField.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05),
-            weightTextField.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05),
-            firstCreaseTextField.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05),
-            secondCreaseTextField.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05),
-            thirdCreaseTextField.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05)
-        ])
-        
-        NSLayoutConstraint.activate([
             
+            weightTextField.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05),
+            
+            firstCreaseTextField.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05),
+            
+            secondCreaseTextField.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05),
+            
+            thirdCreaseTextField.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05),
+            
+            nextButton.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05)
         ])
-        
     }
     
     // MARK: @objc methods

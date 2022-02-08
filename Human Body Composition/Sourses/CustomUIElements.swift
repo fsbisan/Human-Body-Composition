@@ -17,7 +17,7 @@ class CustomButton: UIButton {
         super.init(frame: .zero)
         backgroundColor = MyCustomColors.colorForActiveState.associatedColor
         setTitle(title, for: .normal)
-        titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
         setTitleColor(.black, for: .normal)
         layer.cornerRadius = 4
     }
