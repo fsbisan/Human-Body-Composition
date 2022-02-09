@@ -22,6 +22,7 @@ class CustomButton: UIButton {
         layer.cornerRadius = 4
     }
     var instructionTextToSend = InstructionTexts.stomach
+    var imageNameToSend = ""
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -38,7 +39,7 @@ class CustomLabel: UILabel {
     
     init(text: String) {
         super.init(frame: .zero)
-        textAlignment = .left
+        textAlignment = .center
         self.text = text
     }
     

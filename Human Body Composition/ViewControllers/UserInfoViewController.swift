@@ -35,11 +35,7 @@ class UserInfoViewController: UIViewController {
     private var secondCreaseIsValid = false
     private var thirdCreaseIsValid = false
     
-    private var firstCreaseText = "введите складку на животе"
-    private var secondCreaseText = "Введите складку на груди"
-    private var thirdCreaseText = "Введите складку на бедре"
-    
-    // MARK: UISegmentedControls
+    // MARK: - UISegmentedControls
     
     private let sexSegmentedControl: UISegmentedControl = {
         let menuArray = ["мужчина", "женщина"]
@@ -54,76 +50,40 @@ class UserInfoViewController: UIViewController {
         return segmentedControl
     }()
     
-    // MARK: UITextFields
-    
-    private lazy var mainStackView = UIStackView()
-    
-    private lazy var ageStackView = UIStackView()
-    private lazy var weightStackView = UIStackView()
-    
-    private lazy var firsCreaseStackView = UIStackView()
-    private lazy var secondCreaseStackView = UIStackView()
-    private lazy var thirdCreaseStackView = UIStackView()
-    
-    private func setupCreaseStackView(_ stackView: UIStackView, with arrangedSubviews: UIView...) {
-        stackView.axis = .vertical
-        stackView.distribution = .fill
-        stackView.alignment = .fill
-        stackView.spacing = 5
-        
-        arrangedSubviews.forEach { subview in
-            stackView.addArrangedSubview(subview)
-        }
-    }
-    let scrollView = UIScrollView()
-    
-    func setupScrollView(){
-        scrollView.addSubview(mainStackView)
-    }
-    
-    private func setupMainStackView(arrangedSubviews: UIView...) {
-        mainStackView.axis = .vertical
-        mainStackView.distribution = .fill
-        mainStackView.spacing = 20
-        mainStackView.alignment = .fill
-        
-        arrangedSubviews.forEach { subview in
-            mainStackView.addArrangedSubview(subview)
-        }
-    }
+    // MARK: - UITextFields
     
     let ageTextField: CustomTextField = {
-        let textField = CustomTextField(placeholder: "Введите ваш возраст")
+        let textField = CustomTextField(placeholder: "Введите ваш возраст, в годах")
         textField.addTarget(self, action: #selector(validateTextAgeTF), for: .editingChanged)
         return textField
     }()
     
     private lazy var weightTextField: CustomTextField = {
-        let textField = CustomTextField(placeholder: "Введите ваш вес")
+        let textField = CustomTextField(placeholder: "Введите ваш вес, кг")
         textField.addTarget(self, action: #selector(validateTextWeightTF), for: .editingChanged)
         textField.keyboardType = .decimalPad
         return textField
     }()
     
     private lazy var firstCreaseTextField: CustomTextField = {
-        let textField = CustomTextField(placeholder: "Размер складки в мм")
+        let textField = CustomTextField(placeholder: "Введите размер складки в мм")
         textField.addTarget(self, action: #selector(validateTextFirstCreaseTF), for: .editingChanged)
         return textField
     }()
     
     private lazy var secondCreaseTextField: CustomTextField = {
-        let textField = CustomTextField(placeholder: "Размер складки в мм")
+        let textField = CustomTextField(placeholder: "Введите размер складки в мм")
         textField.addTarget(self, action: #selector(validateTextSecondCreaseTF), for: .editingChanged)
         return textField
     }()
     
     private let thirdCreaseTextField: CustomTextField = {
-        let textField = CustomTextField(placeholder: "Размер складки в мм")
+        let textField = CustomTextField(placeholder: "Введите размер складки в мм")
         textField.addTarget(self, action: #selector(validateTextThirdCreaseTF), for: .editingChanged)
         return textField
     }()
     
-    // MARK: UILabels
+    // MARK: - UILabels
     
     private lazy var ageLabel: CustomLabel = {
         let label = CustomLabel(text: "Возраст")
@@ -131,9 +91,10 @@ class UserInfoViewController: UIViewController {
     }()
     
     private let alertAgeLabel: CustomLabel = {
-        let label = CustomLabel(text: "")
+        let label = CustomLabel(text: "0")
         label.correctText = "возраст корректен"
         label.incorrectText = "возраст неверный"
+        label.alpha = 0
         return label
     }()
     
@@ -143,9 +104,10 @@ class UserInfoViewController: UIViewController {
     }()
     
     private lazy var alertWeightLabel: CustomLabel = {
-        let label = CustomLabel(text: "")
+        let label = CustomLabel(text: "0")
         label.correctText = "вес корректен"
         label.incorrectText = "вес неверный"
+        label.alpha = 0
         return label
     }()
     
@@ -171,28 +133,31 @@ class UserInfoViewController: UIViewController {
     }()
     
     private lazy var alertFirstCreaseLabel: CustomLabel = {
-        let label = CustomLabel(text: "")
+        let label = CustomLabel(text: "0")
         label.font = UIFont.systemFont(ofSize: 16, weight: .light)
         label.correctText = "размер складки корректен"
         label.incorrectText = "не корректный размер складки"
+        label.alpha = 0
         return label
     }()
     
     private lazy var alertSecondCreaseLabel: CustomLabel = {
-        let label = CustomLabel(text: "")
+        let label = CustomLabel(text: "0")
         label.correctText = "размер складки корректен"
         label.incorrectText = "не корректный размер складки"
+        label.alpha = 0
         return label
     }()
     
     private lazy var alertThirdCreaseLabel: CustomLabel = {
-        let label = CustomLabel(text: "")
+        let label = CustomLabel(text: "0")
         label.correctText = "размер складки корректен"
         label.incorrectText = "не корректный размер складки"
+        label.alpha = 0
         return label
     }()
     
-    // MARK: UIButtons
+    // MARK: - UIButtons
     
     private lazy var nextButton: CustomButton = {
         let button = CustomButton(title: "Расчитать")
@@ -206,6 +171,7 @@ class UserInfoViewController: UIViewController {
         button.addTarget(self, action: #selector(showInstructionVC(sender:)), for: .touchUpInside)
         button.setImage(UIImage(systemName: "questionmark.circle"), for: .normal)
         button.instructionTextToSend = InstructionTexts.stomach
+        button.imageNameToSend = ImageNames.stomachImage.rawValue
         return button
     }()
     
@@ -215,6 +181,7 @@ class UserInfoViewController: UIViewController {
         button.addTarget(self, action: #selector(showInstructionVC), for: .touchUpInside)
         button.setImage(UIImage(systemName: "questionmark.circle"), for: .normal)
         button.instructionTextToSend = InstructionTexts.breast
+        button.imageNameToSend = ImageNames.breastImage.rawValue
         return button
     }()
     
@@ -224,10 +191,29 @@ class UserInfoViewController: UIViewController {
         button.addTarget(self, action: #selector(showInstructionVC), for: .touchUpInside)
         button.setImage(UIImage(systemName: "questionmark.circle"), for: .normal)
         button.instructionTextToSend = InstructionTexts.leg
+        button.imageNameToSend = ImageNames.legImage.rawValue
         return button
     }()
     
-    // MARK: Override Methods
+    // MARK: - UIStackViews
+    
+    private lazy var mainStackView = UIStackView()
+    
+    private lazy var ageStackView = UIStackView()
+    private lazy var weightStackView = UIStackView()
+    
+    private lazy var firsCreaseStackView = UIStackView()
+    private lazy var secondCreaseStackView = UIStackView()
+    private lazy var thirdCreaseStackView = UIStackView()
+    
+    private lazy var firstCreaseLBAndInfBTStackView = UIStackView()
+    private lazy var secondCreaseLBAndInfBTStackView = UIStackView()
+    private lazy var thirdCreaseLBAndInfBTStackView = UIStackView()
+    // MARK: - UIScrollViews
+    
+    let scrollView = UIScrollView()
+    
+    // MARK: - Override Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -235,31 +221,34 @@ class UserInfoViewController: UIViewController {
         setupNavigationBar()
         setupSubviews(scrollView)
         setupScrollView()
-        alertAgeLabel.isHidden = true
         nextButton.isEnabled = false
         updateButtonActivityState()
-        setupCreaseStackView(ageStackView,
+        setupCreaseLBAndInfBTStackViews(firstCreaseLBAndInfBTStackView,
+                                        with: firstCreaseLabel, showFirstCreaseInstructionButton)
+        setupCreaseLBAndInfBTStackViews(secondCreaseLBAndInfBTStackView,
+                                        with: secondCreaseLabel, showSecondCreaseInstructionButton)
+        setupCreaseLBAndInfBTStackViews(thirdCreaseLBAndInfBTStackView,
+                                        with: thirdCreaseLabel, showThirdCreaseInstructionButton)
+        setupCreaseStackViews(ageStackView,
                              with: ageLabel, ageTextField, alertAgeLabel)
-        setupCreaseStackView(weightStackView,
+        setupCreaseStackViews(weightStackView,
                              with: weightLabel, weightTextField, alertWeightLabel)
-        setupCreaseStackView(firsCreaseStackView,
-                             with: firstCreaseLabel, firstCreaseTextField, alertFirstCreaseLabel)
-        setupCreaseStackView(secondCreaseStackView,
-                             with: secondCreaseLabel, secondCreaseTextField, alertSecondCreaseLabel)
-        setupCreaseStackView(thirdCreaseStackView,
-                             with: thirdCreaseLabel, thirdCreaseTextField, alertThirdCreaseLabel)
-        setupMainStackView(arrangedSubviews:
-                        sexSegmentedControl, ageStackView, weightStackView,
+        setupCreaseStackViews(firsCreaseStackView,
+                             with: firstCreaseLBAndInfBTStackView, firstCreaseTextField, alertFirstCreaseLabel)
+        setupCreaseStackViews(secondCreaseStackView,
+                             with: secondCreaseLBAndInfBTStackView, secondCreaseTextField, alertSecondCreaseLabel)
+        setupCreaseStackViews(thirdCreaseStackView,
+                             with: thirdCreaseLBAndInfBTStackView, thirdCreaseTextField, alertThirdCreaseLabel)
+        setupMainStackView(sexSegmentedControl, ageStackView, weightStackView,
                         firsCreaseStackView, secondCreaseStackView, thirdCreaseStackView, nextButton)
         setConstraints()
         setGradientBackground()
     }
     
-    // MARK: Private Methods
+    // MARK: - Private Methods
     
     private func showAlertingLabel(_ isValidData: Bool, label: CustomLabel) {
-        label.isHidden = false
-        
+        label.alpha = 1
         if isValidData {
             label.text = label.correctText
             label.textColor = MyCustomColors.colorForActiveState.associatedColor
@@ -291,6 +280,42 @@ class UserInfoViewController: UIViewController {
         }
     }
     
+    private func setupScrollView(){
+        scrollView.addSubview(mainStackView)
+    }
+    
+    private func setupMainStackView(_ arrangedSubviews: UIView...) {
+        mainStackView.axis = .vertical
+        mainStackView.distribution = .fill
+        mainStackView.spacing = 20
+        mainStackView.alignment = .fill
+        
+        arrangedSubviews.forEach { subview in
+            mainStackView.addArrangedSubview(subview)
+        }
+    }
+    
+    private func setupCreaseStackViews(_ stackView: UIStackView, with arrangedSubviews: UIView...) {
+        stackView.axis = .vertical
+        stackView.distribution = .fill
+        stackView.alignment = .fill
+        stackView.spacing = 5
+        
+        arrangedSubviews.forEach { subview in
+            stackView.addArrangedSubview(subview)
+        }
+    }
+    
+    private func setupCreaseLBAndInfBTStackViews(_ stackView: UIStackView, with arrangedSubviews: UIView...) {
+        stackView.axis = .horizontal
+        stackView.distribution = .equalSpacing
+        stackView.alignment = .fill
+        
+        arrangedSubviews.forEach { subview in
+            stackView.addArrangedSubview(subview)
+        }
+    }
+    
     private func setConstraints() {
         
         mainStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -306,7 +331,7 @@ class UserInfoViewController: UIViewController {
             mainStackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 20),
             mainStackView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
             mainStackView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 20),
-            mainStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            mainStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -20),
             
             sexSegmentedControl.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05),
             
@@ -320,21 +345,20 @@ class UserInfoViewController: UIViewController {
             
             thirdCreaseTextField.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05),
             
-            nextButton.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05)
+            nextButton.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05),
+            
         ])
     }
     
-    // MARK: @objc methods
+    // MARK: - @objc methods
     
     @objc private func validateTextAgeTF() {
         guard let text = ageTextField.text else { return }
         if let ageNumber = Double(text) {
             switch ageNumber {
             case 10...150:
-                user.age = ageNumber
                 ageIsValid = true
             default:
-                user.age = 0
                 ageIsValid = false
             }
         } else {
@@ -416,20 +440,17 @@ class UserInfoViewController: UIViewController {
             user.sex = .female
             firstCreaseLabel.text = FirstCreaseLabelText.forFemale.rawValue
             secondCreaseLabel.text = SecondCreaseLabelText.forFemale.rawValue
+            
+            showFirstCreaseInstructionButton.imageNameToSend = ImageNames.hipImage.rawValue
+            showSecondCreaseInstructionButton.imageNameToSend = ImageNames.armImage.rawValue
         default:
             user.sex = .male
             firstCreaseLabel.text = FirstCreaseLabelText.forMale.rawValue
             secondCreaseLabel.text = SecondCreaseLabelText.forMale.rawValue
+            
+            showFirstCreaseInstructionButton.imageNameToSend = ImageNames.stomachImage.rawValue
+            showSecondCreaseInstructionButton.imageNameToSend = ImageNames.breastImage.rawValue
         }
-    }
-    
-    @objc private func goToNextView() {
-        
-        let rootVC = ResultViewController()
-        rootVC.user = user
-        let userCreaseNavVC = UINavigationController(rootViewController: rootVC)
-        userCreaseNavVC.modalPresentationStyle = .fullScreen
-        present(userCreaseNavVC, animated: true)
     }
     
     @objc private func close() {
@@ -448,9 +469,19 @@ class UserInfoViewController: UIViewController {
         }
     }
     
+    @objc private func goToNextView() {
+        
+        let rootVC = ResultViewController()
+        rootVC.user = user
+        let userCreaseNavVC = UINavigationController(rootViewController: rootVC)
+        userCreaseNavVC.modalPresentationStyle = .fullScreen
+        present(userCreaseNavVC, animated: true)
+    }
+    
     @objc private func showInstructionVC(sender: CustomButton) {
         let rootVC = InstructionViewController()
         rootVC.instructionsText = sender.instructionTextToSend
+        rootVC.imageName = sender.imageNameToSend
         present(rootVC, animated: true)
     }
 }

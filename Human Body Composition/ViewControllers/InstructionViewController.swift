@@ -40,11 +40,20 @@ enum InstructionTexts: String {
     """
 }
 
+enum ImageNames: String {
+    case armImage
+    case breastImage
+    case hipImage
+    case legImage
+    case stomachImage
+}
+
 class InstructionViewController: UIViewController {
     
     // MARK: Private Properties
     
     var instructionsText: InstructionTexts!
+    var imageName: String!
    
     // MARK: UIButtons
     
@@ -58,7 +67,7 @@ class InstructionViewController: UIViewController {
     
     private lazy var sketchImage: UIImageView = {
         let imageView = UIImageView()
-        imageView.backgroundColor = .red
+        imageView.image = UIImage(named: imageName)
         return imageView
     }()
     
@@ -93,28 +102,22 @@ class InstructionViewController: UIViewController {
     private func setConstraints() {
         
         sketchImage.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            sketchImage.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7),
-            sketchImage.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.4),
-            sketchImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            sketchImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20)
-        ])
-        
         instructionLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            instructionLabel.topAnchor.constraint(equalTo: sketchImage.bottomAnchor, constant: 16),
-            instructionLabel.leadingAnchor.constraint(equalTo: sketchImage.leadingAnchor),
-            instructionLabel.trailingAnchor.constraint(equalTo: sketchImage.trailingAnchor)
-        ])
-        
         closeButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            closeButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50),
-            closeButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
-            closeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40)
+            sketchImage.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
+            sketchImage.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5),
+            sketchImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            sketchImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+   
+            instructionLabel.topAnchor.constraint(equalTo: sketchImage.bottomAnchor, constant: 16),
+            instructionLabel.leadingAnchor.constraint(equalTo: sketchImage.leadingAnchor),
+            instructionLabel.trailingAnchor.constraint(equalTo: sketchImage.trailingAnchor),
+     
+            closeButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
+            closeButton.leadingAnchor.constraint(equalTo: sketchImage.leadingAnchor),
+            closeButton.trailingAnchor.constraint(equalTo: sketchImage.trailingAnchor)
         ])
     }
     
