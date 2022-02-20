@@ -50,12 +50,12 @@ enum ImageNames: String {
 
 class InstructionViewController: UIViewController {
     
-    // MARK: Private Properties
+    // MARK: - Private Properties
     
     var instructionsText: InstructionTexts!
     var imageName: String!
    
-    // MARK: UIButtons
+    // MARK: - UIButtons
     
     private lazy var closeButton: CustomButton = {
         let button = CustomButton(title: "Закрыть")
@@ -63,7 +63,7 @@ class InstructionViewController: UIViewController {
         return button
     }()
     
-    // MARK: UIImages
+    // MARK: - UIImages
     
     private lazy var sketchImage: UIImageView = {
         let imageView = UIImageView()
@@ -71,7 +71,7 @@ class InstructionViewController: UIViewController {
         return imageView
     }()
     
-    // MARK: UILabels
+    // MARK: - UILabels
     
     private lazy var instructionLabel: CustomLabel = {
         let label = CustomLabel(text: instructionsText.rawValue)
@@ -80,7 +80,7 @@ class InstructionViewController: UIViewController {
         return label
     }()
     
-    // MARK: Override Methods
+    // MARK: - Override Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -97,7 +97,7 @@ class InstructionViewController: UIViewController {
         }
     }
     
-    // MARK: OBJC Methods
+    // MARK: - OBJC Methods
     
     private func setConstraints() {
         

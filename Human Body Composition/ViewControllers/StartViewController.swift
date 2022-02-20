@@ -9,7 +9,7 @@ import UIKit
 
 class StartViewController: UIViewController {
     
-    // MARK: UIButtons
+    // MARK: - UIButtons
     
     private let startCalculateButton: CustomButton = {
         let button = CustomButton(title: "Расчитать ИМТ")
@@ -18,7 +18,7 @@ class StartViewController: UIViewController {
         return button
     }()
     
-    // MARK: Private Methods
+    // MARK: - Private Methods
     
     private func setupSubviews(_ subviews: UIView...) {
         subviews.forEach { subview in
@@ -37,7 +37,7 @@ class StartViewController: UIViewController {
         ])
     }
     
-    // MARK: OBJC Methods
+    // MARK: - OBJC Methods
     
     @objc private func goNextVC() {
         let rootVC = UserInfoViewController()
@@ -46,7 +46,7 @@ class StartViewController: UIViewController {
         present(userInfoNavVC, animated: true)
     }
     
-    // MARK: Override Methods
+    // MARK: - Override Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()

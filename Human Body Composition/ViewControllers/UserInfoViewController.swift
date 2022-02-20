@@ -26,6 +26,7 @@ class UserInfoViewController: UIViewController {
     // MARK: Public Properties
     
     var user = User()
+    var activeTextField : UITextField? = nil
     
     // MARK: Private Properties
     
@@ -52,7 +53,7 @@ class UserInfoViewController: UIViewController {
     
     // MARK: - UITextFields
     
-    let ageTextField: CustomTextField = {
+    private lazy var ageTextField: CustomTextField = {
         let textField = CustomTextField(placeholder: "Введите ваш возраст, в годах")
         textField.addTarget(self, action: #selector(validateTextAgeTF), for: .editingChanged)
         return textField
@@ -211,7 +212,7 @@ class UserInfoViewController: UIViewController {
     private lazy var thirdCreaseLBAndInfBTStackView = UIStackView()
     // MARK: - UIScrollViews
     
-    let scrollView = UIScrollView()
+    private lazy var scrollView = UIScrollView()
     
     // MARK: - Override Methods
     
@@ -243,6 +244,12 @@ class UserInfoViewController: UIViewController {
                         firsCreaseStackView, secondCreaseStackView, thirdCreaseStackView, nextButton)
         setConstraints()
         setGradientBackground()
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UserInfoViewController.backgroundTap))
+        self.mainStackView.addGestureRecognizer(tapGestureRecognizer)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(UserInfoViewController.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(UserInfoViewController.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     // MARK: - Private Methods
@@ -345,8 +352,7 @@ class UserInfoViewController: UIViewController {
             
             thirdCreaseTextField.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05),
             
-            nextButton.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05),
-            
+            nextButton.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05)
         ])
     }
     
@@ -484,13 +490,45 @@ class UserInfoViewController: UIViewController {
         rootVC.imageName = sender.imageNameToSend
         present(rootVC, animated: true)
     }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        
+        guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
+            
+            // if keyboard size is not available for some reason, dont do anything
+           return
+        }
+        
+        var shouldMoveViewUp = false
+        
+        // if active text field is not nil
+        if let activeTextField = activeTextField {
+            
+            let bottomOfTextField = activeTextField.convert(activeTextField.bounds, to: self.view).maxY;
+            let topOfKeyboard = self.view.frame.height - keyboardSize.height
+            
+            if bottomOfTextField > topOfKeyboard {
+                shouldMoveViewUp = true
+            }
+        }
+        
+        if(shouldMoveViewUp) {
+            self.view.frame.origin.y = 0 - keyboardSize.height
+        }
+    }
+
+    @objc func keyboardWillHide(notification: NSNotification) {
+        self.view.frame.origin.y = 0
+    }
+    
+    @objc func backgroundTap(_ sender: UITapGestureRecognizer) {
+        // go through all of the textfield inside the view, and end editing thus resigning first responder
+        // ie. it will trigger a keyboardWillHide notification
+        self.view.endEditing(true)
+    }
 }
 
 extension UserInfoViewController: UITextFieldDelegate {
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesBegan(touches, with: event)
-        view.endEditing(true)
-    }
     
     func setGradientBackground() {
         let colorTop =  UIColor(red: 200/255, green: 255/255, blue: 200/255, alpha: 1.0).cgColor
@@ -502,6 +540,14 @@ extension UserInfoViewController: UITextFieldDelegate {
         gradientLayer.frame = self.view.bounds
 
         self.view.layer.insertSublayer(gradientLayer, at:0)
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        self.activeTextField = textField
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        self.activeTextField = nil
     }
 }
 

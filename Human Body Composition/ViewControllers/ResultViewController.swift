@@ -9,11 +9,11 @@ import UIKit
 
 class ResultViewController: UIViewController {
     
-    // MARK: Public Properties
+    // MARK: - Public Properties
     
     var user: User!
     
-    // MARK: UIButtons
+    // MARK: - UIButtons
     
     private lazy var resultLabel: UILabel = {
         let label = UILabel()
@@ -23,7 +23,7 @@ class ResultViewController: UIViewController {
         return label
     }()
     
-    // MARK: Override Methods
+    // MARK: - Override Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +33,7 @@ class ResultViewController: UIViewController {
         setupNavigationBar()
     }
     
-    // MARK: Private Methods
+    // MARK: - Private Methods
     
     private func setupNavigationBar() {
         title = "Результат"
@@ -68,7 +68,7 @@ class ResultViewController: UIViewController {
         ])
     }
     
-    // MARK: @objc methods
+    // MARK: - @objc methods
     
     @objc private func close(){
         dismiss(animated: true)

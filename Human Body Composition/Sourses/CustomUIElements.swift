@@ -8,6 +8,8 @@
 import Foundation
 import UIKit
 
+//MARK: - Custom UIKit Elements
+
 class CustomButton: UIButton {
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -69,6 +71,8 @@ class CustomTextField: UITextField {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
+//MARK: - Custom Atributes
 
 enum MyCustomColors {
     
