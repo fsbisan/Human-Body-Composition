@@ -13,7 +13,7 @@ enum FirstCreaseLabelText: String {
 }
 
 enum SecondCreaseLabelText: String {
-    case forMale = " складка груди"
+    case forMale = "складка груди"
     case forFemale = "складка на трицепсе"
 }
 
@@ -220,8 +220,8 @@ class UserInfoViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = MyCustomColors.bgColorForView.associatedColor
         setupNavigationBar()
-        setupSubviews(scrollView)
         setupScrollView()
+        setupSubviews(scrollView)
         nextButton.isEnabled = false
         updateButtonActivityState()
         setupCreaseLBAndInfBTStackViews(firstCreaseLBAndInfBTStackView,
@@ -330,15 +330,17 @@ class UserInfoViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             
-            scrollView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            scrollView.widthAnchor.constraint(equalTo: view.widthAnchor),
-            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            
             
             mainStackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 20),
             mainStackView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
             mainStackView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 20),
             mainStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -20),
+   
             
             sexSegmentedControl.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05),
             
@@ -492,33 +494,23 @@ class UserInfoViewController: UIViewController {
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
-        
-        guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
-            
+        guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
+        else {
             // if keyboard size is not available for some reason, dont do anything
-           return
+            return
         }
         
-        var shouldMoveViewUp = false
+        let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardSize.height, right: 0.0)
         
-        // if active text field is not nil
-        if let activeTextField = activeTextField {
-            
-            let bottomOfTextField = activeTextField.convert(activeTextField.bounds, to: self.view).maxY;
-            let topOfKeyboard = self.view.frame.height - keyboardSize.height
-            
-            if bottomOfTextField > topOfKeyboard {
-                shouldMoveViewUp = true
-            }
-        }
-        
-        if(shouldMoveViewUp) {
-            self.view.frame.origin.y = 0 - keyboardSize.height
-        }
+        scrollView.contentInset = contentInsets
+        scrollView.scrollIndicatorInsets = contentInsets
     }
 
     @objc func keyboardWillHide(notification: NSNotification) {
-        self.view.frame.origin.y = 0
+        let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
+        
+        scrollView.contentInset = contentInsets
+        scrollView.scrollIndicatorInsets = contentInsets
     }
     
     @objc func backgroundTap(_ sender: UITapGestureRecognizer) {

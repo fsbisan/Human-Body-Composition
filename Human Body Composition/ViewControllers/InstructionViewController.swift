@@ -68,6 +68,7 @@ class InstructionViewController: UIViewController {
     private lazy var sketchImage: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: imageName)
+        imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     
@@ -106,8 +107,8 @@ class InstructionViewController: UIViewController {
         closeButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            sketchImage.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
-            sketchImage.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5),
+            sketchImage.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
+            sketchImage.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.6),
             sketchImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             sketchImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
    
