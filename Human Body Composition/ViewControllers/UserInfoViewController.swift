@@ -26,8 +26,11 @@ class UserInfoViewController: UIViewController {
     // MARK: Public Properties
     
     var user = User()
-    var activeTextField : UITextField? = nil
+    weak var activeTextField: UITextField?
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
     // MARK: Private Properties
     
     private var ageIsValid = false
@@ -210,6 +213,7 @@ class UserInfoViewController: UIViewController {
     private lazy var firstCreaseLBAndInfBTStackView = UIStackView()
     private lazy var secondCreaseLBAndInfBTStackView = UIStackView()
     private lazy var thirdCreaseLBAndInfBTStackView = UIStackView()
+    
     // MARK: - UIScrollViews
     
     private lazy var scrollView = UIScrollView()
@@ -244,6 +248,8 @@ class UserInfoViewController: UIViewController {
                         firsCreaseStackView, secondCreaseStackView, thirdCreaseStackView, nextButton)
         setConstraints()
         setGradientBackground()
+        
+        delegate(textFields: ageTextField, weightTextField, firstCreaseTextField, secondCreaseTextField, thirdCreaseTextField)
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UserInfoViewController.backgroundTap))
         self.mainStackView.addGestureRecognizer(tapGestureRecognizer)
@@ -294,7 +300,7 @@ class UserInfoViewController: UIViewController {
     private func setupMainStackView(_ arrangedSubviews: UIView...) {
         mainStackView.axis = .vertical
         mainStackView.distribution = .fill
-        mainStackView.spacing = 20
+        mainStackView.spacing = 10
         mainStackView.alignment = .fill
         
         arrangedSubviews.forEach { subview in
@@ -335,13 +341,13 @@ class UserInfoViewController: UIViewController {
             scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             
-            
-            mainStackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 20),
-            mainStackView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
-            mainStackView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 20),
-            mainStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -20),
+            mainStackView.leadingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.leadingAnchor, constant: 20),
+            mainStackView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor, constant: 20),
+            mainStackView.trailingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.trailingAnchor, constant: -20),
+            mainStackView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor, constant: -20),
+            mainStackView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor, constant: 20),
+            mainStackView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor, constant: -20),
    
-            
             sexSegmentedControl.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05),
             
             ageTextField.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05),
@@ -494,7 +500,7 @@ class UserInfoViewController: UIViewController {
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
-        guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
+        guard let activeTextField = activeTextField, let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
         else {
             // if keyboard size is not available for some reason, dont do anything
             return
@@ -504,6 +510,9 @@ class UserInfoViewController: UIViewController {
         
         scrollView.contentInset = contentInsets
         scrollView.scrollIndicatorInsets = contentInsets
+        
+        let activeRect = activeTextField.convert(activeTextField.bounds, to: scrollView)
+        scrollView.scrollRectToVisible(activeRect, animated: true)
     }
 
     @objc func keyboardWillHide(notification: NSNotification) {
@@ -534,6 +543,11 @@ extension UserInfoViewController: UITextFieldDelegate {
         self.view.layer.insertSublayer(gradientLayer, at:0)
     }
     
+    func delegate(textFields: UITextField...) {
+        textFields.forEach({ textField in
+            textField.delegate = self
+        })
+    }
     func textFieldDidBeginEditing(_ textField: UITextField) {
         self.activeTextField = textField
     }
