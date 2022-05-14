@@ -15,7 +15,7 @@ class ResultViewController: UIViewController {
     
     // MARK: - UIButtons
     
-    private lazy var resultLabel: UILabel = {
+    private lazy var percentOfFatLabel: UILabel = {
         let label = UILabel()
         label.text = "Процент жира в организме: " + String(format: "%.2f", user.fatBodyMass)
         label.numberOfLines = 0
@@ -23,12 +23,33 @@ class ResultViewController: UIViewController {
         return label
     }()
     
+    private lazy var dryBodyMassLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Процент жира в организме: " + String(format: "%.2f", user.fatBodyMass)
+        label.numberOfLines = 0
+        label.textAlignment = .justified
+        return label
+    }()
+    
+    private lazy var interpretationOfResultLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Процент жира в организме: " + String(format: "%.2f", user.fatBodyMass)
+        label.numberOfLines = 0
+        label.textAlignment = .justified
+        return label
+    }()
+    
+    // MARK: - Stack Views
+    
+    private var mainStackView = UIStackView()
+    
     // MARK: - Override Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 0.5, green: 0.9, blue: 0.5, alpha: 1)
-        setupSubviews(resultLabel)
+        setupMainStackView(percentOfFatLabel, dryBodyMassLabel, interpretationOfResultLabel)
+        setupSubviews(mainStackView)
         setConstraints()
         setupNavigationBar()
     }
@@ -58,14 +79,24 @@ class ResultViewController: UIViewController {
     
     private func setConstraints() {
         
-        resultLabel.translatesAutoresizingMaskIntoConstraints = false
+        mainStackView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate ([
-            resultLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 200),
-            resultLabel.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.4),
-            resultLabel.leadingAnchor.constraint(equalTo:  view.leadingAnchor, constant: 20),
-            resultLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
+            mainStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            mainStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            mainStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100),
+            mainStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -300)
         ])
+    }
+    
+    private func setupMainStackView(_ arrangedSubviews: UIView...) {
+        mainStackView.axis = .vertical
+        mainStackView.distribution = .equalSpacing
+        mainStackView.alignment = .leading
+        
+        arrangedSubviews.forEach { subview in
+            mainStackView.addArrangedSubview(subview)
+        }
     }
     
     // MARK: - @objc methods

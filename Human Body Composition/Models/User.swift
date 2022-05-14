@@ -48,7 +48,7 @@ class User {
     
     // MARK: Private Methods
     
-    private var sumOfCrease: Double {
+    var sumOfCrease: Double {
         firstCrease + secondCrease + thirdCrease
     }
     

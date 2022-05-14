@@ -41,7 +41,7 @@ class UserInfoViewController: UIViewController {
     
     // MARK: - UISegmentedControls
     
-    private let sexSegmentedControl: UISegmentedControl = {
+    private lazy var sexSegmentedControl: UISegmentedControl = {
         let menuArray = ["мужчина", "женщина"]
         let segmentedControl = UISegmentedControl(items: menuArray )
         let font = UIFont.systemFont(ofSize: 18)
