@@ -8,28 +8,22 @@
 import Foundation
 
 protocol ResultViewModelProtocol {
-    func getPercentOfFat() -> String
-    func getDryBodyMass() -> String
+    var percentOfFat: String { get }
+    var dryBodyMass: String { get }
     func getInterpretation() -> String
     init (user: User)
 }
 
 class ResultViewModel: ResultViewModelProtocol {
+    
     private var user: User
+    let percentOfFat: String
+    let dryBodyMass: String
+    
     required init (user: User) {
         self.user = user
-    }
-
-    func getPercentOfFat() -> String {
-    let fatBodyMass = getFatBodyMass(from: user)
-    let percentOfFat = String(fatBodyMass * 100 / user.weight)
-    return percentOfFat
-    }
-
-    func getDryBodyMass() -> String {
-    let fatBodyMass = getFatBodyMass(from: user)
-    let dryBodyMass = String((user.weight - fatBodyMass) * 100 / user.weight)
-    return dryBodyMass
+        self.percentOfFat = String(user.fatBodyMass)
+        self.dryBodyMass = String(user.fatBodyMass)
     }
 
     func getInterpretation() -> String {
@@ -47,7 +41,7 @@ class ResultViewModel: ResultViewModelProtocol {
         case 26...100:
             return InterpretationOfResults.obesity.rawValue
         default:
-            return "Неизвестный результат"
+            return "Ошибка: неизвестный результат"
         }
     }
 

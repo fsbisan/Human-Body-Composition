@@ -10,6 +10,7 @@
 		927DCEA82788908300BF5799 /* CustomUIElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927DCEA72788908300BF5799 /* CustomUIElements.swift */; };
 		929668DD282CAADF006B7D10 /* ResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929668DC282CAADF006B7D10 /* ResultViewModel.swift */; };
 		92A294892783543200FFFED1 /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A294882783543200FFFED1 /* ResultViewController.swift */; };
+		92A528EE28391F0D001094F7 /* UserInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A528ED28391F0D001094F7 /* UserInfoViewModel.swift */; };
 		92AC0D24276CF2BB00B03551 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92AC0D23276CF2BB00B03551 /* StartViewController.swift */; };
 		92C1487E27A30BC700F00731 /* InstructionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C1487D27A30BC700F00731 /* InstructionViewController.swift */; };
 		92C733D02750038100A566D1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C733CF2750038100A566D1 /* AppDelegate.swift */; };
@@ -24,6 +25,7 @@
 		927DCEA72788908300BF5799 /* CustomUIElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUIElements.swift; sourceTree = "<group>"; };
 		929668DC282CAADF006B7D10 /* ResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewModel.swift; sourceTree = "<group>"; };
 		92A294882783543200FFFED1 /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
+		92A528ED28391F0D001094F7 /* UserInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoViewModel.swift; sourceTree = "<group>"; };
 		92AC0D23276CF2BB00B03551 /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		92C1487D27A30BC700F00731 /* InstructionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionViewController.swift; sourceTree = "<group>"; };
 		92C733CC2750038100A566D1 /* Human Body Composition.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Human Body Composition.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -47,12 +49,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		929668DE282CAB38006B7D10 /* Protocols */ = {
+		929668DE282CAB38006B7D10 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
 				929668DC282CAADF006B7D10 /* ResultViewModel.swift */,
+				92A528ED28391F0D001094F7 /* UserInfoViewModel.swift */,
 			);
-			path = Protocols;
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		92C733C32750038100A566D1 = {
@@ -74,7 +77,7 @@
 		92C733CE2750038100A566D1 /* Human Body Composition */ = {
 			isa = PBXGroup;
 			children = (
-				929668DE282CAB38006B7D10 /* Protocols */,
+				929668DE282CAB38006B7D10 /* ViewModels */,
 				92C733E62750105000A566D1 /* App */,
 				92C733E72750845D00A566D1 /* ViewControllers */,
 				92C733EC27508D9400A566D1 /* Sourses */,
@@ -207,6 +210,7 @@
 				92C733DA2750038100A566D1 /* Human_Body_Composition.xcdatamodeld in Sources */,
 				92C733D42750038100A566D1 /* UserInfoViewController.swift in Sources */,
 				92C733D02750038100A566D1 /* AppDelegate.swift in Sources */,
+				92A528EE28391F0D001094F7 /* UserInfoViewModel.swift in Sources */,
 				927DCEA82788908300BF5799 /* CustomUIElements.swift in Sources */,
 				929668DD282CAADF006B7D10 /* ResultViewModel.swift in Sources */,
 			);

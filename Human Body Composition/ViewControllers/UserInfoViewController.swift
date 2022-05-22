@@ -25,19 +25,15 @@ class UserInfoViewController: UIViewController {
     
     // MARK: Public Properties
     
-    var user = User()
     weak var activeTextField: UITextField?
+    
+    var userInfoViewModel: UserInfoViewModelProtocol!
     
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
     // MARK: Private Properties
     
-    private var ageIsValid = false
-    private var weightIsValid = false
-    private var firstCreaseIsValid = false
-    private var secondCreaseIsValid = false
-    private var thirdCreaseIsValid = false
     
     // MARK: - UISegmentedControls
     
@@ -58,32 +54,32 @@ class UserInfoViewController: UIViewController {
     
     private lazy var ageTextField: CustomTextField = {
         let textField = CustomTextField(placeholder: "Введите ваш возраст, в годах")
-        textField.addTarget(self, action: #selector(validateTextAgeTF), for: .editingChanged)
+        textField.addTarget(self, action: #selector(ageTFTextDidChange), for: .editingChanged)
         return textField
     }()
     
     private lazy var weightTextField: CustomTextField = {
         let textField = CustomTextField(placeholder: "Введите ваш вес, кг")
-        textField.addTarget(self, action: #selector(validateTextWeightTF), for: .editingChanged)
+        textField.addTarget(self, action: #selector(weightTFTextDidChange), for: .editingChanged)
         textField.keyboardType = .decimalPad
         return textField
     }()
     
     private lazy var firstCreaseTextField: CustomTextField = {
         let textField = CustomTextField(placeholder: "Введите размер складки в мм")
-        textField.addTarget(self, action: #selector(validateTextFirstCreaseTF), for: .editingChanged)
+        textField.addTarget(self, action: #selector(firstCreaseTFDidChange), for: .editingChanged)
         return textField
     }()
     
     private lazy var secondCreaseTextField: CustomTextField = {
         let textField = CustomTextField(placeholder: "Введите размер складки в мм")
-        textField.addTarget(self, action: #selector(validateTextSecondCreaseTF), for: .editingChanged)
+        textField.addTarget(self, action: #selector(secondCreaseTFTextDidChange), for: .editingChanged)
         return textField
     }()
     
     private let thirdCreaseTextField: CustomTextField = {
         let textField = CustomTextField(placeholder: "Введите размер складки в мм")
-        textField.addTarget(self, action: #selector(validateTextThirdCreaseTF), for: .editingChanged)
+        textField.addTarget(self, action: #selector(thirdCreaseTFTextDidChange), for: .editingChanged)
         return textField
     }()
     
@@ -222,6 +218,7 @@ class UserInfoViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        userInfoViewModel = UserInfoViewModel()
         view.backgroundColor = MyCustomColors.bgColorForView.associatedColor
         setupNavigationBar()
         setupScrollView()
@@ -366,11 +363,12 @@ class UserInfoViewController: UIViewController {
     
     // MARK: - @objc methods
     
-    @objc private func validateTextAgeTF() {
+    @objc private func ageTFTextDidChange() {
         guard let text = ageTextField.text else { return }
         if let ageNumber = Double(text) {
             switch ageNumber {
             case 10...150:
+                userInfoViewModel?.age = ageNumber
                 ageIsValid = true
             default:
                 ageIsValid = false
@@ -381,12 +379,12 @@ class UserInfoViewController: UIViewController {
         showAlertingLabel(ageIsValid, label: alertAgeLabel)
     }
     
-    @objc private func validateTextWeightTF() {
+    @objc private func weightTFTextDidChange() {
         guard let text = weightTextField.text else { return }
         if let weightNumber = Double(text) {
             switch weightNumber {
             case 40...200:
-                user.weight = weightNumber
+                userInfoViewModel?.weight = weightNumber
                 weightIsValid = true
             default:
                 weightIsValid = false
@@ -397,15 +395,14 @@ class UserInfoViewController: UIViewController {
         showAlertingLabel(weightIsValid, label: alertWeightLabel)
     }
     
-    @objc private func validateTextFirstCreaseTF() {
+    @objc private func firstCreaseTFDidChange() {
         guard let text = firstCreaseTextField.text else { return }
         if let creaseNumber = Double(text) {
             switch creaseNumber {
             case 2...60:
-                user.firstCrease = creaseNumber
+                userInfoViewModel?.firstCrease = creaseNumber
                 firstCreaseIsValid = true
             default:
-                user.firstCrease = 0
                 firstCreaseIsValid = false
             }
         } else {
@@ -414,15 +411,14 @@ class UserInfoViewController: UIViewController {
         showAlertingLabel(firstCreaseIsValid, label: alertFirstCreaseLabel)
     }
     
-    @objc private func validateTextSecondCreaseTF() {
+    @objc private func secondCreaseTFTextDidChange() {
         guard let text = secondCreaseTextField.text else { return }
         if let creaseNumber = Double(text) {
             switch creaseNumber {
             case 2...60:
-                user.secondCrease = creaseNumber
+                userInfoViewModel?.secondCrease = creaseNumber
                 secondCreaseIsValid = true
             default:
-                user.secondCrease = 0
                 secondCreaseIsValid = false
             }
         } else {
@@ -431,15 +427,14 @@ class UserInfoViewController: UIViewController {
         showAlertingLabel(secondCreaseIsValid, label: alertSecondCreaseLabel)
     }
     
-    @objc private func validateTextThirdCreaseTF() {
+    @objc private func thirdCreaseTFTextDidChange() {
         guard let text = thirdCreaseTextField.text else { return }
         if let creaseNumber = Double(text) {
             switch creaseNumber {
             case 2...60:
-                user.thirdCrease = creaseNumber
+                userInfoViewModel?.thirdCrease = creaseNumber
                 thirdCreaseIsValid = true
             default:
-                user.thirdCrease = 0
                 thirdCreaseIsValid = false
             }
         } else {
@@ -451,14 +446,14 @@ class UserInfoViewController: UIViewController {
     @objc private func toggleSex() {
         switch sexSegmentedControl.selectedSegmentIndex {
         case 1:
-            user.sex = .female
+            userInfoViewModel?.sex = .female
             firstCreaseLabel.text = FirstCreaseLabelText.forFemale.rawValue
             secondCreaseLabel.text = SecondCreaseLabelText.forFemale.rawValue
             
             showFirstCreaseInstructionButton.imageNameToSend = ImageNames.hipImage.rawValue
             showSecondCreaseInstructionButton.imageNameToSend = ImageNames.armImage.rawValue
         default:
-            user.sex = .male
+            userInfoViewModel?.sex = .male
             firstCreaseLabel.text = FirstCreaseLabelText.forMale.rawValue
             secondCreaseLabel.text = SecondCreaseLabelText.forMale.rawValue
             
@@ -486,7 +481,7 @@ class UserInfoViewController: UIViewController {
     @objc private func goToNextView() {
         
         let rootVC = ResultViewController()
-        rootVC.user = user
+        rootVC.resultViewModel = userInfoViewModel?.getResultViewModel()
         let userCreaseNavVC = UINavigationController(rootViewController: rootVC)
         userCreaseNavVC.modalPresentationStyle = .fullScreen
         present(userCreaseNavVC, animated: true)

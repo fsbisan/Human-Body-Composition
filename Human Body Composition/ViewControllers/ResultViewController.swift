@@ -11,45 +11,45 @@ class ResultViewController: UIViewController {
     
     // MARK: - Public Properties
     
-    var user: User!
+    var resultViewModel: ResultViewModelProtocol!
     
     // MARK: - UIButtons
     
     private lazy var percentOfFatLabel: UILabel = {
         let label = UILabel()
-        label.text = "Процент жира в организме: " + String(format: "%.2f", user.fatBodyMass)
+        label.text = "Процент жира в организме: " + resultViewModel.percentOfFat
         label.numberOfLines = 0
-        label.textAlignment = .justified
+        label.textAlignment = .left
         return label
     }()
     
     private lazy var dryBodyMassLabel: UILabel = {
         let label = UILabel()
-        label.text = "Процент жира в организме: " + String(format: "%.2f", user.fatBodyMass)
+        label.text = "Сухая масса тела: " + resultViewModel.dryBodyMass
         label.numberOfLines = 0
-        label.textAlignment = .justified
+        label.textAlignment = .left
         return label
     }()
     
-    private lazy var interpretationOfResultLabel: UILabel = {
+    private lazy var interpretationOfResultsLabel: UILabel = {
         let label = UILabel()
-        label.text = "Процент жира в организме: " + String(format: "%.2f", user.fatBodyMass)
+        label.text = "Интерпритация: " + InterpretationOfResults.highFat.rawValue
         label.numberOfLines = 0
-        label.textAlignment = .justified
+        label.textAlignment = .left
         return label
     }()
     
-    // MARK: - Stack Views
+    // MARK: - StackViews
     
-    private var mainStackView = UIStackView()
+    private lazy var resultStackView = UIStackView()
     
     // MARK: - Override Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 0.5, green: 0.9, blue: 0.5, alpha: 1)
-        setupMainStackView(percentOfFatLabel, dryBodyMassLabel, interpretationOfResultLabel)
-        setupSubviews(mainStackView)
+        setupSubviews(resultStackView)
+        setupResultStackView(resultStackView, with: percentOfFatLabel, dryBodyMassLabel, interpretationOfResultsLabel)
         setConstraints()
         setupNavigationBar()
     }
@@ -77,26 +77,26 @@ class ResultViewController: UIViewController {
         }
     }
     
-    private func setConstraints() {
-        
-        mainStackView.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate ([
-            mainStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            mainStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            mainStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100),
-            mainStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -250)
-        ])
-    }
-    
-    private func setupMainStackView(_ arrangedSubviews: UIView...) {
-        mainStackView.axis = .vertical
-        mainStackView.distribution = .equalSpacing
-        mainStackView.alignment = .leading
+    private func setupResultStackView(_ stackView: UIStackView, with arrangedSubviews: UIView...) {
+        stackView.axis = .vertical
+        stackView.distribution = .equalSpacing
+        stackView.alignment = .fill
         
         arrangedSubviews.forEach { subview in
-            mainStackView.addArrangedSubview(subview)
+            stackView.addArrangedSubview(subview)
         }
+    }
+    
+    private func setConstraints() {
+        
+        resultStackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate ([
+            resultStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50),
+            resultStackView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.2),
+            resultStackView.leadingAnchor.constraint(equalTo:  view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            resultStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20)
+        ])
     }
     
     // MARK: - @objc methods
@@ -105,3 +105,5 @@ class ResultViewController: UIViewController {
         dismiss(animated: true)
     }
 }
+
+
