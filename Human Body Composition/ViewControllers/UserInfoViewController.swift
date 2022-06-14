@@ -27,7 +27,26 @@ class UserInfoViewController: UIViewController {
     
     weak var activeTextField: UITextField?
     
-    var userInfoViewModel: UserInfoViewModelProtocol!
+    var userInfoViewModel: UserInfoViewModelProtocol! {
+        didSet {
+            self.userInfoViewModel.validityDidChange = { [unowned self] userInfoViewModel in
+                self.userInfoViewModel.ageIsValid ? (alertAgeLabel.isHidden = true) : (alertAgeLabel.isHidden = false)
+                self.userInfoViewModel.weightIsValid ? (alertWeightLabel.isHidden = true) : (alertWeightLabel.isHidden = false)
+                self.userInfoViewModel.firstCreaseIsValid ? (alertFirstCreaseLabel.isHidden = true) : (alertFirstCreaseLabel.isHidden = false)
+                self.userInfoViewModel.secondCreaseIsValid ? (alertSecondCreaseLabel.isHidden = true) : (alertSecondCreaseLabel.isHidden = false)
+                self.userInfoViewModel.thirdCreaseIsValid ? (alertThirdCreaseLabel.isHidden = true) : (alertThirdCreaseLabel.isHidden = false)
+                if self.userInfoViewModel.allDataIsTrue {
+                        nextButton.isEnabled = true
+                        nextButton.setTitleColor(.black, for: .normal)
+                        nextButton.backgroundColor = MyCustomColors.colorForActiveState.associatedColor
+                    } else {
+                        nextButton.isEnabled = false
+                        nextButton.backgroundColor = MyCustomColors.colorForUnActiveState.associatedColor
+                        nextButton.setTitleColor(.gray, for: .normal)
+                }
+            }
+        }
+    }
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -91,10 +110,10 @@ class UserInfoViewController: UIViewController {
     }()
     
     private let alertAgeLabel: CustomLabel = {
-        let label = CustomLabel(text: "0")
+        let label = CustomLabel(text: "Возраст не корректный")
         label.correctText = "возраст корректен"
         label.incorrectText = "возраст неверный"
-        label.alpha = 0
+        label.isHidden = true
         return label
     }()
     
@@ -104,10 +123,10 @@ class UserInfoViewController: UIViewController {
     }()
     
     private lazy var alertWeightLabel: CustomLabel = {
-        let label = CustomLabel(text: "0")
+        let label = CustomLabel(text: "Вес некорректный")
         label.correctText = "вес корректен"
         label.incorrectText = "вес неверный"
-        label.alpha = 0
+        label.isHidden = true
         return label
     }()
     
@@ -133,27 +152,27 @@ class UserInfoViewController: UIViewController {
     }()
     
     private lazy var alertFirstCreaseLabel: CustomLabel = {
-        let label = CustomLabel(text: "0")
+        let label = CustomLabel(text: "не корректный размер складки")
         label.font = UIFont.systemFont(ofSize: 16, weight: .light)
         label.correctText = "размер складки корректен"
         label.incorrectText = "не корректный размер складки"
-        label.alpha = 0
+        label.isHidden = true
         return label
     }()
     
     private lazy var alertSecondCreaseLabel: CustomLabel = {
-        let label = CustomLabel(text: "0")
+        let label = CustomLabel(text: "не корректный размер складки")
         label.correctText = "размер складки корректен"
         label.incorrectText = "не корректный размер складки"
-        label.alpha = 0
+        label.isHidden = true
         return label
     }()
     
     private lazy var alertThirdCreaseLabel: CustomLabel = {
-        let label = CustomLabel(text: "0")
+        let label = CustomLabel(text: "не корректный размер складки")
         label.correctText = "размер складки корректен"
         label.incorrectText = "не корректный размер складки"
-        label.alpha = 0
+        label.isHidden = true
         return label
     }()
     
@@ -224,7 +243,6 @@ class UserInfoViewController: UIViewController {
         setupScrollView()
         setupSubviews(scrollView)
         nextButton.isEnabled = false
-        updateButtonActivityState()
         setupCreaseLBAndInfBTStackViews(firstCreaseLBAndInfBTStackView,
                                         with: firstCreaseLabel, showFirstCreaseInstructionButton)
         setupCreaseLBAndInfBTStackViews(secondCreaseLBAndInfBTStackView,
@@ -256,18 +274,6 @@ class UserInfoViewController: UIViewController {
     }
     
     // MARK: - Private Methods
-    
-    private func showAlertingLabel(_ isValidData: Bool, label: CustomLabel) {
-        label.alpha = 1
-        if isValidData {
-            label.text = label.correctText
-            label.textColor = MyCustomColors.colorForActiveState.associatedColor
-        } else {
-            label.text = label.incorrectText
-            label.textColor = .red
-        }
-        updateButtonActivityState()
-    }
     
     private func setupNavigationBar() {
         title = "Введите данные"
@@ -364,83 +370,23 @@ class UserInfoViewController: UIViewController {
     // MARK: - @objc methods
     
     @objc private func ageTFTextDidChange() {
-        guard let text = ageTextField.text else { return }
-        if let ageNumber = Double(text) {
-            switch ageNumber {
-            case 10...150:
-                userInfoViewModel?.age = ageNumber
-                ageIsValid = true
-            default:
-                ageIsValid = false
-            }
-        } else {
-            ageIsValid = false
-        }
-        showAlertingLabel(ageIsValid, label: alertAgeLabel)
+        userInfoViewModel.textfieldTextDidChange(text: ageTextField.text, typeOfValidate: .age)
     }
     
     @objc private func weightTFTextDidChange() {
-        guard let text = weightTextField.text else { return }
-        if let weightNumber = Double(text) {
-            switch weightNumber {
-            case 40...200:
-                userInfoViewModel?.weight = weightNumber
-                weightIsValid = true
-            default:
-                weightIsValid = false
-            }
-        } else {
-            weightIsValid = false
-        }
-        showAlertingLabel(weightIsValid, label: alertWeightLabel)
+        userInfoViewModel.textfieldTextDidChange(text: weightTextField.text, typeOfValidate: .weight)
     }
     
     @objc private func firstCreaseTFDidChange() {
-        guard let text = firstCreaseTextField.text else { return }
-        if let creaseNumber = Double(text) {
-            switch creaseNumber {
-            case 2...60:
-                userInfoViewModel?.firstCrease = creaseNumber
-                firstCreaseIsValid = true
-            default:
-                firstCreaseIsValid = false
-            }
-        } else {
-            firstCreaseIsValid = false
-        }
-        showAlertingLabel(firstCreaseIsValid, label: alertFirstCreaseLabel)
+        userInfoViewModel.textfieldTextDidChange(text: firstCreaseTextField.text, typeOfValidate: .firstCrease)
     }
     
     @objc private func secondCreaseTFTextDidChange() {
-        guard let text = secondCreaseTextField.text else { return }
-        if let creaseNumber = Double(text) {
-            switch creaseNumber {
-            case 2...60:
-                userInfoViewModel?.secondCrease = creaseNumber
-                secondCreaseIsValid = true
-            default:
-                secondCreaseIsValid = false
-            }
-        } else {
-            secondCreaseIsValid = false
-        }
-        showAlertingLabel(secondCreaseIsValid, label: alertSecondCreaseLabel)
+        userInfoViewModel.textfieldTextDidChange(text: secondCreaseTextField.text, typeOfValidate: .secondCrease)
     }
     
     @objc private func thirdCreaseTFTextDidChange() {
-        guard let text = thirdCreaseTextField.text else { return }
-        if let creaseNumber = Double(text) {
-            switch creaseNumber {
-            case 2...60:
-                userInfoViewModel?.thirdCrease = creaseNumber
-                thirdCreaseIsValid = true
-            default:
-                thirdCreaseIsValid = false
-            }
-        } else {
-            thirdCreaseIsValid = false
-        }
-        showAlertingLabel(thirdCreaseIsValid, label: alertThirdCreaseLabel)
+        userInfoViewModel.textfieldTextDidChange(text: thirdCreaseTextField.text, typeOfValidate: .thirdCrease)
     }
     
     @objc private func toggleSex() {
@@ -466,20 +412,7 @@ class UserInfoViewController: UIViewController {
         dismiss(animated: true)
     }
     
-    @objc private func updateButtonActivityState() {
-        if ageIsValid, weightIsValid, firstCreaseIsValid, secondCreaseIsValid, thirdCreaseIsValid {
-            nextButton.isEnabled = true
-            nextButton.setTitleColor(.black, for: .normal)
-            nextButton.backgroundColor = MyCustomColors.colorForActiveState.associatedColor
-        } else {
-            nextButton.isEnabled = false
-            nextButton.backgroundColor = MyCustomColors.colorForUnActiveState.associatedColor
-            nextButton.setTitleColor(.gray, for: .normal)
-        }
-    }
-    
     @objc private func goToNextView() {
-        
         let rootVC = ResultViewController()
         rootVC.resultViewModel = userInfoViewModel?.getResultViewModel()
         let userCreaseNavVC = UINavigationController(rootViewController: rootVC)

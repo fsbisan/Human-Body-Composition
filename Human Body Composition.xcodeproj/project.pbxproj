@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		927DCEA82788908300BF5799 /* CustomUIElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927DCEA72788908300BF5799 /* CustomUIElements.swift */; };
+		928EF61D28563DFE0004EFE2 /* Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928EF61C28563DFE0004EFE2 /* Validator.swift */; };
 		929668DD282CAADF006B7D10 /* ResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929668DC282CAADF006B7D10 /* ResultViewModel.swift */; };
 		92A294892783543200FFFED1 /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A294882783543200FFFED1 /* ResultViewController.swift */; };
 		92A528EE28391F0D001094F7 /* UserInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A528ED28391F0D001094F7 /* UserInfoViewModel.swift */; };
@@ -23,6 +24,7 @@
 
 /* Begin PBXFileReference section */
 		927DCEA72788908300BF5799 /* CustomUIElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUIElements.swift; sourceTree = "<group>"; };
+		928EF61C28563DFE0004EFE2 /* Validator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validator.swift; sourceTree = "<group>"; };
 		929668DC282CAADF006B7D10 /* ResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewModel.swift; sourceTree = "<group>"; };
 		92A294882783543200FFFED1 /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
 		92A528ED28391F0D001094F7 /* UserInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoViewModel.swift; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 			children = (
 				92C733DB2750038400A566D1 /* Assets.xcassets */,
 				927DCEA72788908300BF5799 /* CustomUIElements.swift */,
+				928EF61C28563DFE0004EFE2 /* Validator.swift */,
 			);
 			path = Sourses;
 			sourceTree = "<group>";
@@ -208,6 +211,7 @@
 				92C1487E27A30BC700F00731 /* InstructionViewController.swift in Sources */,
 				92C733E92750848C00A566D1 /* User.swift in Sources */,
 				92C733DA2750038100A566D1 /* Human_Body_Composition.xcdatamodeld in Sources */,
+				928EF61D28563DFE0004EFE2 /* Validator.swift in Sources */,
 				92C733D42750038100A566D1 /* UserInfoViewController.swift in Sources */,
 				92C733D02750038100A566D1 /* AppDelegate.swift in Sources */,
 				92A528EE28391F0D001094F7 /* UserInfoViewModel.swift in Sources */,
