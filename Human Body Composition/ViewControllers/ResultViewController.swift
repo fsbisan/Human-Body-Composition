@@ -93,7 +93,7 @@ class ResultViewController: UIViewController {
         
         NSLayoutConstraint.activate ([
             resultStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50),
-            resultStackView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.2),
+            resultStackView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.4),
             resultStackView.leadingAnchor.constraint(equalTo:  view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             resultStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20)
         ])

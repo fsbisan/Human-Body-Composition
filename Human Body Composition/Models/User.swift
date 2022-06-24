@@ -46,6 +46,10 @@ class User {
         }
     }
     
+    var dryBodyMass: Double {
+        weight - fatBodyMass
+    }
+    
     // MARK: Private Methods
     
     var sumOfCrease: Double {

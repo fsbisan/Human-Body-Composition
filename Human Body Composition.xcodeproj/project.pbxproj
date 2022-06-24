@@ -10,6 +10,7 @@
 		927DCEA82788908300BF5799 /* CustomUIElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927DCEA72788908300BF5799 /* CustomUIElements.swift */; };
 		928EF61D28563DFE0004EFE2 /* Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928EF61C28563DFE0004EFE2 /* Validator.swift */; };
 		929668DD282CAADF006B7D10 /* ResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929668DC282CAADF006B7D10 /* ResultViewModel.swift */; };
+		929EF1902865C41700F51FC6 /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929EF18F2865C41700F51FC6 /* Box.swift */; };
 		92A294892783543200FFFED1 /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A294882783543200FFFED1 /* ResultViewController.swift */; };
 		92A528EE28391F0D001094F7 /* UserInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A528ED28391F0D001094F7 /* UserInfoViewModel.swift */; };
 		92AC0D24276CF2BB00B03551 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92AC0D23276CF2BB00B03551 /* StartViewController.swift */; };
@@ -26,6 +27,7 @@
 		927DCEA72788908300BF5799 /* CustomUIElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUIElements.swift; sourceTree = "<group>"; };
 		928EF61C28563DFE0004EFE2 /* Validator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validator.swift; sourceTree = "<group>"; };
 		929668DC282CAADF006B7D10 /* ResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewModel.swift; sourceTree = "<group>"; };
+		929EF18F2865C41700F51FC6 /* Box.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Box.swift; sourceTree = "<group>"; };
 		92A294882783543200FFFED1 /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
 		92A528ED28391F0D001094F7 /* UserInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoViewModel.swift; sourceTree = "<group>"; };
 		92AC0D23276CF2BB00B03551 /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
@@ -60,6 +62,14 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
+		929EF18E2865C40100F51FC6 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				929EF18F2865C41700F51FC6 /* Box.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		92C733C32750038100A566D1 = {
 			isa = PBXGroup;
 			children = (
@@ -79,6 +89,7 @@
 		92C733CE2750038100A566D1 /* Human Body Composition */ = {
 			isa = PBXGroup;
 			children = (
+				929EF18E2865C40100F51FC6 /* Helpers */,
 				929668DE282CAB38006B7D10 /* ViewModels */,
 				92C733E62750105000A566D1 /* App */,
 				92C733E72750845D00A566D1 /* ViewControllers */,
@@ -215,6 +226,7 @@
 				92C733D42750038100A566D1 /* UserInfoViewController.swift in Sources */,
 				92C733D02750038100A566D1 /* AppDelegate.swift in Sources */,
 				92A528EE28391F0D001094F7 /* UserInfoViewModel.swift in Sources */,
+				929EF1902865C41700F51FC6 /* Box.swift in Sources */,
 				927DCEA82788908300BF5799 /* CustomUIElements.swift in Sources */,
 				929668DD282CAADF006B7D10 /* ResultViewModel.swift in Sources */,
 			);

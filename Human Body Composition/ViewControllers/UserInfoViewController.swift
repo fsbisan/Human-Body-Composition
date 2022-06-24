@@ -27,26 +27,7 @@ class UserInfoViewController: UIViewController {
     
     weak var activeTextField: UITextField?
     
-    var userInfoViewModel: UserInfoViewModelProtocol! {
-        didSet {
-            self.userInfoViewModel.validityDidChange = { [unowned self] userInfoViewModel in
-                self.userInfoViewModel.ageIsValid ? (alertAgeLabel.isHidden = true) : (alertAgeLabel.isHidden = false)
-                self.userInfoViewModel.weightIsValid ? (alertWeightLabel.isHidden = true) : (alertWeightLabel.isHidden = false)
-                self.userInfoViewModel.firstCreaseIsValid ? (alertFirstCreaseLabel.isHidden = true) : (alertFirstCreaseLabel.isHidden = false)
-                self.userInfoViewModel.secondCreaseIsValid ? (alertSecondCreaseLabel.isHidden = true) : (alertSecondCreaseLabel.isHidden = false)
-                self.userInfoViewModel.thirdCreaseIsValid ? (alertThirdCreaseLabel.isHidden = true) : (alertThirdCreaseLabel.isHidden = false)
-                if self.userInfoViewModel.allDataIsTrue {
-                        nextButton.isEnabled = true
-                        nextButton.setTitleColor(.black, for: .normal)
-                        nextButton.backgroundColor = MyCustomColors.colorForActiveState.associatedColor
-                    } else {
-                        nextButton.isEnabled = false
-                        nextButton.backgroundColor = MyCustomColors.colorForUnActiveState.associatedColor
-                        nextButton.setTitleColor(.gray, for: .normal)
-                }
-            }
-        }
-    }
+    var userInfoViewModel: UserInfoViewModelProtocol!
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -113,6 +94,7 @@ class UserInfoViewController: UIViewController {
         let label = CustomLabel(text: "Возраст не корректный")
         label.correctText = "возраст корректен"
         label.incorrectText = "возраст неверный"
+        label.textColor = .red
         label.isHidden = true
         return label
     }()
@@ -126,6 +108,7 @@ class UserInfoViewController: UIViewController {
         let label = CustomLabel(text: "Вес некорректный")
         label.correctText = "вес корректен"
         label.incorrectText = "вес неверный"
+        label.textColor = .red
         label.isHidden = true
         return label
     }()
@@ -156,6 +139,7 @@ class UserInfoViewController: UIViewController {
         label.font = UIFont.systemFont(ofSize: 16, weight: .light)
         label.correctText = "размер складки корректен"
         label.incorrectText = "не корректный размер складки"
+        label.textColor = .red
         label.isHidden = true
         return label
     }()
@@ -164,6 +148,7 @@ class UserInfoViewController: UIViewController {
         let label = CustomLabel(text: "не корректный размер складки")
         label.correctText = "размер складки корректен"
         label.incorrectText = "не корректный размер складки"
+        label.textColor = .red
         label.isHidden = true
         return label
     }()
@@ -172,6 +157,7 @@ class UserInfoViewController: UIViewController {
         let label = CustomLabel(text: "не корректный размер складки")
         label.correctText = "размер складки корректен"
         label.incorrectText = "не корректный размер складки"
+        label.textColor = .red
         label.isHidden = true
         return label
     }()
@@ -243,6 +229,8 @@ class UserInfoViewController: UIViewController {
         setupScrollView()
         setupSubviews(scrollView)
         nextButton.isEnabled = false
+        nextButton.backgroundColor = MyCustomColors.colorForUnActiveState.associatedColor
+        nextButton.setTitleColor(.gray, for: .normal)
         setupCreaseLBAndInfBTStackViews(firstCreaseLBAndInfBTStackView,
                                         with: firstCreaseLabel, showFirstCreaseInstructionButton)
         setupCreaseLBAndInfBTStackViews(secondCreaseLBAndInfBTStackView,
@@ -367,26 +355,59 @@ class UserInfoViewController: UIViewController {
         ])
     }
     
+    private func SetupValidityState() {
+        userInfoViewModel.allDataIsValid.bind { allDataIsValid in
+            if allDataIsValid {
+                self.nextButton.isEnabled = true
+                self.nextButton.setTitleColor(.black, for: .normal)
+                self.nextButton.backgroundColor = MyCustomColors.colorForActiveState.associatedColor
+            } else {
+                self.nextButton.isEnabled = false
+                self.nextButton.backgroundColor = MyCustomColors.colorForUnActiveState.associatedColor
+                self.nextButton.setTitleColor(.gray, for: .normal)
+            }
+        }
+    }
     // MARK: - @objc methods
     
     @objc private func ageTFTextDidChange() {
         userInfoViewModel.textfieldTextDidChange(text: ageTextField.text, typeOfValidate: .age)
+        userInfoViewModel.ageIsValid.bind { [unowned self] value in
+            self.alertAgeLabel.isHidden = value
+        }
+        SetupValidityState()
     }
     
     @objc private func weightTFTextDidChange() {
         userInfoViewModel.textfieldTextDidChange(text: weightTextField.text, typeOfValidate: .weight)
+        userInfoViewModel.weightIsValid.bind { [unowned self] value in
+            self.alertWeightLabel.isHidden = value
+        }
+        SetupValidityState()
     }
     
     @objc private func firstCreaseTFDidChange() {
         userInfoViewModel.textfieldTextDidChange(text: firstCreaseTextField.text, typeOfValidate: .firstCrease)
+        userInfoViewModel.firstCreaseIsValid.bind { [unowned self] value in
+            self.alertFirstCreaseLabel.isHidden = value
+        }
+        SetupValidityState()
     }
     
     @objc private func secondCreaseTFTextDidChange() {
         userInfoViewModel.textfieldTextDidChange(text: secondCreaseTextField.text, typeOfValidate: .secondCrease)
+        userInfoViewModel.secondCreaseIsValid.bind { [unowned self] value in
+            self.alertSecondCreaseLabel.isHidden = value
+        }
+        SetupValidityState()
     }
     
     @objc private func thirdCreaseTFTextDidChange() {
         userInfoViewModel.textfieldTextDidChange(text: thirdCreaseTextField.text, typeOfValidate: .thirdCrease)
+        userInfoViewModel.thirdCreaseIsValid.bind { [unowned self] value in
+            self.alertThirdCreaseLabel.isHidden = value
+        }
+        SetupValidityState()
     }
     
     @objc private func toggleSex() {
@@ -430,7 +451,7 @@ class UserInfoViewController: UIViewController {
     @objc func keyboardWillShow(notification: NSNotification) {
         guard let activeTextField = activeTextField, let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
         else {
-            // if keyboard size is not available for some reason, dont do anything
+            // если клавиатура не доступна, по каким-то причинам, то не делать ничего
             return
         }
         

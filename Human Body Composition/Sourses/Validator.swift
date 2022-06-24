@@ -15,8 +15,7 @@ enum TypeForValidate {
 }
 
 class Validator {
-    func validateText(text: String?, typeOfValidate: TypeForValidate) -> Bool {
-        guard let text = text else { return false }
+    func validateText(text: String, typeOfValidate: TypeForValidate) -> Bool {
         var rangeOfValidate: [Double] = []
         switch typeOfValidate {
         case .age:

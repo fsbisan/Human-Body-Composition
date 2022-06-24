@@ -9,13 +9,12 @@ import Foundation
 import UIKit
 
 protocol UserInfoViewModelProtocol {
-    var ageIsValid: Bool { get }
-    var weightIsValid: Bool { get }
-    var firstCreaseIsValid: Bool { get }
-    var secondCreaseIsValid: Bool { get }
-    var thirdCreaseIsValid: Bool { get }
-    var allDataIsTrue: Bool { get }
-    var validityDidChange: ((UserInfoViewModelProtocol) -> Void)? { get set }
+    var ageIsValid: Box<Bool> { get }
+    var weightIsValid: Box<Bool> { get }
+    var firstCreaseIsValid: Box<Bool> { get }
+    var secondCreaseIsValid: Box<Bool> { get }
+    var thirdCreaseIsValid: Box<Bool> { get }
+    var allDataIsValid: Box<Bool> { get }
     
     var sex: Sex { get set }
     var age: Double? { get set }
@@ -28,42 +27,20 @@ protocol UserInfoViewModelProtocol {
 }
 
 class UserInfoViewModel: UserInfoViewModelProtocol {
-    var allDataIsTrue: Bool {
-        if ageIsValid, weightIsValid, firstCreaseIsValid, secondCreaseIsValid, thirdCreaseIsValid {
-            return true
-        }
-        return false
-    }
+    
+    var ageIsValid = Box(false)
+    
+    var weightIsValid = Box(false)
+    
+    var firstCreaseIsValid = Box(false)
+    
+    var secondCreaseIsValid = Box(false)
+    
+    var thirdCreaseIsValid = Box(false)
+    
+    var allDataIsValid = Box(false)
     
     let validator = Validator()
-    
-    var ageIsValid = false {
-        didSet {
-            validityDidChange?(self)
-        }
-    }
-    var weightIsValid = false {
-        didSet {
-            validityDidChange?(self)
-        }
-    }
-    var firstCreaseIsValid = false {
-        didSet {
-            validityDidChange?(self)
-        }
-    }
-    var secondCreaseIsValid = false {
-        didSet {
-            validityDidChange?(self)
-        }
-    }
-    var thirdCreaseIsValid = false {
-        didSet {
-            validityDidChange?(self)
-        }
-    }
-    
-    var validityDidChange: ((UserInfoViewModelProtocol) -> Void)?
     
     var sex = Sex.male
     var age: Double?
@@ -72,20 +49,34 @@ class UserInfoViewModel: UserInfoViewModelProtocol {
     var secondCrease: Double?
     var thirdCrease: Double?
     
+    private func getValidityOfAllData() {
+        if ageIsValid.value, weightIsValid.value, firstCreaseIsValid.value, secondCreaseIsValid.value, thirdCreaseIsValid.value {
+            allDataIsValid.value = true
+        } else { allDataIsValid.value = false}
+    }
+    
     func textfieldTextDidChange(text: String?, typeOfValidate: TypeForValidate) {
+        guard let text = text else { return }
         let isValid = validator.validateText(text: text, typeOfValidate: typeOfValidate)
         switch typeOfValidate {
         case .age:
-            ageIsValid = isValid
+            ageIsValid.value = isValid
+            age = Double(text)
         case .weight:
-            weightIsValid = isValid
+            weightIsValid.value = isValid
+            weight = Double(text)
         case .firstCrease:
-            firstCreaseIsValid = isValid
+            firstCreaseIsValid.value = isValid
+            firstCrease = Double(text)
         case .secondCrease:
-            secondCreaseIsValid = isValid
+            secondCreaseIsValid.value = isValid
+            secondCrease = Double(text)
         case .thirdCrease:
-            thirdCreaseIsValid = isValid
+            thirdCreaseIsValid.value = isValid
+            thirdCrease = Double(text)
         }
+        getValidityOfAllData()
+
     }
     
     func getResultViewModel() -> ResultViewModelProtocol {
