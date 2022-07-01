@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 //MARK: - Custom UIKit Elements
-
+/// Кнопки используемые в приложении
 class CustomButton: UIButton {
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -21,8 +21,10 @@ class CustomButton: UIButton {
         setTitle(title, for: .normal)
         titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
         setTitleColor(.black, for: .normal)
+        titleLabel?.numberOfLines = 0
         layer.cornerRadius = 4
     }
+    /// Свойство для передачи подробной информации при нажатии
     var instructionTextToSend = InstructionTexts.stomach
     var imageNameToSend = ""
     
@@ -30,7 +32,7 @@ class CustomButton: UIButton {
         fatalError("init(coder:) has not been implemented")
     }
 }
-
+/// Лэйблы используемые в приложении
 class CustomLabel: UILabel {
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -49,7 +51,7 @@ class CustomLabel: UILabel {
         fatalError("init(coder:) has not been implemented")
     }
 }
-
+/// Текстовые поля используемые в приложении
 class CustomTextField: UITextField {
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -74,6 +76,7 @@ class CustomTextField: UITextField {
 
 //MARK: - Custom Atributes
 
+/// Цвета используемые в интерфейсе
 enum MyCustomColors {
     
     case colorForActiveState
@@ -92,3 +95,4 @@ enum MyCustomColors {
         }
     }
 }
+

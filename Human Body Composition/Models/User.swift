@@ -8,7 +8,10 @@
 import Foundation
 
 enum Sex {
+    /// Мужчина
     case male
+    
+    /// Женщина
     case female
 }
 
@@ -16,20 +19,31 @@ class User {
     
     // MARK: Public Properties
     
-    var name = ""
+    /// Пол
     var sex = Sex.male
+    
+    /// Возраст
     var age = 0.0
+    
+    /// Вес в килограммах
     var weight = 1.0
     
+    /// Размер первой складки в мм
     var firstCrease = 1.0
+    
+    /// Размер второй складки в мм
     var secondCrease = 1.0
+    
+    /// Размер третьей складки в мм
     var thirdCrease = 1.0
     
+    /// Является ли пользователь несовершеннолетнем
     private var isTeen: Bool {
         age < 18 ? true : false
     }
     
-    var fatBodyMass: Double {
+    /// Относительная жировая масса тела
+    var relativeFatBodyMass: Double {
         switch (sex, isTeen) {
         case (.male, true):
             let mass = getFatBodyMass(sex: sex)
@@ -46,16 +60,18 @@ class User {
         }
     }
     
+    /// Сухая масса тела
     var dryBodyMass: Double {
-        weight - fatBodyMass
+        weight - (weight * relativeFatBodyMass) / 100
     }
     
     // MARK: Private Methods
     
-    var sumOfCrease: Double {
+    /// Сумма всех складок
+    private var sumOfCrease: Double {
         firstCrease + secondCrease + thirdCrease
     }
-    
+    /// Возвращает относительную жировую массу тела(процент жира в организме)
     private func getFatBodyMass(sex: Sex) -> Double {
         switch sex {
         case .male:
@@ -64,7 +80,6 @@ class User {
         case .female:
             let fatBodyMass: Double = 495/(1.099421 - 0.0009929 * sumOfCrease + 0.0000023 * pow(sumOfCrease, 2) - 0.0001392 * age) - 450
             return fatBodyMass
-            
         }
     }
 }

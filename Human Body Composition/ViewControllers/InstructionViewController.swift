@@ -7,6 +7,7 @@
 
 import UIKit
 
+/// Варианты инструкций при при производстве замеров
 enum InstructionTexts: String {
     case stomach = """
     Отметьте точку на 3 см правее и на 1 см ниже пупка. Соберите горизонтальную \
@@ -27,7 +28,7 @@ enum InstructionTexts: String {
     """
     case arm = """
     Вдоль середины задней поверхности трицепса плеча определите \
-    точку,которая располагается между верхушкой акромиального отростка \
+    точку, которая располагается между верхушкой акромиального отростка \
     (верхняя выступающая часть плеча) и нижней частью локтевого отростка \
     (наиболее выпуклая нижняя часть локтя). Соберите кожу таким образом, \
     чтобы складка шла вертикально (вдоль плечевой кости).
@@ -39,7 +40,7 @@ enum InstructionTexts: String {
     бедра.
     """
 }
-
+/// Варианты картинок для инструкций
 enum ImageNames: String {
     case armImage
     case breastImage
@@ -47,7 +48,7 @@ enum ImageNames: String {
     case legImage
     case stomachImage
 }
-
+/// Отображает экран с инструкцией
 class InstructionViewController: UIViewController {
     
     // MARK: - Private Properties
@@ -76,7 +77,7 @@ class InstructionViewController: UIViewController {
     
     private lazy var instructionLabel: CustomLabel = {
         let label = CustomLabel(text: instructionsText.rawValue)
-        label.textAlignment = .justified
+        label.textAlignment = .left
         label.numberOfLines = 0
         return label
     }()

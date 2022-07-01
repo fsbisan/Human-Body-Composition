@@ -12,7 +12,7 @@ class StartViewController: UIViewController {
     // MARK: - UIButtons
     
     private let startCalculateButton: CustomButton = {
-        let button = CustomButton(title: "Расчитать ИМТ")
+        let button = CustomButton(title: "Расчитать процент жира в организме")
         button.layer.cornerRadius = 25
         button.addTarget(self, action: #selector(goNextVC), for: .touchUpInside)
         return button

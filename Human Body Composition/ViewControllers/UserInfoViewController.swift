@@ -7,20 +7,21 @@
 
 import UIKit
 
+/// Текст для загооловка поля в зависимости от пола
 enum FirstCreaseLabelText: String {
     case forMale = "складка на животе"
     case forFemale = "складка на боку"
 }
-
+/// Текст для загооловка поля в зависимости от пола
 enum SecondCreaseLabelText: String {
     case forMale = "складка груди"
     case forFemale = "складка на трицепсе"
 }
-
+/// Текст для загооловка поля в зависимости от пола
 enum ThirdCreaseLabelText: String {
     case forMale = "складка на бедре"
 }
-
+/// Отображает экран ввода данных
 class UserInfoViewController: UIViewController {
     
     // MARK: Public Properties
@@ -32,11 +33,12 @@ class UserInfoViewController: UIViewController {
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
-    // MARK: Private Properties
     
+    // MARK: Private Properties
     
     // MARK: - UISegmentedControls
     
+    /// Переключатель пола
     private lazy var sexSegmentedControl: UISegmentedControl = {
         let menuArray = ["мужчина", "женщина"]
         let segmentedControl = UISegmentedControl(items: menuArray )
@@ -51,32 +53,32 @@ class UserInfoViewController: UIViewController {
     }()
     
     // MARK: - UITextFields
-    
+    /// Поле ввода возраста
     private lazy var ageTextField: CustomTextField = {
         let textField = CustomTextField(placeholder: "Введите ваш возраст, в годах")
         textField.addTarget(self, action: #selector(ageTFTextDidChange), for: .editingChanged)
         return textField
     }()
-    
+    /// Поле ввода веса
     private lazy var weightTextField: CustomTextField = {
         let textField = CustomTextField(placeholder: "Введите ваш вес, кг")
         textField.addTarget(self, action: #selector(weightTFTextDidChange), for: .editingChanged)
         textField.keyboardType = .decimalPad
         return textField
     }()
-    
+    /// Поле ввода первой складки
     private lazy var firstCreaseTextField: CustomTextField = {
         let textField = CustomTextField(placeholder: "Введите размер складки в мм")
         textField.addTarget(self, action: #selector(firstCreaseTFDidChange), for: .editingChanged)
         return textField
     }()
-    
+    /// Поле ввода второй складки
     private lazy var secondCreaseTextField: CustomTextField = {
         let textField = CustomTextField(placeholder: "Введите размер складки в мм")
         textField.addTarget(self, action: #selector(secondCreaseTFTextDidChange), for: .editingChanged)
         return textField
     }()
-    
+    /// Поле ввода третьей складки
     private let thirdCreaseTextField: CustomTextField = {
         let textField = CustomTextField(placeholder: "Введите размер складки в мм")
         textField.addTarget(self, action: #selector(thirdCreaseTFTextDidChange), for: .editingChanged)
@@ -84,18 +86,20 @@ class UserInfoViewController: UIViewController {
     }()
     
     // MARK: - UILabels
-    
+    /// Заголовк для поля ввода возраста
     private lazy var ageLabel: CustomLabel = {
         let label = CustomLabel(text: "Возраст")
         return label
     }()
     
+    /// Label отображаемый при невалидных данных в поле возраста
     private let alertAgeLabel: CustomLabel = {
         let label = CustomLabel(text: "Возраст не корректный")
         label.correctText = "возраст корректен"
         label.incorrectText = "возраст неверный"
         label.textColor = .red
         label.isHidden = true
+        label.textAlignment = .left
         return label
     }()
     
@@ -104,29 +108,31 @@ class UserInfoViewController: UIViewController {
         return label
     }()
     
+    /// Label отображаемый при невалидных данных в поле веса
     private lazy var alertWeightLabel: CustomLabel = {
         let label = CustomLabel(text: "Вес некорректный")
         label.correctText = "вес корректен"
         label.incorrectText = "вес неверный"
         label.textColor = .red
         label.isHidden = true
+        label.textAlignment = .left
         return label
     }()
-    
+    /// Заголовок для первой складки
     private lazy var firstCreaseLabel: CustomLabel = {
         let label = CustomLabel(text: FirstCreaseLabelText.forMale.rawValue)
         label.textAlignment = .left
         label.numberOfLines = 0
         return label
     }()
-    
+    /// Заголовок для второй складки
     private lazy var secondCreaseLabel: CustomLabel = {
         let label = CustomLabel(text: SecondCreaseLabelText.forMale.rawValue)
         label.textAlignment = .left
         label.numberOfLines = 0
         return label
     }()
-    
+    /// Заголовок для третьей складки
     private lazy var thirdCreaseLabel: CustomLabel = {
         let label = CustomLabel(text: ThirdCreaseLabelText.forMale.rawValue)
         label.textAlignment = .left
@@ -134,6 +140,7 @@ class UserInfoViewController: UIViewController {
         return label
     }()
     
+    /// Label отображаемый при невалидных данных в поле первой складки
     private lazy var alertFirstCreaseLabel: CustomLabel = {
         let label = CustomLabel(text: "не корректный размер складки")
         label.font = UIFont.systemFont(ofSize: 16, weight: .light)
@@ -141,29 +148,35 @@ class UserInfoViewController: UIViewController {
         label.incorrectText = "не корректный размер складки"
         label.textColor = .red
         label.isHidden = true
+        label.textAlignment = .left
         return label
     }()
     
+    /// Label отображаемый при невалидных данных в поле второй складки
     private lazy var alertSecondCreaseLabel: CustomLabel = {
         let label = CustomLabel(text: "не корректный размер складки")
         label.correctText = "размер складки корректен"
         label.incorrectText = "не корректный размер складки"
         label.textColor = .red
         label.isHidden = true
+        label.textAlignment = .left
         return label
     }()
     
+    /// Label отображаемый при невалидных данных в поле третьей складки
     private lazy var alertThirdCreaseLabel: CustomLabel = {
         let label = CustomLabel(text: "не корректный размер складки")
         label.correctText = "размер складки корректен"
         label.incorrectText = "не корректный размер складки"
         label.textColor = .red
         label.isHidden = true
+        label.textAlignment = .left
         return label
     }()
     
     // MARK: - UIButtons
     
+    /// Кнопка завершения ввода и перехода на следующий экран
     private lazy var nextButton: CustomButton = {
         let button = CustomButton(title: "Расчитать")
         button.addTarget(self, action: #selector(goToNextView), for: .touchUpInside)
@@ -287,18 +300,18 @@ class UserInfoViewController: UIViewController {
     private func setupScrollView(){
         scrollView.addSubview(mainStackView)
     }
-    
+    /// Настройка главного StackView
     private func setupMainStackView(_ arrangedSubviews: UIView...) {
         mainStackView.axis = .vertical
         mainStackView.distribution = .fill
-        mainStackView.spacing = 10
+        mainStackView.spacing = 12
         mainStackView.alignment = .fill
         
         arrangedSubviews.forEach { subview in
             mainStackView.addArrangedSubview(subview)
         }
     }
-    
+    /// настройка StackView с
     private func setupCreaseStackViews(_ stackView: UIStackView, with arrangedSubviews: UIView...) {
         stackView.axis = .vertical
         stackView.distribution = .fill
@@ -309,7 +322,7 @@ class UserInfoViewController: UIViewController {
             stackView.addArrangedSubview(subview)
         }
     }
-    
+    /// настройка StackView с заголовком поля и кнопкой инструкции
     private func setupCreaseLBAndInfBTStackViews(_ stackView: UIStackView, with arrangedSubviews: UIView...) {
         stackView.axis = .horizontal
         stackView.distribution = .equalSpacing
@@ -320,6 +333,7 @@ class UserInfoViewController: UIViewController {
         }
     }
     
+    /// Установка констрейнтов
     private func setConstraints() {
         
         mainStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -354,7 +368,7 @@ class UserInfoViewController: UIViewController {
             nextButton.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05)
         ])
     }
-    
+    /// Связывание allDataIsValid и состояния кнопки перехода далее
     private func SetupValidityState() {
         userInfoViewModel.allDataIsValid.bind { allDataIsValid in
             if allDataIsValid {
@@ -409,7 +423,7 @@ class UserInfoViewController: UIViewController {
         }
         SetupValidityState()
     }
-    
+    /// Связывание переключателя пола и отображаемых заголовков полей
     @objc private func toggleSex() {
         switch sexSegmentedControl.selectedSegmentIndex {
         case 1:
@@ -432,7 +446,7 @@ class UserInfoViewController: UIViewController {
     @objc private func close() {
         dismiss(animated: true)
     }
-    
+    /// Переход на экран с результатами
     @objc private func goToNextView() {
         let rootVC = ResultViewController()
         rootVC.resultViewModel = userInfoViewModel?.getResultViewModel()
@@ -440,22 +454,23 @@ class UserInfoViewController: UIViewController {
         userCreaseNavVC.modalPresentationStyle = .fullScreen
         present(userCreaseNavVC, animated: true)
     }
-    
+    /// Переход на экран с инструкцией по замерам
     @objc private func showInstructionVC(sender: CustomButton) {
         let rootVC = InstructionViewController()
         rootVC.instructionsText = sender.instructionTextToSend
         rootVC.imageName = sender.imageNameToSend
         present(rootVC, animated: true)
     }
-    
+    /// Поднимаем ScrollView когда клавиатура показалась на экране
     @objc func keyboardWillShow(notification: NSNotification) {
-        guard let activeTextField = activeTextField, let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
+        guard let activeTextField = activeTextField,
+              let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
         else {
-            // если клавиатура не доступна, по каким-то причинам, то не делать ничего
+            /// если клавиатура не доступна, по каким-то причинам, то не делать ничего
             return
         }
-        
-        let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardSize.height, right: 0.0)
+        /// величина подъема
+        let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardSize.height + 24, right: 0.0)
         
         scrollView.contentInset = contentInsets
         scrollView.scrollIndicatorInsets = contentInsets
@@ -463,27 +478,25 @@ class UserInfoViewController: UIViewController {
         let activeRect = activeTextField.convert(activeTextField.bounds, to: scrollView)
         scrollView.scrollRectToVisible(activeRect, animated: true)
     }
-
+    /// Когда клавиатура скрывается опускаем назад ScrollView
     @objc func keyboardWillHide(notification: NSNotification) {
         let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
         
         scrollView.contentInset = contentInsets
         scrollView.scrollIndicatorInsets = contentInsets
     }
-    
+    /// Убираем клавиатуру и каретку из текстового поля когда происходит тап в свободном месте
     @objc func backgroundTap(_ sender: UITapGestureRecognizer) {
-        // go through all of the textfield inside the view, and end editing thus resigning first responder
-        // ie. it will trigger a keyboardWillHide notification
         self.view.endEditing(true)
     }
 }
 
 extension UserInfoViewController: UITextFieldDelegate {
-    
+    /// Установка градиента заднего плана
     func setGradientBackground() {
         let colorTop =  UIColor(red: 200/255, green: 255/255, blue: 200/255, alpha: 1.0).cgColor
         let colorBottom = UIColor(red: 100/255, green: 255/255, blue: 100/255, alpha: 1.0).cgColor
-
+        
         let gradientLayer = CAGradientLayer()
         gradientLayer.colors = [colorTop, colorBottom]
         gradientLayer.locations = [0.0, 1.0]
@@ -491,14 +504,30 @@ extension UserInfoViewController: UITextFieldDelegate {
 
         self.view.layer.insertSublayer(gradientLayer, at:0)
     }
-    
+    /// Делаем текстовые поля делегатами
     func delegate(textFields: UITextField...) {
         textFields.forEach({ textField in
             textField.delegate = self
         })
     }
+    
+    @objc private func didTapDone() {
+        self.view.endEditing(true)
+    }
+    
     func textFieldDidBeginEditing(_ textField: UITextField) {
         self.activeTextField = textField
+        let keyboardToolBar = UIToolbar()
+        keyboardToolBar.sizeToFit()
+        textField.inputAccessoryView = keyboardToolBar
+        
+        let doneButton = UIBarButtonItem(title: "Готово", style: .done, target: self, action: #selector(didTapDone))
+         let flexBarButton = UIBarButtonItem (
+            barButtonSystemItem: .flexibleSpace,
+            target: nil,
+            action: nil)
+        
+        keyboardToolBar.items = [flexBarButton, doneButton]
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
