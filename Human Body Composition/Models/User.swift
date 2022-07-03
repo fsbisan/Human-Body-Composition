@@ -37,24 +37,12 @@ class User {
     /// Размер третьей складки в мм
     var thirdCrease = 1.0
     
-    /// Является ли пользователь несовершеннолетнем
-    private var isTeen: Bool {
-        age < 18 ? true : false
-    }
-    
     /// Относительная жировая масса тела
     var relativeFatBodyMass: Double {
-        switch (sex, isTeen) {
-        case (.male, true):
-            let mass = getFatBodyMass(sex: sex)
-            return mass
-        case (.male, false):
-            let mass = getFatBodyMass(sex: sex)
-            return mass
-        case (.female, false):
-            let mass = getFatBodyMass(sex: sex)
-            return mass
-        case (.female, true):
+        switch self.sex {
+        case .male:
+           return 495/(1.109380 - 0.0008267 * sumOfCrease + 0.0000016 * pow(sumOfCrease, 2) - 0.0002574 * age) - 45
+        case .female:
             let mass = getFatBodyMass(sex: sex)
             return mass
         }

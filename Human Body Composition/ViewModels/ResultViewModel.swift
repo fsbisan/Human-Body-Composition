@@ -14,6 +14,7 @@ protocol ResultViewModelProtocol {
     func getInterpretation() -> String
     func getDate() -> String
     func getInterpretationBackGroundColor() -> UIColor
+    func saveButtonDidTapped()
     init (user: User)
 }
 
@@ -22,6 +23,8 @@ class ResultViewModel: ResultViewModelProtocol {
     private var user: User
     let percentOfFat: String
     let dryBodyMass: String
+    private var dateOfMeasure: Date
+    
     private var interpretationOfResults: InterpretationOfResults {
         switch user.relativeFatBodyMass {
         case 1..<4:
@@ -43,6 +46,7 @@ class ResultViewModel: ResultViewModelProtocol {
         self.user = user
         self.percentOfFat = "Процент жира в организме: " + String(format: "%.1f", user.relativeFatBodyMass)
         self.dryBodyMass = "Сухая масса тела: " + String(format: "%.1f", user.dryBodyMass)
+        self.dateOfMeasure = Date()
     }
 
     func getInterpretation() -> String {
@@ -67,10 +71,14 @@ class ResultViewModel: ResultViewModelProtocol {
     }
     
     func getDate() -> String {
-        let date = Date()
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd.MM.yyyy г.  HH:mm"
-        return dateFormatter.string(from: date)
+        dateFormatter.locale = Locale(identifier: "ru_RU")
+        dateFormatter.dateFormat = "dd MMMM yyyy г.  HH:mm"
+        return dateFormatter.string(from: dateOfMeasure)
+    }
+    
+    func saveButtonDidTapped() {
+        StorageManager.shared.saveContext(date: dateOfMeasure, relativeFatBodyMass: user.relativeFatBodyMass, dryBodyMass: user.dryBodyMass, weight: user.weight)
     }
 }
 

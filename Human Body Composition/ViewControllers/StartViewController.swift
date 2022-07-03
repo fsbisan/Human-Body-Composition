@@ -14,6 +14,7 @@ class StartViewController: UIViewController {
     private let startCalculateButton: CustomButton = {
         let button = CustomButton(title: "Расчитать процент жира в организме")
         button.layer.cornerRadius = 25
+        button.titleLabel?.textAlignment = .center
         button.addTarget(self, action: #selector(goNextVC), for: .touchUpInside)
         return button
     }()

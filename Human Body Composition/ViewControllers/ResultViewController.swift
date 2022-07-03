@@ -23,7 +23,8 @@ class ResultViewController: UIViewController {
     
     private lazy var devisionView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(red: 0.6, green: 1, blue: 0.6, alpha: 1)
+        view.backgroundColor = .black
+//        UIColor(red: 0.6, green: 1, blue: 0.6, alpha: 1)
         return view
     }()
     
@@ -89,7 +90,7 @@ class ResultViewController: UIViewController {
     
     private lazy var saveButton: CustomButton = {
         let button = CustomButton(title: "Cохранить")
-//        button.addTarget(self, action: #selector(goToNextView), for: .touchUpInside)
+        button.addTarget(self, action: #selector(saveButtonDidTapped), for: .touchUpInside)
         return button
     }()
 
@@ -97,7 +98,7 @@ class ResultViewController: UIViewController {
         let button = CustomButton()
         button.tintColor = .red
         button.setImage(UIImage(systemName: "trash.fill"), for: .normal)
-        button.addTarget(self, action: #selector(close), for: .touchUpInside)
+        button.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -126,7 +127,7 @@ class ResultViewController: UIViewController {
         navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(
-            title: "Назад", style: .plain, target: self, action: #selector(close)
+            title: "Назад", style: .plain, target: self, action: #selector(goBack)
         )
     }
     
@@ -167,7 +168,7 @@ class ResultViewController: UIViewController {
             dateOfMeasure.centerXAnchor.constraint(equalTo: topView.centerXAnchor),
             
             devisionView.centerXAnchor.constraint(equalTo: topView.centerXAnchor),
-            devisionView.widthAnchor.constraint(equalToConstant: 2),
+            devisionView.widthAnchor.constraint(equalToConstant: 1),
             devisionView.topAnchor.constraint(greaterThanOrEqualTo: dateOfMeasure.bottomAnchor, constant: 20),
             devisionView.bottomAnchor.constraint(equalTo: topView.bottomAnchor, constant: -16),
             
@@ -203,7 +204,18 @@ class ResultViewController: UIViewController {
     
     // MARK: - @objc methods
     
-    @objc private func close(){
+    @objc private func saveButtonDidTapped() {
+        resultViewModel.saveButtonDidTapped()
+        dismiss(animated: true)
+        self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+    }
+    
+    @objc private func closeButtonTapped(){
+        dismiss(animated: true)
+        self.view.window?.rootViewController?.tabBarController?.selectedIndex = 1
+    }
+    
+    @objc private func goBack(){
         dismiss(animated: true)
     }
 }

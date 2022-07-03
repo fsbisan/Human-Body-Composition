@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import UIKit
 
 protocol UserInfoViewModelProtocol {
     var ageIsValid: Box<Bool> { get }

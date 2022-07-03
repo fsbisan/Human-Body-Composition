@@ -8,7 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		927DCEA82788908300BF5799 /* CustomUIElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927DCEA72788908300BF5799 /* CustomUIElements.swift */; };
+		928AAC1928719143000CB00F /* InstructionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928AAC1828719143000CB00F /* InstructionViewModel.swift */; };
+		928AAC1B2871AFD2000CB00F /* MeasureListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928AAC1A2871AFD2000CB00F /* MeasureListViewController.swift */; };
+		928AAC1E2871B857000CB00F /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928AAC1D2871B857000CB00F /* StorageManager.swift */; };
+		928AAC202871D5CE000CB00F /* MesureListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928AAC1F2871D5CE000CB00F /* MesureListViewModel.swift */; };
 		928EF61D28563DFE0004EFE2 /* Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928EF61C28563DFE0004EFE2 /* Validator.swift */; };
+		92925B2C2871DD71009F4190 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92925B2B2871DD71009F4190 /* AboutViewController.swift */; };
 		929668DD282CAADF006B7D10 /* ResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929668DC282CAADF006B7D10 /* ResultViewModel.swift */; };
 		929EF1902865C41700F51FC6 /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929EF18F2865C41700F51FC6 /* Box.swift */; };
 		92A294892783543200FFFED1 /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A294882783543200FFFED1 /* ResultViewController.swift */; };
@@ -25,7 +30,12 @@
 
 /* Begin PBXFileReference section */
 		927DCEA72788908300BF5799 /* CustomUIElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUIElements.swift; sourceTree = "<group>"; };
+		928AAC1828719143000CB00F /* InstructionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionViewModel.swift; sourceTree = "<group>"; };
+		928AAC1A2871AFD2000CB00F /* MeasureListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureListViewController.swift; sourceTree = "<group>"; };
+		928AAC1D2871B857000CB00F /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
+		928AAC1F2871D5CE000CB00F /* MesureListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MesureListViewModel.swift; sourceTree = "<group>"; };
 		928EF61C28563DFE0004EFE2 /* Validator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validator.swift; sourceTree = "<group>"; };
+		92925B2B2871DD71009F4190 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		929668DC282CAADF006B7D10 /* ResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewModel.swift; sourceTree = "<group>"; };
 		929EF18F2865C41700F51FC6 /* Box.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Box.swift; sourceTree = "<group>"; };
 		92A294882783543200FFFED1 /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
@@ -53,11 +63,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		928AAC212871D64D000CB00F /* Workers */ = {
+			isa = PBXGroup;
+			children = (
+				928EF61C28563DFE0004EFE2 /* Validator.swift */,
+				928AAC1D2871B857000CB00F /* StorageManager.swift */,
+			);
+			path = Workers;
+			sourceTree = "<group>";
+		};
 		929668DE282CAB38006B7D10 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
 				929668DC282CAADF006B7D10 /* ResultViewModel.swift */,
 				92A528ED28391F0D001094F7 /* UserInfoViewModel.swift */,
+				928AAC1828719143000CB00F /* InstructionViewModel.swift */,
+				928AAC1F2871D5CE000CB00F /* MesureListViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -95,6 +116,7 @@
 				92C733E72750845D00A566D1 /* ViewControllers */,
 				92C733EC27508D9400A566D1 /* Sourses */,
 				92C733EB27508D7900A566D1 /* CoreData */,
+				928AAC212871D64D000CB00F /* Workers */,
 				92C733EA2750849D00A566D1 /* Models */,
 			);
 			path = "Human Body Composition";
@@ -117,6 +139,8 @@
 				92AC0D23276CF2BB00B03551 /* StartViewController.swift */,
 				92A294882783543200FFFED1 /* ResultViewController.swift */,
 				92C1487D27A30BC700F00731 /* InstructionViewController.swift */,
+				928AAC1A2871AFD2000CB00F /* MeasureListViewController.swift */,
+				92925B2B2871DD71009F4190 /* AboutViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -142,7 +166,6 @@
 			children = (
 				92C733DB2750038400A566D1 /* Assets.xcassets */,
 				927DCEA72788908300BF5799 /* CustomUIElements.swift */,
-				928EF61C28563DFE0004EFE2 /* Validator.swift */,
 			);
 			path = Sourses;
 			sourceTree = "<group>";
@@ -221,12 +244,17 @@
 				92A294892783543200FFFED1 /* ResultViewController.swift in Sources */,
 				92C1487E27A30BC700F00731 /* InstructionViewController.swift in Sources */,
 				92C733E92750848C00A566D1 /* User.swift in Sources */,
+				928AAC1928719143000CB00F /* InstructionViewModel.swift in Sources */,
+				928AAC1B2871AFD2000CB00F /* MeasureListViewController.swift in Sources */,
 				92C733DA2750038100A566D1 /* Human_Body_Composition.xcdatamodeld in Sources */,
 				928EF61D28563DFE0004EFE2 /* Validator.swift in Sources */,
 				92C733D42750038100A566D1 /* UserInfoViewController.swift in Sources */,
+				92925B2C2871DD71009F4190 /* AboutViewController.swift in Sources */,
 				92C733D02750038100A566D1 /* AppDelegate.swift in Sources */,
 				92A528EE28391F0D001094F7 /* UserInfoViewModel.swift in Sources */,
 				929EF1902865C41700F51FC6 /* Box.swift in Sources */,
+				928AAC1E2871B857000CB00F /* StorageManager.swift in Sources */,
+				928AAC202871D5CE000CB00F /* MesureListViewModel.swift in Sources */,
 				927DCEA82788908300BF5799 /* CustomUIElements.swift in Sources */,
 				929668DD282CAADF006B7D10 /* ResultViewModel.swift in Sources */,
 			);
