@@ -37,14 +37,13 @@ class User {
     /// Размер третьей складки в мм
     var thirdCrease = 1.0
     
-    /// Относительная жировая масса тела
+    /// Относительная жировая масса тела(процент жира в организме)
     var relativeFatBodyMass: Double {
         switch self.sex {
         case .male:
-           return 495/(1.109380 - 0.0008267 * sumOfCrease + 0.0000016 * pow(sumOfCrease, 2) - 0.0002574 * age) - 45
+            return 495/(1.109380 - 0.0008267 * sumOfCrease + 0.0000016 * pow(sumOfCrease, 2) - 0.0002574 * age) - 450
         case .female:
-            let mass = getFatBodyMass(sex: sex)
-            return mass
+            return 495/(1.099421 - 0.0009929 * sumOfCrease + 0.0000023 * pow(sumOfCrease, 2) - 0.0001392 * age) - 450
         }
     }
     
@@ -58,17 +57,6 @@ class User {
     /// Сумма всех складок
     private var sumOfCrease: Double {
         firstCrease + secondCrease + thirdCrease
-    }
-    /// Возвращает относительную жировую массу тела(процент жира в организме)
-    private func getFatBodyMass(sex: Sex) -> Double {
-        switch sex {
-        case .male:
-            let fatBodyMass: Double = 495/(1.109380 - 0.0008267 * sumOfCrease + 0.0000016 * pow(sumOfCrease, 2) - 0.0002574 * age) - 450
-            return fatBodyMass
-        case .female:
-            let fatBodyMass: Double = 495/(1.099421 - 0.0009929 * sumOfCrease + 0.0000023 * pow(sumOfCrease, 2) - 0.0001392 * age) - 450
-            return fatBodyMass
-        }
     }
 }
 

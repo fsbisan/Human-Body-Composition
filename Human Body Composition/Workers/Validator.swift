@@ -16,7 +16,7 @@ enum TypeForValidate {
     case thirdCrease
 }
 /// Валидирует значения согласно переданного типа
-class Validator {
+struct Validator {
     func validateText(text: String, typeOfValidate: TypeForValidate) -> Bool {
         var rangeOfValidate: [Double] = []
         /// Задание диапазона валидации в зависимости от типа

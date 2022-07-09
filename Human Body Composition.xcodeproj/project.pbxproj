@@ -19,6 +19,8 @@
 		92A294892783543200FFFED1 /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A294882783543200FFFED1 /* ResultViewController.swift */; };
 		92A528EE28391F0D001094F7 /* UserInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A528ED28391F0D001094F7 /* UserInfoViewModel.swift */; };
 		92AC0D24276CF2BB00B03551 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92AC0D23276CF2BB00B03551 /* StartViewController.swift */; };
+		92AF46972879ABCE00E03248 /* MeasureTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92AF46962879ABCE00E03248 /* MeasureTableViewCell.swift */; };
+		92AF46992879AC6B00E03248 /* MeasureCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92AF46982879AC6B00E03248 /* MeasureCellViewModel.swift */; };
 		92C1487E27A30BC700F00731 /* InstructionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C1487D27A30BC700F00731 /* InstructionViewController.swift */; };
 		92C733D02750038100A566D1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C733CF2750038100A566D1 /* AppDelegate.swift */; };
 		92C733D42750038100A566D1 /* UserInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C733D32750038100A566D1 /* UserInfoViewController.swift */; };
@@ -41,6 +43,8 @@
 		92A294882783543200FFFED1 /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
 		92A528ED28391F0D001094F7 /* UserInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoViewModel.swift; sourceTree = "<group>"; };
 		92AC0D23276CF2BB00B03551 /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
+		92AF46962879ABCE00E03248 /* MeasureTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureTableViewCell.swift; sourceTree = "<group>"; };
+		92AF46982879AC6B00E03248 /* MeasureCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureCellViewModel.swift; sourceTree = "<group>"; };
 		92C1487D27A30BC700F00731 /* InstructionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionViewController.swift; sourceTree = "<group>"; };
 		92C733CC2750038100A566D1 /* Human Body Composition.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Human Body Composition.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		92C733CF2750038100A566D1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -72,23 +76,74 @@
 			path = Workers;
 			sourceTree = "<group>";
 		};
-		929668DE282CAB38006B7D10 /* ViewModels */ = {
-			isa = PBXGroup;
-			children = (
-				929668DC282CAADF006B7D10 /* ResultViewModel.swift */,
-				92A528ED28391F0D001094F7 /* UserInfoViewModel.swift */,
-				928AAC1828719143000CB00F /* InstructionViewModel.swift */,
-				928AAC1F2871D5CE000CB00F /* MesureListViewModel.swift */,
-			);
-			path = ViewModels;
-			sourceTree = "<group>";
-		};
 		929EF18E2865C40100F51FC6 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
 				929EF18F2865C41700F51FC6 /* Box.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		92AF468F2878401B00E03248 /* StartView */ = {
+			isa = PBXGroup;
+			children = (
+				92AC0D23276CF2BB00B03551 /* StartViewController.swift */,
+			);
+			path = StartView;
+			sourceTree = "<group>";
+		};
+		92AF46902878404F00E03248 /* UserInfo */ = {
+			isa = PBXGroup;
+			children = (
+				92A528ED28391F0D001094F7 /* UserInfoViewModel.swift */,
+				92C733D32750038100A566D1 /* UserInfoViewController.swift */,
+			);
+			path = UserInfo;
+			sourceTree = "<group>";
+		};
+		92AF46912878407F00E03248 /* Result */ = {
+			isa = PBXGroup;
+			children = (
+				929668DC282CAADF006B7D10 /* ResultViewModel.swift */,
+				92A294882783543200FFFED1 /* ResultViewController.swift */,
+			);
+			path = Result;
+			sourceTree = "<group>";
+		};
+		92AF46922878409D00E03248 /* Instruction */ = {
+			isa = PBXGroup;
+			children = (
+				928AAC1828719143000CB00F /* InstructionViewModel.swift */,
+				92C1487D27A30BC700F00731 /* InstructionViewController.swift */,
+			);
+			path = Instruction;
+			sourceTree = "<group>";
+		};
+		92AF4693287840D200E03248 /* About */ = {
+			isa = PBXGroup;
+			children = (
+				92925B2B2871DD71009F4190 /* AboutViewController.swift */,
+			);
+			path = About;
+			sourceTree = "<group>";
+		};
+		92AF4694287840E900E03248 /* MesureList */ = {
+			isa = PBXGroup;
+			children = (
+				928AAC1F2871D5CE000CB00F /* MesureListViewModel.swift */,
+				928AAC1A2871AFD2000CB00F /* MeasureListViewController.swift */,
+				92AF46952879ABA000E03248 /* CellView */,
+			);
+			path = MesureList;
+			sourceTree = "<group>";
+		};
+		92AF46952879ABA000E03248 /* CellView */ = {
+			isa = PBXGroup;
+			children = (
+				92AF46982879AC6B00E03248 /* MeasureCellViewModel.swift */,
+				92AF46962879ABCE00E03248 /* MeasureTableViewCell.swift */,
+			);
+			path = CellView;
 			sourceTree = "<group>";
 		};
 		92C733C32750038100A566D1 = {
@@ -110,14 +165,18 @@
 		92C733CE2750038100A566D1 /* Human Body Composition */ = {
 			isa = PBXGroup;
 			children = (
-				929EF18E2865C40100F51FC6 /* Helpers */,
-				929668DE282CAB38006B7D10 /* ViewModels */,
 				92C733E62750105000A566D1 /* App */,
-				92C733E72750845D00A566D1 /* ViewControllers */,
+				92AF468F2878401B00E03248 /* StartView */,
+				92AF46902878404F00E03248 /* UserInfo */,
+				92AF46922878409D00E03248 /* Instruction */,
+				92AF46912878407F00E03248 /* Result */,
+				92AF4694287840E900E03248 /* MesureList */,
+				92AF4693287840D200E03248 /* About */,
 				92C733EC27508D9400A566D1 /* Sourses */,
-				92C733EB27508D7900A566D1 /* CoreData */,
-				928AAC212871D64D000CB00F /* Workers */,
 				92C733EA2750849D00A566D1 /* Models */,
+				92C733EB27508D7900A566D1 /* CoreData */,
+				929EF18E2865C40100F51FC6 /* Helpers */,
+				928AAC212871D64D000CB00F /* Workers */,
 			);
 			path = "Human Body Composition";
 			sourceTree = "<group>";
@@ -130,19 +189,6 @@
 				92C733CF2750038100A566D1 /* AppDelegate.swift */,
 			);
 			path = App;
-			sourceTree = "<group>";
-		};
-		92C733E72750845D00A566D1 /* ViewControllers */ = {
-			isa = PBXGroup;
-			children = (
-				92C733D32750038100A566D1 /* UserInfoViewController.swift */,
-				92AC0D23276CF2BB00B03551 /* StartViewController.swift */,
-				92A294882783543200FFFED1 /* ResultViewController.swift */,
-				92C1487D27A30BC700F00731 /* InstructionViewController.swift */,
-				928AAC1A2871AFD2000CB00F /* MeasureListViewController.swift */,
-				92925B2B2871DD71009F4190 /* AboutViewController.swift */,
-			);
-			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		92C733EA2750849D00A566D1 /* Models */ = {
@@ -240,9 +286,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				92AF46972879ABCE00E03248 /* MeasureTableViewCell.swift in Sources */,
 				92AC0D24276CF2BB00B03551 /* StartViewController.swift in Sources */,
 				92A294892783543200FFFED1 /* ResultViewController.swift in Sources */,
 				92C1487E27A30BC700F00731 /* InstructionViewController.swift in Sources */,
+				92AF46992879AC6B00E03248 /* MeasureCellViewModel.swift in Sources */,
 				92C733E92750848C00A566D1 /* User.swift in Sources */,
 				928AAC1928719143000CB00F /* InstructionViewModel.swift in Sources */,
 				928AAC1B2871AFD2000CB00F /* MeasureListViewController.swift in Sources */,
@@ -402,9 +450,9 @@
 				INFOPLIST_FILE = "Human Body Composition/App/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -431,9 +479,9 @@
 				INFOPLIST_FILE = "Human Body Composition/App/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

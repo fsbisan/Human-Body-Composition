@@ -11,9 +11,13 @@ import UIKit
 protocol ResultViewModelProtocol {
     var percentOfFat: String { get }
     var dryBodyMass: String { get }
-    func getInterpretation() -> String
+    var topViewBackgroundColor: UIColor { get }
+    var divisionViewBackgroundColor: UIColor { get }
+    var interpretationViewBackgroundColor: UIColor { get }
+    var interpretationOfResults: InterpretationOfResults { get }
+    var topHeaderText: String { get }
+    var lowHeaderText: String { get }
     func getDate() -> String
-    func getInterpretationBackGroundColor() -> UIColor
     func saveButtonDidTapped()
     init (user: User)
 }
@@ -25,7 +29,7 @@ class ResultViewModel: ResultViewModelProtocol {
     let dryBodyMass: String
     private var dateOfMeasure: Date
     
-    private var interpretationOfResults: InterpretationOfResults {
+    var interpretationOfResults: InterpretationOfResults {
         switch user.relativeFatBodyMass {
         case 1..<4:
             return InterpretationOfResults.lowFat
@@ -42,32 +46,21 @@ class ResultViewModel: ResultViewModelProtocol {
         }
     }
     
+    var topHeaderText = "ИЗМЕРЕНИЯ"
+    var lowHeaderText = "ИНЕТЕРПРЕТАЦИЯ"
+    
+    let divisionViewBackgroundColor: UIColor = .black
+    let topViewBackgroundColor: UIColor = MyCustomColors.bgColorForTF.associatedColor
+    
+    var interpretationViewBackgroundColor: UIColor {
+        interpretationOfResults.associatedColor
+    }
+    
     required init (user: User) {
         self.user = user
         self.percentOfFat = "Процент жира в организме: " + String(format: "%.1f", user.relativeFatBodyMass)
         self.dryBodyMass = "Сухая масса тела: " + String(format: "%.1f", user.dryBodyMass)
         self.dateOfMeasure = Date()
-    }
-
-    func getInterpretation() -> String {
-        interpretationOfResults.rawValue
-    }
-    
-    func getInterpretationBackGroundColor() -> UIColor {
-        switch interpretationOfResults {
-        case .obesity:
-            return UIColor(red: 1, green: 0.4, blue: 0.4, alpha: 1)
-        case .highFat:
-           return UIColor(red: 1, green: 0.6, blue: 0.6, alpha: 1)
-        case .normalMax:
-            return UIColor(red: 255/255, green: 150/255, blue: 50/255, alpha: 1)
-        case .normalMin:
-            return UIColor(red: 200/255, green: 255/255, blue: 50/255, alpha: 1)
-        case .lowFat:
-            return UIColor(red: 125/255, green: 255/255, blue: 20/255, alpha: 1)
-        case .error:
-            return UIColor(red: 1, green: 0.6, blue: 0.6, alpha: 1)
-        }
     }
     
     func getDate() -> String {
@@ -89,4 +82,21 @@ enum InterpretationOfResults: String {
     case normalMin = "В Вашем организме нормальное содержание жира. Вероятно, начинает проявляться рельефность."
     case lowFat = "В Вашем организме низкое содержание жира. Очевидно, у Вас очень рельефная фигура."
     case error = "Ошибка: неизвестный результат"
+    
+    var associatedColor: UIColor {
+        switch self {
+        case .obesity:
+            return UIColor(red: 1, green: 0.4, blue: 0.4, alpha: 1)
+        case .highFat:
+            return UIColor(red: 1, green: 0.6, blue: 0.6, alpha: 1)
+        case .normalMax:
+            return UIColor(red: 255/255, green: 150/255, blue: 50/255, alpha: 1)
+        case .normalMin:
+            return UIColor(red: 200/255, green: 255/255, blue: 50/255, alpha: 1)
+        case .lowFat:
+            return UIColor(red: 125/255, green: 255/255, blue: 20/255, alpha: 1)
+        case .error:
+            return UIColor(red: 1, green: 0.6, blue: 0.6, alpha: 1)
+        }
+    }
 }

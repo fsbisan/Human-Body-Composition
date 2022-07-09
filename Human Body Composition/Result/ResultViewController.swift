@@ -11,51 +11,49 @@ class ResultViewController: UIViewController {
     
     // MARK: - Public Properties
     
-    var resultViewModel: ResultViewModelProtocol!
+    var resultViewModel: ResultViewModelProtocol! {
+        didSet {
+            /// настройка внешнего вида элементов интерфейса
+            topView.backgroundColor = resultViewModel.topViewBackgroundColor
+            devisionView.backgroundColor = resultViewModel.divisionViewBackgroundColor
+            interpretationOfResultView.backgroundColor = resultViewModel.interpretationViewBackgroundColor
+            
+            topHeader.text = resultViewModel.topHeaderText
+            lowHeader.text = resultViewModel.lowHeaderText
+            dateOfMeasure.text = resultViewModel.getDate()
+            interpretationOfResultsLabel.text = resultViewModel.interpretationOfResults.rawValue
+            percentOfFatLabel.text = resultViewModel.percentOfFat
+        }
+    }
     
     // MARK: - UIViews
+    /// Верхняя половина экрана
+    private lazy var topView = UIView()
+    /// Разделительная полоска между данными
+    private lazy var devisionView = UIView()
+    /// Нижняя половина экрана c интерпретацией результата
+    private lazy var interpretationOfResultView = UIView()
     
-    private lazy var topView: UIView = {
-        let view = UIView()
-        view.backgroundColor = MyCustomColors.bgColorForTF.associatedColor
-        return view
-    }()
-    
-    private lazy var devisionView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .black
-//        UIColor(red: 0.6, green: 1, blue: 0.6, alpha: 1)
-        return view
-    }()
-    
-    private lazy var interpretationBackgroundView: UIView = {
-        let view = UIView()
-        view.backgroundColor = resultViewModel.getInterpretationBackGroundColor()
-        return view
-    }()
     // MARK: - UILabels
-    
+    /// Заголовок верхнего поля
     private lazy var topHeader: UILabel = {
         let label = UILabel()
-        label.text = "ИЗМЕРЕНИЯ"
         label.numberOfLines = 0
         label.font = UIFont.boldSystemFont(ofSize: 20)
         label.textAlignment = .center
         return label
     }()
-    
+    /// Заголовок нижнего поля
     private lazy var lowHeader: UILabel = {
         let label = UILabel()
-        label.text = "ИНЕТЕРПРЕТАЦИЯ"
         label.numberOfLines = 0
         label.textAlignment = .center
         label.font = UIFont.boldSystemFont(ofSize: 20)
         return label
     }()
-    
+    /// Лэйбл с датой измерения
     private lazy var dateOfMeasure: UILabel = {
         let label = UILabel()
-        label.text = resultViewModel.getDate()
         label.numberOfLines = 0
         label.font = UIFont.boldSystemFont(ofSize: 18)
         label.textAlignment = .left
@@ -64,7 +62,6 @@ class ResultViewController: UIViewController {
     
     private lazy var percentOfFatLabel: UILabel = {
         let label = UILabel()
-        label.text = resultViewModel.percentOfFat
         label.numberOfLines = 0
         label.textAlignment = .left
         return label
@@ -80,7 +77,6 @@ class ResultViewController: UIViewController {
     
     private lazy var interpretationOfResultsLabel: UILabel = {
         let label = UILabel()
-        label.text = resultViewModel.getInterpretation()
         label.numberOfLines = 0
         label.textAlignment = .left
         return label
@@ -107,7 +103,7 @@ class ResultViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 0.5, green: 0.9, blue: 0.5, alpha: 1)
-        setupSubviews(topView, interpretationBackgroundView, topHeader, lowHeader,
+        setupSubviews(topView, interpretationOfResultView, topHeader, lowHeader,
                       dateOfMeasure, devisionView, percentOfFatLabel, dryBodyMassLabel,
                       interpretationOfResultsLabel, saveButton, deleteButton)
         setConstraints()
@@ -139,7 +135,7 @@ class ResultViewController: UIViewController {
     
     private func setConstraints() {
         topView.translatesAutoresizingMaskIntoConstraints = false
-        interpretationBackgroundView.translatesAutoresizingMaskIntoConstraints = false
+        interpretationOfResultView.translatesAutoresizingMaskIntoConstraints = false
         topHeader.translatesAutoresizingMaskIntoConstraints = false
         dateOfMeasure.translatesAutoresizingMaskIntoConstraints = false
         devisionView.translatesAutoresizingMaskIntoConstraints = false
@@ -156,10 +152,10 @@ class ResultViewController: UIViewController {
             topView.rightAnchor.constraint(equalTo: view.rightAnchor),
             topView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor, multiplier: 0.33),
             
-            interpretationBackgroundView.leftAnchor.constraint(equalTo: view.leftAnchor),
-            interpretationBackgroundView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            interpretationBackgroundView.topAnchor.constraint(equalTo: topView.bottomAnchor),
-            interpretationBackgroundView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.3),
+            interpretationOfResultView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            interpretationOfResultView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            interpretationOfResultView.topAnchor.constraint(equalTo: topView.bottomAnchor),
+            interpretationOfResultView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.3),
             
             topHeader.topAnchor.constraint(equalTo: topView.topAnchor, constant: 10),
             topHeader.centerXAnchor.constraint(equalTo: topView.centerXAnchor),
@@ -190,7 +186,7 @@ class ResultViewController: UIViewController {
             interpretationOfResultsLabel.topAnchor.constraint(equalTo: lowHeader.bottomAnchor, constant: 10),
             
             saveButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16),
-            saveButton.topAnchor.constraint(equalTo: interpretationBackgroundView.bottomAnchor, constant: 30),
+            saveButton.topAnchor.constraint(equalTo: interpretationOfResultView.bottomAnchor, constant: 30),
             saveButton.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05),
             saveButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.4),
             
@@ -206,8 +202,7 @@ class ResultViewController: UIViewController {
     
     @objc private func saveButtonDidTapped() {
         resultViewModel.saveButtonDidTapped()
-        dismiss(animated: true)
-        self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+        self.view.window?.rootViewController?.dismiss(animated: true)
     }
     
     @objc private func closeButtonTapped(){
