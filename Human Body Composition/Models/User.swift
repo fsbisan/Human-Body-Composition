@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum Sex {
+enum Sex: String {
     /// Мужчина
     case male
     
@@ -47,6 +47,8 @@ class User {
         }
     }
     
+    var dateOfMeasure: Date?
+    
     /// Сухая масса тела
     var dryBodyMass: Double {
         weight - (weight * relativeFatBodyMass) / 100
@@ -57,6 +59,24 @@ class User {
     /// Сумма всех складок
     private var sumOfCrease: Double {
         firstCrease + secondCrease + thirdCrease
+    }
+    
+    init(){}
+    
+    init(sex: String, age: Double, weight: Double, firstCrease: Double, secondCrease: Double, thirdCrease: Double) {
+        switch sex {
+        case "male":
+            self.sex = Sex.male
+        case "female":
+            self.sex = Sex.female
+        default:
+            self.sex = Sex.male
+        }
+        self.age = age
+        self.weight = weight
+        self.firstCrease = firstCrease
+        self.secondCrease = secondCrease
+        self.thirdCrease = thirdCrease
     }
 }
 

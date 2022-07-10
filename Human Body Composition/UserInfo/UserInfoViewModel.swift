@@ -79,20 +79,14 @@ class UserInfoViewModel: UserInfoViewModelProtocol {
     }
     
     func getResultViewModel() -> ResultViewModelProtocol {
-        let user = User()
         guard let age = age, let weight = weight, let firstCrease = firstCrease,
               let secondCrease = secondCrease, let  thirdCrease = thirdCrease else {
-            return ResultViewModel(user: user)
+            return ResultViewModel(user: User(), buttonVisibility: true)
         }
        
-        user.age = age
-        user.sex = sex
-        user.weight = weight
-        user.firstCrease = firstCrease
-        user.secondCrease = secondCrease
-        user.thirdCrease = thirdCrease
-        
-        return ResultViewModel(user: user)
+        let user = User(sex: sex.rawValue, age: age, weight: weight, firstCrease: firstCrease, secondCrease: secondCrease, thirdCrease: thirdCrease)
+
+        return ResultViewModel(user: user, buttonVisibility: true)
     }
     
     

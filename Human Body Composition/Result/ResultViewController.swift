@@ -23,8 +23,11 @@ class ResultViewController: UIViewController {
             dateOfMeasure.text = resultViewModel.getDate()
             interpretationOfResultsLabel.text = resultViewModel.interpretationOfResults.rawValue
             percentOfFatLabel.text = resultViewModel.percentOfFat
+            saveButton.isHidden = !resultViewModel.buttonVisibility
+            deleteButton.isHidden = !resultViewModel.buttonVisibility
         }
     }
+    
     
     // MARK: - UIViews
     /// Верхняя половина экрана
@@ -206,8 +209,8 @@ class ResultViewController: UIViewController {
     }
     
     @objc private func closeButtonTapped(){
+//        resultViewModel.deleteButtonTapped(measure: <#T##MeasureData#>)
         dismiss(animated: true)
-        self.view.window?.rootViewController?.tabBarController?.selectedIndex = 1
     }
     
     @objc private func goBack(){

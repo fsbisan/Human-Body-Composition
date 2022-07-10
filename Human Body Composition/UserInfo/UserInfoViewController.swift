@@ -448,9 +448,9 @@ class UserInfoViewController: UIViewController {
     }
     /// Переход на экран с результатами
     @objc private func goToNextView() {
-        let rootVC = ResultViewController()
-        rootVC.resultViewModel = userInfoViewModel?.getResultViewModel()
-        let userCreaseNavVC = UINavigationController(rootViewController: rootVC)
+        let resultVC = ResultViewController()
+        resultVC.resultViewModel = userInfoViewModel?.getResultViewModel()
+        let userCreaseNavVC = UINavigationController(rootViewController: resultVC)
         userCreaseNavVC.modalPresentationStyle = .fullScreen
         present(userCreaseNavVC, animated: true)
     }

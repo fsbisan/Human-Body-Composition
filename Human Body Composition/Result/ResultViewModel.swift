@@ -17,17 +17,20 @@ protocol ResultViewModelProtocol {
     var interpretationOfResults: InterpretationOfResults { get }
     var topHeaderText: String { get }
     var lowHeaderText: String { get }
+    var buttonVisibility: Bool { get }
     func getDate() -> String
     func saveButtonDidTapped()
-    init (user: User)
+    func deleteButtonTapped(measure: MeasureData)
+    init (user: User, buttonVisibility: Bool)
 }
 
 class ResultViewModel: ResultViewModelProtocol {
     
     private var user: User
+    
     let percentOfFat: String
     let dryBodyMass: String
-    private var dateOfMeasure: Date
+    var buttonVisibility: Bool
     
     var interpretationOfResults: InterpretationOfResults {
         switch user.relativeFatBodyMass {
@@ -46,6 +49,8 @@ class ResultViewModel: ResultViewModelProtocol {
         }
     }
     
+    var delegate: MeasureListViewControllerDelegate = MeasureListViewController()
+    
     var topHeaderText = "ИЗМЕРЕНИЯ"
     var lowHeaderText = "ИНЕТЕРПРЕТАЦИЯ"
     
@@ -56,22 +61,31 @@ class ResultViewModel: ResultViewModelProtocol {
         interpretationOfResults.associatedColor
     }
     
-    required init (user: User) {
+    required init (user: User, buttonVisibility: Bool) {
         self.user = user
         self.percentOfFat = "Процент жира в организме: " + String(format: "%.1f", user.relativeFatBodyMass)
         self.dryBodyMass = "Сухая масса тела: " + String(format: "%.1f", user.dryBodyMass)
-        self.dateOfMeasure = Date()
+        self.buttonVisibility = buttonVisibility
+    }
+    
+    func setDateOfMeasure() {
+        user.dateOfMeasure = Date()
     }
     
     func getDate() -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ru_RU")
         dateFormatter.dateFormat = "dd MMMM yyyy г.  HH:mm"
-        return dateFormatter.string(from: dateOfMeasure)
+        return dateFormatter.string(from: user.dateOfMeasure ?? Date())
     }
     
     func saveButtonDidTapped() {
-        StorageManager.shared.saveContext(date: dateOfMeasure, relativeFatBodyMass: user.relativeFatBodyMass, dryBodyMass: user.dryBodyMass, weight: user.weight)
+        StorageManager.shared.saveContext(date: user.dateOfMeasure ?? Date(), age: user.age, sex: user.sex.rawValue, firstCrease: user.firstCrease, secondCrease: user.secondCrease, thirdCrease: user.thirdCrease, relativeFatBodyMass: user.relativeFatBodyMass, dryBodyMass: user.dryBodyMass, weight: user.weight)
+        delegate.upDateMeasureListViewModel()
+    }
+    
+    func deleteButtonTapped(measure: MeasureData) {
+        StorageManager.shared.delete(measure)
     }
 }
 

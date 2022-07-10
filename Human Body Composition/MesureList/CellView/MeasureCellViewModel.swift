@@ -9,21 +9,27 @@ import Foundation
 
 protocol MeasureCellViewModelProtocol {
     func getMeasureDate() -> String
+    func getMeasureRelativeFatBodyMass() -> String
     init(measure: MeasureData)
 }
 
 class MeasureCellViewModel: MeasureCellViewModelProtocol {
     
     private let measure: MeasureData
-
+    
     func getMeasureDate() -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ru_RU")
         dateFormatter.dateFormat = "dd MMMM yyyy г.  HH:mm"
         guard let measureDate = measure.date else { return "" }
         return dateFormatter.string(from: measureDate)
+    
     }
 
+    func getMeasureRelativeFatBodyMass() -> String {
+        return "Процент жира \(measure.relativeFatBodyMass) \n Сухая масса тела \(measure.dryBodyMass)"
+    }
+    
     required init(measure: MeasureData) {
         self.measure = measure
     }

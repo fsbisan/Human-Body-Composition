@@ -7,6 +7,11 @@
 
 import UIKit
 
+
+protocol MeasureListViewControllerDelegate {
+    func upDateMeasureListViewModel()
+}
+
 class MeasureListViewController: UITableViewController {
     
     let CellID = "measure"
@@ -38,15 +43,23 @@ class MeasureListViewController: UITableViewController {
         return cell
     }
     
-//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        <#code#>
-//    }
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let resultVC = ResultViewController()
+        resultVC.resultViewModel = measureListViewModel?.getResultViewModel(at: indexPath)
+        let userCreaseNavVC = UINavigationController(rootViewController: resultVC)
+        userCreaseNavVC.modalPresentationStyle = .fullScreen
+        present(userCreaseNavVC, animated: true)
+    }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             measureListViewModel.deleteMeasureForRow(at: indexPath)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        70
     }
     
     private func setupNavigationBar() {
@@ -58,5 +71,16 @@ class MeasureListViewController: UITableViewController {
         navigationController?.navigationBar.tintColor = UIColor(red: 0.2, green: 0.4, blue: 0.2, alpha: 1)
         navigationController?.navigationBar.standardAppearance = navBarAppearance
         navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        measureListViewModel = MeasureListViewModel()
+    }
+}
+
+
+extension MeasureListViewController: MeasureListViewControllerDelegate {
+    func upDateMeasureListViewModel() {
+        measureListViewModel = MeasureListViewModel()
     }
 }

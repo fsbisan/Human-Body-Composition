@@ -29,10 +29,15 @@ final class StorageManager {
     // MARK: - Core Data Saving support
     
     /// Сохранение в базу данных
-    func saveContext (date: Date, relativeFatBodyMass: Double, dryBodyMass: Double, weight: Double) {
+    func saveContext (date: Date, age: Double, sex: String, firstCrease: Double, secondCrease: Double, thirdCrease: Double, relativeFatBodyMass: Double, dryBodyMass: Double, weight: Double) {
         guard let entityDescription = NSEntityDescription.entity(forEntityName: "MeasureData", in: viewContext) else { return }
         guard let measureData = NSManagedObject(entity: entityDescription, insertInto: viewContext) as? MeasureData else { return }
         measureData.date = date
+        measureData.age = age
+        measureData.sex = sex
+        measureData.firstCrease = firstCrease
+        measureData.secondCrease = secondCrease
+        measureData.thirdCrease = thirdCrease
         measureData.dryBodyMass = dryBodyMass
         measureData.relativeFatBodyMass = relativeFatBodyMass
         measureData.weight = weight

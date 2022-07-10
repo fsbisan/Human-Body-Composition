@@ -12,13 +12,24 @@ protocol MeasureListViewModelProtocol {
     func fetchMeasures(completion: () -> Void)
     func numberOfRows() -> Int
     func deleteMeasureForRow(at indexPath: IndexPath)
-    func getDateForRow(at indexPath: IndexPath) -> String
     func cellViewModel(at indexPath: IndexPath) -> MeasureCellViewModelProtocol
+    func getResultViewModel(at indexPath: IndexPath) -> ResultViewModelProtocol
 }
 
 final class MeasureListViewModel: MeasureListViewModelProtocol {
     
     var measures: [MeasureData] = []
+    
+    func getResultViewModel(at indexPath: IndexPath) -> ResultViewModelProtocol {
+        let measure = measures[indexPath.row]
+        guard let sex = measure.sex
+        else {
+            print("неизвлекся пол")
+            return ResultViewModel(user: User(), buttonVisibility: false)
+        }
+        let user = User(sex: sex, age: measure.age, weight: measure.weight, firstCrease: measure.firstCrease, secondCrease: measure.secondCrease, thirdCrease: measure.thirdCrease)
+        return ResultViewModel(user: user, buttonVisibility: false)
+    }
     
     func cellViewModel(at indexPath: IndexPath) -> MeasureCellViewModelProtocol {
         let measure = measures[indexPath.row]
@@ -29,15 +40,6 @@ final class MeasureListViewModel: MeasureListViewModelProtocol {
         let measure = measures[indexPath.row]
         measures.remove(at: indexPath.row)
         StorageManager.shared.delete(measure)
-    }
-    
-    func getDateForRow(at indexPath: IndexPath) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "ru_RU")
-        dateFormatter.dateFormat = "dd MMMM yyyy г.  HH:mm"
-        guard let measureDate = measures[indexPath.row].date else { return "" }
-        let formatedMeasureDate = dateFormatter.string(from: measureDate)
-        return formatedMeasureDate
     }
     
     func fetchMeasures(completion: () -> Void) {
