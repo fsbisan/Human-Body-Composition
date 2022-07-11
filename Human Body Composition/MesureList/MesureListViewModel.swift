@@ -22,12 +22,13 @@ final class MeasureListViewModel: MeasureListViewModelProtocol {
     
     func getResultViewModel(at indexPath: IndexPath) -> ResultViewModelProtocol {
         let measure = measures[indexPath.row]
-        guard let sex = measure.sex
+        guard let sex = measure.sex,
+              let date = measure.date
         else {
             print("неизвлекся пол")
             return ResultViewModel(user: User(), buttonVisibility: false)
         }
-        let user = User(sex: sex, age: measure.age, weight: measure.weight, firstCrease: measure.firstCrease, secondCrease: measure.secondCrease, thirdCrease: measure.thirdCrease)
+        let user = User(sex: sex, age: measure.age, weight: measure.weight, firstCrease: measure.firstCrease, secondCrease: measure.secondCrease, thirdCrease: measure.thirdCrease, dateOfMeasure: date)
         return ResultViewModel(user: user, buttonVisibility: false)
     }
     

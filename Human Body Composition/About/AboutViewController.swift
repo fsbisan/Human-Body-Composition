@@ -43,13 +43,14 @@ final class AboutViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
-        view.backgroundColor = .white
         setupSubviews(scrollView)
         setConstraints()
+        setGradientBackground()
+        tabBarController?.tabBar.barTintColor = MyCustomColors.bgColorForTF.associatedColor
     }
     
     private func setupNavigationBar() {
-        title = "О программе"
+        title = "О ПРОГРАММЕ"
         
         let navBarAppearance = UINavigationBarAppearance()
         
@@ -85,3 +86,17 @@ final class AboutViewController: UIViewController {
             ])
     }
 }
+extension AboutViewController {
+    func setGradientBackground() {
+        let colorTop =  UIColor(red: 200/255, green: 255/255, blue: 200/255, alpha: 1.0).cgColor
+        let colorBottom = UIColor(red: 100/255, green: 255/255, blue: 100/255, alpha: 1.0).cgColor
+
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = [colorTop, colorBottom]
+        gradientLayer.locations = [0.0, 1.0]
+        gradientLayer.frame = self.view.bounds
+
+        self.view.layer.insertSublayer(gradientLayer, at:0)
+    }
+}
+

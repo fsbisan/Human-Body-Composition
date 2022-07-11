@@ -86,7 +86,7 @@ class UserInfoViewController: UIViewController {
     }()
     
     // MARK: - UILabels
-    /// Заголовк для поля ввода возраста
+    /// Заголовок для поля ввода возраста
     private lazy var ageLabel: CustomLabel = {
         let label = CustomLabel(text: "Возраст")
         return label
@@ -102,7 +102,7 @@ class UserInfoViewController: UIViewController {
         label.textAlignment = .left
         return label
     }()
-    
+    /// Заголовок для поля ввода веса
     private lazy var weightLabel: CustomLabel = {
         let label = CustomLabel(text: "Вес")
         return label
@@ -182,34 +182,28 @@ class UserInfoViewController: UIViewController {
         button.addTarget(self, action: #selector(goToNextView), for: .touchUpInside)
         return button
     }()
-    
+    /// Кнопка показа инструкции для первого поля
     private lazy var showFirstCreaseInstructionButton: CustomButton = {
         let button = CustomButton()
 
-        button.addTarget(self, action: #selector(showInstructionVC(sender:)), for: .touchUpInside)
+        button.addTarget(self, action: #selector(showFirstCreaseInstructionVC), for: .touchUpInside)
         button.setImage(UIImage(systemName: "questionmark.circle"), for: .normal)
-        button.instructionTextToSend = InstructionTexts.stomach
-        button.imageNameToSend = ImageNames.stomachImage.rawValue
         return button
     }()
-    
+    /// Кнопка показа инструкции для второго поля
     private lazy var showSecondCreaseInstructionButton: CustomButton = {
         let button = CustomButton()
 
-        button.addTarget(self, action: #selector(showInstructionVC), for: .touchUpInside)
+        button.addTarget(self, action: #selector(showSecondCreaseInstructionVC), for: .touchUpInside)
         button.setImage(UIImage(systemName: "questionmark.circle"), for: .normal)
-        button.instructionTextToSend = InstructionTexts.breast
-        button.imageNameToSend = ImageNames.breastImage.rawValue
         return button
     }()
-    
+    /// Кнопка показа инструкции для третьего поля
     private lazy var showThirdCreaseInstructionButton: CustomButton = {
         let button = CustomButton()
 
-        button.addTarget(self, action: #selector(showInstructionVC), for: .touchUpInside)
+        button.addTarget(self, action: #selector(showThirdCreaseInstructionVC), for: .touchUpInside)
         button.setImage(UIImage(systemName: "questionmark.circle"), for: .normal)
-        button.instructionTextToSend = InstructionTexts.leg
-        button.imageNameToSend = ImageNames.legImage.rawValue
         return button
     }()
     
@@ -425,22 +419,17 @@ class UserInfoViewController: UIViewController {
     }
     /// Связывание переключателя пола и отображаемых заголовков полей
     @objc private func toggleSex() {
+        
         switch sexSegmentedControl.selectedSegmentIndex {
         case 1:
             userInfoViewModel?.sex = .female
-            firstCreaseLabel.text = FirstCreaseLabelText.forFemale.rawValue
-            secondCreaseLabel.text = SecondCreaseLabelText.forFemale.rawValue
             
-            showFirstCreaseInstructionButton.imageNameToSend = ImageNames.hipImage.rawValue
-            showSecondCreaseInstructionButton.imageNameToSend = ImageNames.armImage.rawValue
         default:
             userInfoViewModel?.sex = .male
-            firstCreaseLabel.text = FirstCreaseLabelText.forMale.rawValue
-            secondCreaseLabel.text = SecondCreaseLabelText.forMale.rawValue
-            
-            showFirstCreaseInstructionButton.imageNameToSend = ImageNames.stomachImage.rawValue
-            showSecondCreaseInstructionButton.imageNameToSend = ImageNames.breastImage.rawValue
         }
+        firstCreaseLabel.text = userInfoViewModel.getFirstCreaseLabelText()
+        secondCreaseLabel.text = userInfoViewModel.getSecondCreaseLabelText()
+        Надо выбрасывать номер сегмента
     }
     
     @objc private func close() {
@@ -455,12 +444,22 @@ class UserInfoViewController: UIViewController {
         present(userCreaseNavVC, animated: true)
     }
     /// Переход на экран с инструкцией по замерам
-    @objc private func showInstructionVC(sender: CustomButton) {
-        let rootVC = InstructionViewController()
-        rootVC.instructionsText = sender.instructionTextToSend
-        rootVC.imageName = sender.imageNameToSend
-        present(rootVC, animated: true)
+    @objc private func showFirstCreaseInstructionVC() {
+        let instructionVC = InstructionViewController()
+        instructionVC.instructionViewModel = userInfoViewModel.getFirstCreaseInstructionViewModel()
+        present(instructionVC, animated: true)
     }
+    @objc private func showSecondCreaseInstructionVC() {
+        let instructionVC = InstructionViewController()
+        instructionVC.instructionViewModel = userInfoViewModel.getSecondCreaseInstructionViewModel()
+        present(instructionVC, animated: true)
+    }
+    @objc private func showThirdCreaseInstructionVC() {
+        let instructionVC = InstructionViewController()
+        instructionVC.instructionViewModel = userInfoViewModel.getThirdCreaseInstructionViewModel()
+        present(instructionVC, animated: true)
+    }
+    
     /// Поднимаем ScrollView когда клавиатура показалась на экране
     @objc func keyboardWillShow(notification: NSNotification) {
         guard let activeTextField = activeTextField,

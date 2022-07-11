@@ -21,13 +21,18 @@ class ResultViewController: UIViewController {
             topHeader.text = resultViewModel.topHeaderText
             lowHeader.text = resultViewModel.lowHeaderText
             dateOfMeasure.text = resultViewModel.getDate()
+            sexLabel.text = resultViewModel.getSex()
+            ageLabel.text = resultViewModel.getAge()
+            weightLabel.text = resultViewModel.getWeight()
+            firstCreaseLabel.text = resultViewModel.getFirstCreaseSize()
+            secondCreaseLabel.text = resultViewModel.getSecondCreaseSize()
+            thirdCreaseLabel.text = resultViewModel.getThirdCreaseSize()
             interpretationOfResultsLabel.text = resultViewModel.interpretationOfResults.rawValue
             percentOfFatLabel.text = resultViewModel.percentOfFat
             saveButton.isHidden = !resultViewModel.buttonVisibility
             deleteButton.isHidden = !resultViewModel.buttonVisibility
         }
     }
-    
     
     // MARK: - UIViews
     /// Верхняя половина экрана
@@ -42,7 +47,7 @@ class ResultViewController: UIViewController {
     private lazy var topHeader: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.font = UIFont.boldSystemFont(ofSize: 22)
         label.textAlignment = .center
         return label
     }()
@@ -51,14 +56,62 @@ class ResultViewController: UIViewController {
         let label = UILabel()
         label.numberOfLines = 0
         label.textAlignment = .center
-        label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.font = UIFont.boldSystemFont(ofSize: 22)
         return label
     }()
     /// Лэйбл с датой измерения
     private lazy var dateOfMeasure: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.textAlignment = .left
+        return label
+    }()
+    
+    private lazy var sexLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.textAlignment = .left
+        return label
+    }()
+    
+    private lazy var ageLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.textAlignment = .left
+        return label
+    }()
+    
+    private lazy var weightLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.textAlignment = .left
+        return label
+    }()
+    
+    private lazy var firstCreaseLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.textAlignment = .left
+        return label
+    }()
+    
+    private lazy var secondCreaseLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.textAlignment = .left
+        return label
+    }()
+    
+    private lazy var thirdCreaseLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.font = UIFont.systemFont(ofSize: 16)
         label.textAlignment = .left
         return label
     }()
@@ -66,6 +119,7 @@ class ResultViewController: UIViewController {
     private lazy var percentOfFatLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
+        label.font = UIFont.boldSystemFont(ofSize: 18)
         label.textAlignment = .left
         return label
     }()
@@ -73,6 +127,7 @@ class ResultViewController: UIViewController {
     private lazy var dryBodyMassLabel: UILabel = {
         let label = UILabel()
         label.text = resultViewModel.dryBodyMass
+        label.font = UIFont.boldSystemFont(ofSize: 18)
         label.numberOfLines = 0
         label.textAlignment = .left
         return label
@@ -81,6 +136,7 @@ class ResultViewController: UIViewController {
     private lazy var interpretationOfResultsLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
+        label.font = UIFont.boldSystemFont(ofSize: 18)
         label.textAlignment = .left
         return label
     }()
@@ -107,7 +163,7 @@ class ResultViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 0.5, green: 0.9, blue: 0.5, alpha: 1)
         setupSubviews(topView, interpretationOfResultView, topHeader, lowHeader,
-                      dateOfMeasure, devisionView, percentOfFatLabel, dryBodyMassLabel,
+                      dateOfMeasure, sexLabel, ageLabel, weightLabel, firstCreaseLabel, secondCreaseLabel, thirdCreaseLabel, devisionView, percentOfFatLabel, dryBodyMassLabel,
                       interpretationOfResultsLabel, saveButton, deleteButton)
         setConstraints()
         setupNavigationBar()
@@ -148,45 +204,68 @@ class ResultViewController: UIViewController {
         interpretationOfResultsLabel.translatesAutoresizingMaskIntoConstraints = false
         saveButton.translatesAutoresizingMaskIntoConstraints = false
         deleteButton.translatesAutoresizingMaskIntoConstraints = false
+        sexLabel.translatesAutoresizingMaskIntoConstraints = false
+        ageLabel.translatesAutoresizingMaskIntoConstraints = false
+        weightLabel.translatesAutoresizingMaskIntoConstraints = false
+        firstCreaseLabel.translatesAutoresizingMaskIntoConstraints = false
+        secondCreaseLabel.translatesAutoresizingMaskIntoConstraints = false
+        thirdCreaseLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate ([
             topView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             topView.leftAnchor.constraint(equalTo: view.leftAnchor),
             topView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            topView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor, multiplier: 0.33),
+            topView.bottomAnchor.constraint(equalTo: percentOfFatLabel.bottomAnchor, constant: 20),
             
             interpretationOfResultView.leftAnchor.constraint(equalTo: view.leftAnchor),
             interpretationOfResultView.rightAnchor.constraint(equalTo: view.rightAnchor),
             interpretationOfResultView.topAnchor.constraint(equalTo: topView.bottomAnchor),
-            interpretationOfResultView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.3),
+            interpretationOfResultView.bottomAnchor.constraint(equalTo: interpretationOfResultsLabel.bottomAnchor, constant: 20),
             
-            topHeader.topAnchor.constraint(equalTo: topView.topAnchor, constant: 10),
+            topHeader.topAnchor.constraint(equalTo: topView.topAnchor, constant: 20),
             topHeader.centerXAnchor.constraint(equalTo: topView.centerXAnchor),
             
             dateOfMeasure.topAnchor.constraint(equalTo: topHeader.bottomAnchor, constant: 4),
             dateOfMeasure.centerXAnchor.constraint(equalTo: topView.centerXAnchor),
             
+            sexLabel.topAnchor.constraint(equalTo: dateOfMeasure.bottomAnchor, constant: 10),
+            sexLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16),
+
+            ageLabel.topAnchor.constraint(equalTo: sexLabel.bottomAnchor, constant: 5),
+            ageLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16),
+
+            weightLabel.topAnchor.constraint(equalTo: ageLabel.bottomAnchor, constant: 5),
+            weightLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16),
+            
+            firstCreaseLabel.topAnchor.constraint(equalTo: dateOfMeasure.bottomAnchor, constant: 10),
+            firstCreaseLabel.leftAnchor.constraint(equalTo: secondCreaseLabel.leftAnchor),
+
+            secondCreaseLabel.topAnchor.constraint(equalTo: firstCreaseLabel.bottomAnchor, constant: 5),
+            secondCreaseLabel.leftAnchor.constraint(equalTo: ageLabel.rightAnchor, constant: 16),
+
+            thirdCreaseLabel.topAnchor.constraint(equalTo: secondCreaseLabel.bottomAnchor, constant: 5),
+            thirdCreaseLabel.leftAnchor.constraint(equalTo: secondCreaseLabel.leftAnchor),
+            
             devisionView.centerXAnchor.constraint(equalTo: topView.centerXAnchor),
             devisionView.widthAnchor.constraint(equalToConstant: 1),
-            devisionView.topAnchor.constraint(greaterThanOrEqualTo: dateOfMeasure.bottomAnchor, constant: 20),
-            devisionView.bottomAnchor.constraint(equalTo: topView.bottomAnchor, constant: -16),
+            devisionView.topAnchor.constraint(equalTo: weightLabel.bottomAnchor, constant: 20),
+            devisionView.bottomAnchor.constraint(equalTo: topView.bottomAnchor, constant: -20),
             
             percentOfFatLabel.leftAnchor.constraint(equalTo: topView.leftAnchor, constant: 16),
             percentOfFatLabel.topAnchor.constraint(equalTo: devisionView.topAnchor),
-            percentOfFatLabel.bottomAnchor.constraint(equalTo: devisionView.bottomAnchor),
-            percentOfFatLabel.rightAnchor.constraint(equalTo: devisionView.leftAnchor, constant: -16),
+            percentOfFatLabel.rightAnchor.constraint(equalTo: devisionView.leftAnchor, constant: -5),
             
             dryBodyMassLabel.leftAnchor.constraint(equalTo: devisionView.rightAnchor, constant: 16),
             dryBodyMassLabel.topAnchor.constraint(equalTo: devisionView.topAnchor),
             dryBodyMassLabel.bottomAnchor.constraint(lessThanOrEqualTo: devisionView.bottomAnchor, constant: 20),
             dryBodyMassLabel.rightAnchor.constraint(equalTo: topView.rightAnchor, constant: -16),
             
-            lowHeader.topAnchor.constraint(equalTo: topView.bottomAnchor, constant: 10),
+            lowHeader.topAnchor.constraint(equalTo: topView.bottomAnchor, constant: 20),
             lowHeader.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
             interpretationOfResultsLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16),
             interpretationOfResultsLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16),
-            interpretationOfResultsLabel.topAnchor.constraint(equalTo: lowHeader.bottomAnchor, constant: 10),
+            interpretationOfResultsLabel.topAnchor.constraint(equalTo: lowHeader.bottomAnchor, constant: 16),
             
             saveButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16),
             saveButton.topAnchor.constraint(equalTo: interpretationOfResultView.bottomAnchor, constant: 30),
@@ -197,7 +276,6 @@ class ResultViewController: UIViewController {
             deleteButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16),
             deleteButton.heightAnchor.constraint(equalTo: saveButton.heightAnchor),
             deleteButton.widthAnchor.constraint(equalTo: deleteButton.heightAnchor)
-            
         ])
     }
     
@@ -209,7 +287,6 @@ class ResultViewController: UIViewController {
     }
     
     @objc private func closeButtonTapped(){
-//        resultViewModel.deleteButtonTapped(measure: <#T##MeasureData#>)
         dismiss(animated: true)
     }
     

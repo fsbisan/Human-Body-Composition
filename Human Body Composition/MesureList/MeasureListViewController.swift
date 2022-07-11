@@ -26,7 +26,7 @@ class MeasureListViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
-        tableView.register(MeasureTableViewCell.self, forCellReuseIdentifier: CellID)
+        tableView.register(MeasureTableViewCell.self, forCellReuseIdentifier: MeasureTableViewCell.cellIdentifier)
         measureListViewModel = MeasureListViewModel()
         tableView.backgroundColor = MyCustomColors.bgColorForView.associatedColor
     }
@@ -38,7 +38,7 @@ class MeasureListViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: CellID, for: indexPath) as! MeasureTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: MeasureTableViewCell.cellIdentifier, for: indexPath) as! MeasureTableViewCell
         cell.measureCellViewModel = measureListViewModel.cellViewModel(at: indexPath)
         return cell
     }
@@ -59,11 +59,11 @@ class MeasureListViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        70
+        80
     }
     
     private func setupNavigationBar() {
-        title = "История измерений"
+        title = "ИСТОРИЯ ИЗМЕРЕНИЙ"
         
         let navBarAppearance = UINavigationBarAppearance()
         

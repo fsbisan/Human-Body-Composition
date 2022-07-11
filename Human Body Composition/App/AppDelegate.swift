@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         startVC.title = "РАЧЕТ"
        
         let measureListVC = UINavigationController(rootViewController: MeasureListViewController())
-        measureListVC.title = "ИСТОРИЯ ИЗМЕРЕНИЯ"
+        measureListVC.title = "ИСТОРИЯ ИЗМЕРЕНИЙ"
         
         
         let aboutVC = UINavigationController(rootViewController: AboutViewController())
@@ -33,6 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         tabBarVC.tabBar.backgroundColor = MyCustomColors.bgColorForTF.associatedColor
         tabBarVC.modalPresentationStyle = .fullScreen
         tabBarVC.setViewControllers([startVC, measureListVC, aboutVC], animated: true)
+       
         guard let items = tabBarVC.tabBar.items else { return false }
         
         let images = ["x.squareroot", "list.bullet.rectangle.portrait", "info.circle"]

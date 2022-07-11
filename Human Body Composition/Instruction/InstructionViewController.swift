@@ -12,6 +12,7 @@ import UIKit
 class InstructionViewController: UIViewController {
     
     // MARK: - Private Properties
+    var instructionViewModel: InstructionViewModelProtocol!
     
     var instructionsText: InstructionTexts!
     var imageName: String!

@@ -13,6 +13,15 @@ enum Sex: String {
     
     /// Женщина
     case female
+    
+    var associatedValue: String {
+        switch self {
+        case .male:
+            return "мужчина"
+        case .female:
+            return "женщина"
+        }
+    }
 }
 
 class User {
@@ -47,7 +56,7 @@ class User {
         }
     }
     
-    var dateOfMeasure: Date?
+    var dateOfMeasure = Date()
     
     /// Сухая масса тела
     var dryBodyMass: Double {
@@ -63,7 +72,7 @@ class User {
     
     init(){}
     
-    init(sex: String, age: Double, weight: Double, firstCrease: Double, secondCrease: Double, thirdCrease: Double) {
+    init(sex: String, age: Double, weight: Double, firstCrease: Double, secondCrease: Double, thirdCrease: Double, dateOfMeasure: Date) {
         switch sex {
         case "male":
             self.sex = Sex.male
@@ -77,6 +86,7 @@ class User {
         self.firstCrease = firstCrease
         self.secondCrease = secondCrease
         self.thirdCrease = thirdCrease
+        self.dateOfMeasure = dateOfMeasure
     }
 }
 
