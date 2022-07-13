@@ -15,7 +15,7 @@ protocol MeasureCellViewModelProtocol {
     init(measure: MeasureData)
 }
 
-class MeasureCellViewModel: MeasureCellViewModelProtocol {
+final class MeasureCellViewModel: MeasureCellViewModelProtocol {
     private let measure: MeasureData
     
     func getWeight() -> String {
@@ -41,6 +41,5 @@ class MeasureCellViewModel: MeasureCellViewModelProtocol {
     required init(measure: MeasureData) {
         self.measure = measure
     }
-    
     
 }

@@ -8,9 +8,9 @@
 import Foundation
 
 protocol InstructionViewModelProtocol {
-    func getInstructionAndImageName() -> (String, String)
-    
-    init(partForMeasurment: BodyPartForMeasurment)
+    func getImageName() -> String
+    func getInstructionText() -> String
+    init(bodyPartForMeasurment: BodyPartForMeasurment)
 }
 
 /// Варианты картинок для инструкций
@@ -49,13 +49,17 @@ enum BodyPartForMeasurment: String {
 }
 
 final class InstructionViewModel: InstructionViewModelProtocol {
-    func getInstructionAndImageName() -> (String, String) {
-        <#code#>
+    private let bodyPartForMeasurment: BodyPartForMeasurment
+    
+    func getImageName() -> String {
+        bodyPartForMeasurment.rawValue
     }
     
-    init(partForMeasurment: BodyPartForMeasurment) {
-        <#code#>
+    func getInstructionText() -> String {
+        bodyPartForMeasurment.associatedTextOfInstruction
     }
     
-    
+    init(bodyPartForMeasurment: BodyPartForMeasurment) {
+        self.bodyPartForMeasurment = bodyPartForMeasurment
+    }
 }

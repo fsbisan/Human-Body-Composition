@@ -24,9 +24,6 @@ class CustomButton: UIButton {
         titleLabel?.numberOfLines = 0
         layer.cornerRadius = 4
     }
-    /// Свойство для передачи подробной информации при нажатии
-    var instructionTextToSend = InstructionTexts.stomach
-    var imageNameToSend = ""
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -37,9 +34,6 @@ class CustomLabel: UILabel {
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
-    
-    var correctText = ""
-    var incorrectText = ""
     
     init(text: String) {
         super.init(frame: .zero)

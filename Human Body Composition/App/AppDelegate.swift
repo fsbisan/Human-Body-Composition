@@ -18,14 +18,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         
-        
+        /// Экземпляр класса StartViewController
         let startVC = StartViewController()
-        startVC.title = "РАЧЕТ"
-       
+        startVC.title = "РАCЧЕТ"
+        /// Экземпляр класса MeasureListViewController
         let measureListVC = UINavigationController(rootViewController: MeasureListViewController())
         measureListVC.title = "ИСТОРИЯ ИЗМЕРЕНИЙ"
-        
-        
+        /// Экземпляр класса AboutViewController
         let aboutVC = UINavigationController(rootViewController: AboutViewController())
         aboutVC.title = "О ПРОГРАММЕ"
         

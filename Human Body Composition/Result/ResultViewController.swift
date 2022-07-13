@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ResultViewController: UIViewController {
+final class ResultViewController: UIViewController {
     
     // MARK: - Public Properties
     
@@ -142,13 +142,14 @@ class ResultViewController: UIViewController {
     }()
     
     // MARK: - UIButtons
-    
+    /// Кнопка сохранения результата
     private lazy var saveButton: CustomButton = {
         let button = CustomButton(title: "Cохранить")
         button.addTarget(self, action: #selector(saveButtonDidTapped), for: .touchUpInside)
         return button
     }()
-
+    
+    /// Кнопка закрытия View
     private lazy var deleteButton: CustomButton = {
         let button = CustomButton()
         button.tintColor = .red
@@ -170,7 +171,7 @@ class ResultViewController: UIViewController {
     }
     
     // MARK: - Private Methods
-    
+    /// Настройка NavigationBar
     private func setupNavigationBar() {
         title = "Результат"
         
@@ -185,13 +186,13 @@ class ResultViewController: UIViewController {
             title: "Назад", style: .plain, target: self, action: #selector(goBack)
         )
     }
-    
+    /// Добавление элементов во View
     private func setupSubviews(_ subviews: UIView...) {
         subviews.forEach { subview in
             view.addSubview(subview)
         }
     }
-    
+    /// Расстановка констрейнтов
     private func setConstraints() {
         topView.translatesAutoresizingMaskIntoConstraints = false
         interpretationOfResultView.translatesAutoresizingMaskIntoConstraints = false

@@ -15,6 +15,8 @@ protocol UserInfoViewModelProtocol {
     var secondCreaseIsValid: Box<Bool> { get }
     var thirdCreaseIsValid: Box<Bool> { get }
     var allDataIsValid: Box<Bool> { get }
+    var firstCreaseText: Box<String> { get }
+    var secondCreaseText: Box<String> { get }
     
     var sex: Sex { get set }
     var age: Double? { get set }
@@ -22,9 +24,7 @@ protocol UserInfoViewModelProtocol {
     var firstCrease: Double? { get set }
     var secondCrease: Double? { get set }
     var thirdCrease: Double? { get set }
-    func pressedSegment(at segmentedIndex: Int)
-    func getFirstCreaseLabelText() -> String
-    func getSecondCreaseLabelText() -> String
+    func segmentedControlDidChange(to segmentIndex: Int)
     func getResultViewModel () -> ResultViewModelProtocol
     func textfieldTextDidChange (text: String?, typeOfValidate: TypeForValidate)
     func getFirstCreaseInstructionViewModel () -> InstructionViewModelProtocol
@@ -32,9 +32,8 @@ protocol UserInfoViewModelProtocol {
     func getThirdCreaseInstructionViewModel () -> InstructionViewModelProtocol
 }
 
-class UserInfoViewModel: UserInfoViewModelProtocol {
+final class UserInfoViewModel: UserInfoViewModelProtocol {
     
-   
     var ageIsValid = Box(false)
     
     var weightIsValid = Box(false)
@@ -47,9 +46,19 @@ class UserInfoViewModel: UserInfoViewModelProtocol {
     
     var allDataIsValid = Box(false)
     
+    var firstCreaseText = Box("складка на животе")
+    
+    var secondCreaseText = Box("складка груди")
+    
     let validator = Validator()
     
-    var sex = Sex.male
+    var sex = Sex.male {
+        didSet {
+            firstCreaseText.value = sex == .male ? "складка на животе" : "складка на боку"
+            secondCreaseText.value = sex == .male ? "складка груди" : "складка на трицепсе"
+        }
+    }
+    
     var age: Double?
     var weight: Double?
     var firstCrease: Double?
@@ -62,8 +71,8 @@ class UserInfoViewModel: UserInfoViewModelProtocol {
         } else { allDataIsValid.value = false}
     }
     
-    func getFirstCreaseLabelText() -> String {
-        <#code#>
+    func segmentedControlDidChange(to segmentIndex: Int) {
+        sex = segmentIndex == 0 ? .male : .female
     }
     
     func textfieldTextDidChange(text: String?, typeOfValidate: TypeForValidate) {
@@ -91,25 +100,17 @@ class UserInfoViewModel: UserInfoViewModelProtocol {
     }
     
     func getFirstCreaseInstructionViewModel() -> InstructionViewModelProtocol {
-        switch sex {
-        case .male:
-            return InstructionViewModel(partForMeasurment: .stomach)
-        case .female:
-            return InstructionViewModel(partForMeasurment: .hip)
-        }
+        let bodyPartForMeasurment: BodyPartForMeasurment = sex == .male ? .stomach : .hip
+        return InstructionViewModel(bodyPartForMeasurment: bodyPartForMeasurment)
     }
     
     func getSecondCreaseInstructionViewModel() -> InstructionViewModelProtocol {
-        switch sex {
-        case .male:
-            return InstructionViewModel(partForMeasurment: .breast)
-        case .female:
-            return InstructionViewModel(partForMeasurment: .arm)
-        }
+        let bodyPartForMeasurment: BodyPartForMeasurment = sex == .male ? .breast : .arm
+        return InstructionViewModel(bodyPartForMeasurment: bodyPartForMeasurment)
     }
     
     func getThirdCreaseInstructionViewModel() -> InstructionViewModelProtocol {
-        return InstructionViewModel(partForMeasurment: .leg)
+        return InstructionViewModel(bodyPartForMeasurment: .leg)
     }
     
     func getResultViewModel() -> ResultViewModelProtocol {

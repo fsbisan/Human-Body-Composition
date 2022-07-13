@@ -7,28 +7,19 @@
 
 import UIKit
 
-/// Текст для загооловка поля в зависимости от пола
-enum FirstCreaseLabelText: String {
-    case forMale = "складка на животе"
-    case forFemale = "складка на боку"
-}
-/// Текст для загооловка поля в зависимости от пола
-enum SecondCreaseLabelText: String {
-    case forMale = "складка груди"
-    case forFemale = "складка на трицепсе"
-}
-/// Текст для загооловка поля в зависимости от пола
-enum ThirdCreaseLabelText: String {
-    case forMale = "складка на бедре"
-}
 /// Отображает экран ввода данных
-class UserInfoViewController: UIViewController {
+final class UserInfoViewController: UIViewController {
     
     // MARK: Public Properties
     
     weak var activeTextField: UITextField?
     
-    var userInfoViewModel: UserInfoViewModelProtocol!
+    var userInfoViewModel: UserInfoViewModelProtocol! {
+        didSet {
+            firstCreaseLabel.text = userInfoViewModel.secondCreaseText.value
+            secondCreaseLabel.text = userInfoViewModel.secondCreaseText.value
+        }
+    }
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -79,7 +70,7 @@ class UserInfoViewController: UIViewController {
         return textField
     }()
     /// Поле ввода третьей складки
-    private let thirdCreaseTextField: CustomTextField = {
+    private lazy var thirdCreaseTextField: CustomTextField = {
         let textField = CustomTextField(placeholder: "Введите размер складки в мм")
         textField.addTarget(self, action: #selector(thirdCreaseTFTextDidChange), for: .editingChanged)
         return textField
@@ -95,8 +86,6 @@ class UserInfoViewController: UIViewController {
     /// Label отображаемый при невалидных данных в поле возраста
     private let alertAgeLabel: CustomLabel = {
         let label = CustomLabel(text: "Возраст не корректный")
-        label.correctText = "возраст корректен"
-        label.incorrectText = "возраст неверный"
         label.textColor = .red
         label.isHidden = true
         label.textAlignment = .left
@@ -111,8 +100,6 @@ class UserInfoViewController: UIViewController {
     /// Label отображаемый при невалидных данных в поле веса
     private lazy var alertWeightLabel: CustomLabel = {
         let label = CustomLabel(text: "Вес некорректный")
-        label.correctText = "вес корректен"
-        label.incorrectText = "вес неверный"
         label.textColor = .red
         label.isHidden = true
         label.textAlignment = .left
@@ -120,21 +107,21 @@ class UserInfoViewController: UIViewController {
     }()
     /// Заголовок для первой складки
     private lazy var firstCreaseLabel: CustomLabel = {
-        let label = CustomLabel(text: FirstCreaseLabelText.forMale.rawValue)
+        let label = CustomLabel(text: "")
         label.textAlignment = .left
         label.numberOfLines = 0
         return label
     }()
     /// Заголовок для второй складки
     private lazy var secondCreaseLabel: CustomLabel = {
-        let label = CustomLabel(text: SecondCreaseLabelText.forMale.rawValue)
+        let label = CustomLabel(text: "")
         label.textAlignment = .left
         label.numberOfLines = 0
         return label
     }()
     /// Заголовок для третьей складки
     private lazy var thirdCreaseLabel: CustomLabel = {
-        let label = CustomLabel(text: ThirdCreaseLabelText.forMale.rawValue)
+        let label = CustomLabel(text: "складка на бедре")
         label.textAlignment = .left
         label.numberOfLines = 0
         return label
@@ -144,8 +131,6 @@ class UserInfoViewController: UIViewController {
     private lazy var alertFirstCreaseLabel: CustomLabel = {
         let label = CustomLabel(text: "не корректный размер складки")
         label.font = UIFont.systemFont(ofSize: 16, weight: .light)
-        label.correctText = "размер складки корректен"
-        label.incorrectText = "не корректный размер складки"
         label.textColor = .red
         label.isHidden = true
         label.textAlignment = .left
@@ -155,8 +140,6 @@ class UserInfoViewController: UIViewController {
     /// Label отображаемый при невалидных данных в поле второй складки
     private lazy var alertSecondCreaseLabel: CustomLabel = {
         let label = CustomLabel(text: "не корректный размер складки")
-        label.correctText = "размер складки корректен"
-        label.incorrectText = "не корректный размер складки"
         label.textColor = .red
         label.isHidden = true
         label.textAlignment = .left
@@ -166,8 +149,6 @@ class UserInfoViewController: UIViewController {
     /// Label отображаемый при невалидных данных в поле третьей складки
     private lazy var alertThirdCreaseLabel: CustomLabel = {
         let label = CustomLabel(text: "не корректный размер складки")
-        label.correctText = "размер складки корректен"
-        label.incorrectText = "не корректный размер складки"
         label.textColor = .red
         label.isHidden = true
         label.textAlignment = .left
@@ -347,19 +328,19 @@ class UserInfoViewController: UIViewController {
             mainStackView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor, constant: 20),
             mainStackView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor, constant: -20),
    
-            sexSegmentedControl.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05),
+            sexSegmentedControl.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.04),
             
-            ageTextField.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05),
+            ageTextField.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.04),
             
-            weightTextField.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05),
+            weightTextField.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.04),
             
-            firstCreaseTextField.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05),
+            firstCreaseTextField.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.04),
             
-            secondCreaseTextField.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05),
+            secondCreaseTextField.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.04),
             
-            thirdCreaseTextField.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05),
+            thirdCreaseTextField.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.04),
             
-            nextButton.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05)
+            nextButton.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.04)
         ])
     }
     /// Связывание allDataIsValid и состояния кнопки перехода далее
@@ -419,17 +400,13 @@ class UserInfoViewController: UIViewController {
     }
     /// Связывание переключателя пола и отображаемых заголовков полей
     @objc private func toggleSex() {
-        
-        switch sexSegmentedControl.selectedSegmentIndex {
-        case 1:
-            userInfoViewModel?.sex = .female
-            
-        default:
-            userInfoViewModel?.sex = .male
+        userInfoViewModel.segmentedControlDidChange(to: sexSegmentedControl.selectedSegmentIndex)
+        userInfoViewModel.firstCreaseText.bind { [unowned self] text in
+            self.firstCreaseLabel.text = text
         }
-        firstCreaseLabel.text = userInfoViewModel.getFirstCreaseLabelText()
-        secondCreaseLabel.text = userInfoViewModel.getSecondCreaseLabelText()
-        Надо выбрасывать номер сегмента
+        userInfoViewModel.secondCreaseText.bind { [unowned self] text in
+            self.secondCreaseLabel.text = text
+        }
     }
     
     @objc private func close() {
@@ -443,17 +420,19 @@ class UserInfoViewController: UIViewController {
         userCreaseNavVC.modalPresentationStyle = .fullScreen
         present(userCreaseNavVC, animated: true)
     }
-    /// Переход на экран с инструкцией по замерам
+    /// Переход на экран с инструкцией по замерам первой складки
     @objc private func showFirstCreaseInstructionVC() {
         let instructionVC = InstructionViewController()
         instructionVC.instructionViewModel = userInfoViewModel.getFirstCreaseInstructionViewModel()
         present(instructionVC, animated: true)
     }
+    /// Переход на экран с инструкцией по замерам второй складки
     @objc private func showSecondCreaseInstructionVC() {
         let instructionVC = InstructionViewController()
         instructionVC.instructionViewModel = userInfoViewModel.getSecondCreaseInstructionViewModel()
         present(instructionVC, animated: true)
     }
+    /// Переход на экран с инструкцией по замерам третьей складки
     @objc private func showThirdCreaseInstructionVC() {
         let instructionVC = InstructionViewController()
         instructionVC.instructionViewModel = userInfoViewModel.getThirdCreaseInstructionViewModel()

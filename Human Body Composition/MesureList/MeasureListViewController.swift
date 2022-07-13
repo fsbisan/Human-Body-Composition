@@ -12,7 +12,7 @@ protocol MeasureListViewControllerDelegate {
     func upDateMeasureListViewModel()
 }
 
-class MeasureListViewController: UITableViewController {
+final class MeasureListViewController: UITableViewController {
     
     let CellID = "measure"
     private var measureListViewModel: MeasureListViewModelProtocol! {

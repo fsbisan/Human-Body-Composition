@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MeasureTableViewCell: UITableViewCell {
+final class MeasureTableViewCell: UITableViewCell {
     static var cellIdentifier = "MeasureTableViewCell"
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -80,13 +80,6 @@ class MeasureTableViewCell: UITableViewCell {
             relativeFatBodyMassLabel.text = measureCellViewModel.getMeasureRelativeFatBodyMass()
             dryBodyMassLabel.text = measureCellViewModel.getDryBodyMass()
             weightLabel.text = measureCellViewModel.getWeight()
-            
-//            var content = defaultContentConfiguration()
-//            content.text = measureCellViewModel.getMeasureDate()
-//            content.secondaryText = measureCellViewModel.getMeasureRelativeFatBodyMass()
-//
-//            contentConfiguration = content
-//            backgroundColor = MyCustomColors.bgColorForTF.associatedColor
         }
     }
 }

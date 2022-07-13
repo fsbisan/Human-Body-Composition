@@ -33,13 +33,14 @@ final class AboutViewController: UIViewController {
         label.numberOfLines = 0
         return label
     }()
+    // MARK: - UIScrollView
     
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.addSubview(aboutProgramTextLabel)
         return scrollView
     }()
-    
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
@@ -82,7 +83,7 @@ final class AboutViewController: UIViewController {
             aboutProgramTextLabel.trailingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.trailingAnchor, constant: -16),
             aboutProgramTextLabel.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor, constant: -16),
             aboutProgramTextLabel.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor, constant: 16),
-            aboutProgramTextLabel.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor, constant: -16)
+            aboutProgramTextLabel.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor)
             ])
     }
 }

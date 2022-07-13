@@ -7,11 +7,11 @@
 
 import UIKit
 
-class StartViewController: UIViewController {
+final class StartViewController: UIViewController {
     
     // MARK: - UIButtons
     
-    private let startCalculateButton: CustomButton = {
+    private lazy var startCalculateButton: CustomButton = {
         let button = CustomButton(title: "Расчитать процент жира в организме")
         button.layer.cornerRadius = 25
         button.titleLabel?.textAlignment = .center

@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Box<T> {
+final class Box<T> {
     var value: T {
         didSet {
             listener?(value)

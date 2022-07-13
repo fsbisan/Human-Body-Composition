@@ -24,7 +24,7 @@ enum Sex: String {
     }
 }
 
-class User {
+final class User {
     
     // MARK: Public Properties
     
