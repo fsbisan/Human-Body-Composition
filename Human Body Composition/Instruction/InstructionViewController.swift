@@ -31,8 +31,8 @@ final class InstructionViewController: UIViewController {
     
     private lazy var instructionImage: UIImageView = {
         let imageView = UIImageView()
+        imageView.backgroundColor = .systemGreen
         imageView.contentMode = .scaleAspectFit
-  
         return imageView
     }()
     
@@ -41,7 +41,6 @@ final class InstructionViewController: UIViewController {
     private lazy var instructionLabel: CustomLabel = {
         let label = CustomLabel(text: "")
         label.textAlignment = .left
-        
         label.numberOfLines = 0
         return label
     }()
@@ -57,7 +56,6 @@ final class InstructionViewController: UIViewController {
     
     private lazy var containerView: UIView = {
         let view = UIView()
-       
         return view
     }()
     
@@ -122,5 +120,10 @@ final class InstructionViewController: UIViewController {
     
     @objc private func closeInstructionVC() {
         dismiss(animated: true)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        instructionImage.layer.cornerRadius = 10
+        instructionImage.clipsToBounds = true
     }
 }

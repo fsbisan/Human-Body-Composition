@@ -8,7 +8,17 @@
 import UIKit
 
 final class MeasureTableViewCell: UITableViewCell {
+    
     static var cellIdentifier = "MeasureTableViewCell"
+    
+    var measureCellViewModel: MeasureCellViewModelProtocol! {
+        didSet{
+            dateLabel.text = measureCellViewModel.getMeasureDate()
+            relativeFatBodyMassLabel.text = measureCellViewModel.getMeasureRelativeFatBodyMass()
+            dryBodyMassLabel.text = measureCellViewModel.getDryBodyMass()
+            weightLabel.text = measureCellViewModel.getWeight()
+        }
+    }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -72,14 +82,5 @@ final class MeasureTableViewCell: UITableViewCell {
             weightLabel.leftAnchor.constraint(equalTo: relativeFatBodyMassLabel.rightAnchor, constant: 10),
             weightLabel.topAnchor.constraint(equalTo: relativeFatBodyMassLabel.topAnchor)
         ])
-    }
-    
-    var measureCellViewModel: MeasureCellViewModelProtocol! {
-        didSet{
-            dateLabel.text = measureCellViewModel.getMeasureDate()
-            relativeFatBodyMassLabel.text = measureCellViewModel.getMeasureRelativeFatBodyMass()
-            dryBodyMassLabel.text = measureCellViewModel.getDryBodyMass()
-            weightLabel.text = measureCellViewModel.getWeight()
-        }
     }
 }
