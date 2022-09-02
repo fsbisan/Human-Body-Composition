@@ -16,7 +16,7 @@ final class UserInfoViewController: UIViewController {
     
     var userInfoViewModel: UserInfoViewModelProtocol! {
         didSet {
-            firstCreaseLabel.text = userInfoViewModel.secondCreaseText.value
+            firstCreaseLabel.text = userInfoViewModel.firstCreaseText.value
             secondCreaseLabel.text = userInfoViewModel.secondCreaseText.value
         }
     }

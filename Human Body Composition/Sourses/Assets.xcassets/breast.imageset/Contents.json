@@ -1,15 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "breastImage.png",
+      "filename" : "breast@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "breast@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "breast@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

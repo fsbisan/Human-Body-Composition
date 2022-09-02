@@ -19,6 +19,14 @@ final class StartViewController: UIViewController {
         return button
     }()
     
+    private lazy var mainInstructionButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "questionmark.circle"), for: .normal)
+     
+        button.addTarget(self, action: #selector(mainInstructionButtonPressed), for: .touchUpInside)
+        return button
+    }()
+    
     // MARK: - Private Methods
     
     private func setupSubviews(_ subviews: UIView...) {
@@ -29,12 +37,16 @@ final class StartViewController: UIViewController {
     
     private func setConstraints() {
         startCalculateButton.translatesAutoresizingMaskIntoConstraints = false
-        
+        mainInstructionButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate ([
             startCalculateButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 200),
             startCalculateButton.leadingAnchor.constraint(equalTo:  view.leadingAnchor, constant: 60),
             startCalculateButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -60),
-            startCalculateButton.heightAnchor.constraint(equalToConstant: 100)
+            startCalculateButton.heightAnchor.constraint(equalToConstant: 100),
+            
+            mainInstructionButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+            mainInstructionButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16),
+            mainInstructionButton.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05)
         ])
     }
     
@@ -47,11 +59,18 @@ final class StartViewController: UIViewController {
         present(userInfoNavVC, animated: true)
     }
     
+    @objc private func mainInstructionButtonPressed() {
+        let rootVC = MainInstructionViewController()
+        
+
+        present(rootVC, animated: true)
+    }
+    
     // MARK: - Override Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupSubviews(startCalculateButton)
+        setupSubviews(startCalculateButton, mainInstructionButton)
         setConstraints()
         setGradientBackground()
     }

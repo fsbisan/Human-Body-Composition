@@ -14,9 +14,12 @@ final class ResultViewController: UIViewController {
     var resultViewModel: ResultViewModelProtocol! {
         didSet {
             /// настройка внешнего вида элементов интерфейса
-            topView.backgroundColor = resultViewModel.topViewBackgroundColor
-            devisionView.backgroundColor = resultViewModel.divisionViewBackgroundColor
-            interpretationOfResultView.backgroundColor = resultViewModel.interpretationViewBackgroundColor
+            interpretationOfResultView.backgroundColor = UIColor(
+                red: CGFloat(resultViewModel.interpretationViewBackgroundColorComponents[0]),
+                green: CGFloat(resultViewModel.interpretationViewBackgroundColorComponents[1]),
+                blue: CGFloat(resultViewModel.interpretationViewBackgroundColorComponents[2]),
+                alpha: CGFloat(resultViewModel.interpretationViewBackgroundColorComponents[3])
+            )
             
             topHeader.text = resultViewModel.topHeaderText
             lowHeader.text = resultViewModel.lowHeaderText
@@ -27,7 +30,7 @@ final class ResultViewController: UIViewController {
             firstCreaseLabel.text = resultViewModel.getFirstCreaseSize()
             secondCreaseLabel.text = resultViewModel.getSecondCreaseSize()
             thirdCreaseLabel.text = resultViewModel.getThirdCreaseSize()
-            interpretationOfResultsLabel.text = resultViewModel.interpretationOfResults.rawValue
+            interpretationOfResultsLabel.text = resultViewModel.interpretationText
             percentOfFatLabel.text = resultViewModel.percentOfFat
             saveButton.isHidden = !resultViewModel.buttonVisibility
             deleteButton.isHidden = !resultViewModel.buttonVisibility
@@ -36,9 +39,17 @@ final class ResultViewController: UIViewController {
     
     // MARK: - UIViews
     /// Верхняя половина экрана
-    private lazy var topView = UIView()
+    private lazy var topView: UIView = {
+        let view = UIView()
+        view.backgroundColor = MyCustomColors.bgColorForTF.associatedColor
+        return view
+    }()
     /// Разделительная полоска между данными
-    private lazy var devisionView = UIView()
+    private lazy var devisionView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .black
+        return view
+    }()
     /// Нижняя половина экрана c интерпретацией результата
     private lazy var interpretationOfResultView = UIView()
     
@@ -158,6 +169,13 @@ final class ResultViewController: UIViewController {
         return button
     }()
     
+    private lazy var sourcesOfTheRecommendationsButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "exclamationmark.circle"), for: .normal)
+        button.addTarget(self, action: #selector(sourcesOfTheRecommendationsButtonPressed), for: .touchUpInside)
+        return button
+    }()
+    
     // MARK: - Override Methods
     
     override func viewDidLoad() {
@@ -165,7 +183,7 @@ final class ResultViewController: UIViewController {
         view.backgroundColor = UIColor(red: 0.5, green: 0.9, blue: 0.5, alpha: 1)
         setupSubviews(topView, interpretationOfResultView, topHeader, lowHeader,
                       dateOfMeasure, sexLabel, ageLabel, weightLabel, firstCreaseLabel, secondCreaseLabel, thirdCreaseLabel, devisionView, percentOfFatLabel, dryBodyMassLabel,
-                      interpretationOfResultsLabel, saveButton, deleteButton)
+                      interpretationOfResultsLabel, saveButton, deleteButton, sourcesOfTheRecommendationsButton)
         setConstraints()
         setupNavigationBar()
     }
@@ -211,6 +229,7 @@ final class ResultViewController: UIViewController {
         firstCreaseLabel.translatesAutoresizingMaskIntoConstraints = false
         secondCreaseLabel.translatesAutoresizingMaskIntoConstraints = false
         thirdCreaseLabel.translatesAutoresizingMaskIntoConstraints = false
+        sourcesOfTheRecommendationsButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate ([
             topView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -222,6 +241,7 @@ final class ResultViewController: UIViewController {
             interpretationOfResultView.rightAnchor.constraint(equalTo: view.rightAnchor),
             interpretationOfResultView.topAnchor.constraint(equalTo: topView.bottomAnchor),
             interpretationOfResultView.bottomAnchor.constraint(equalTo: interpretationOfResultsLabel.bottomAnchor, constant: 20),
+            
             
             topHeader.topAnchor.constraint(equalTo: topView.topAnchor, constant: 20),
             topHeader.centerXAnchor.constraint(equalTo: topView.centerXAnchor),
@@ -276,11 +296,19 @@ final class ResultViewController: UIViewController {
             deleteButton.bottomAnchor.constraint(equalTo: saveButton.bottomAnchor),
             deleteButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16),
             deleteButton.heightAnchor.constraint(equalTo: saveButton.heightAnchor),
-            deleteButton.widthAnchor.constraint(equalTo: deleteButton.heightAnchor)
+            deleteButton.widthAnchor.constraint(equalTo: deleteButton.heightAnchor),
+            
+            sourcesOfTheRecommendationsButton.leftAnchor.constraint(equalTo: lowHeader.rightAnchor, constant: 10),
+            sourcesOfTheRecommendationsButton.bottomAnchor.constraint(equalTo: lowHeader.bottomAnchor),
+            sourcesOfTheRecommendationsButton.heightAnchor.constraint(equalTo: lowHeader.heightAnchor)
         ])
     }
     
     // MARK: - @objc methods
+    @objc private func sourcesOfTheRecommendationsButtonPressed() {
+        let rootVC = SourceOfRecommendationViewController()
+        present(rootVC, animated: true)
+    }
     
     @objc private func saveButtonDidTapped() {
         resultViewModel.saveButtonDidTapped()

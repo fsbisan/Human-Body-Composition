@@ -73,14 +73,9 @@ final class User {
     init(){}
     
     init(sex: String, age: Double, weight: Double, firstCrease: Double, secondCrease: Double, thirdCrease: Double, dateOfMeasure: Date) {
-        switch sex {
-        case "male":
-            self.sex = Sex.male
-        case "female":
-            self.sex = Sex.female
-        default:
-            self.sex = Sex.male
-        }
+        
+        self.sex = sex == "male" ? .male : .female
+        
         self.age = age
         self.weight = weight
         self.firstCrease = firstCrease

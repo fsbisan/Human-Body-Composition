@@ -16,6 +16,7 @@ protocol MeasureCellViewModelProtocol {
 }
 
 final class MeasureCellViewModel: MeasureCellViewModelProtocol {
+    
     private let measure: MeasureData
     
     func getWeight() -> String {

@@ -48,7 +48,7 @@ final class UserInfoViewModel: UserInfoViewModelProtocol {
     
     var firstCreaseText = Box("складка на животе")
     
-    var secondCreaseText = Box("складка груди")
+    var secondCreaseText = Box("складка на груди")
     
     let validator = Validator()
     

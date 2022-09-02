@@ -14,7 +14,6 @@ protocol MeasureListViewControllerDelegate {
 
 final class MeasureListViewController: UITableViewController {
     
-    let CellID = "measure"
     private var measureListViewModel: MeasureListViewModelProtocol! {
         didSet {
             measureListViewModel.fetchMeasures { [unowned self] in
@@ -77,7 +76,6 @@ final class MeasureListViewController: UITableViewController {
         measureListViewModel = MeasureListViewModel()
     }
 }
-
 
 extension MeasureListViewController: MeasureListViewControllerDelegate {
     func upDateMeasureListViewModel() {
