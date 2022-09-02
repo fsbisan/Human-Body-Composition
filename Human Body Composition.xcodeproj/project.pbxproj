@@ -30,8 +30,9 @@
 		92C733DC2750038400A566D1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92C733DB2750038400A566D1 /* Assets.xcassets */; };
 		92C733DF2750038400A566D1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92C733DD2750038400A566D1 /* LaunchScreen.storyboard */; };
 		92C733E92750848C00A566D1 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C733E82750848C00A566D1 /* User.swift */; };
-		92D9BC782880557E00A1A5C7 /* MainlInstructionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D9BC772880557E00A1A5C7 /* MainlInstructionViewController.swift */; };
-/* End PBXBuildFile section */
+
+		92D9BC782880557E00A1A5C7 /* MainInstructionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D9BC772880557E00A1A5C7 /* MainInstructionViewController.swift */; };
+
 
 /* Begin PBXFileReference section */
 		927DCEA72788908300BF5799 /* CustomUIElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUIElements.swift; sourceTree = "<group>"; };
@@ -59,7 +60,9 @@
 		92C733DE2750038400A566D1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		92C733E02750038400A566D1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		92C733E82750848C00A566D1 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		92D9BC772880557E00A1A5C7 /* MainlInstructionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainlInstructionViewController.swift; sourceTree = "<group>"; };
+
+		92D9BC772880557E00A1A5C7 /* MainInstructionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainInstructionViewController.swift; sourceTree = "<group>"; };
+
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,7 +97,7 @@
 		92906B1C2884515E00C93D1E /* MainInstruction */ = {
 			isa = PBXGroup;
 			children = (
-				92D9BC772880557E00A1A5C7 /* MainlInstructionViewController.swift */,
+				92D9BC772880557E00A1A5C7 /* MainInstructionViewController.swift */,
 			);
 			path = MainInstruction;
 			sourceTree = "<group>";
@@ -319,7 +322,9 @@
 				928E41E92888272000660418 /* SourceOfRecommendationViewController.swift in Sources */,
 				92AF46992879AC6B00E03248 /* MeasureCellViewModel.swift in Sources */,
 				92C733E92750848C00A566D1 /* User.swift in Sources */,
-				92D9BC782880557E00A1A5C7 /* MainlInstructionViewController.swift in Sources */,
+
+				92D9BC782880557E00A1A5C7 /* MainInstructionViewController.swift in Sources */,
+
 				928AAC1928719143000CB00F /* InstructionViewModel.swift in Sources */,
 				928AAC1B2871AFD2000CB00F /* MeasureListViewController.swift in Sources */,
 				92C733DA2750038100A566D1 /* Human_Body_Composition.xcdatamodeld in Sources */,

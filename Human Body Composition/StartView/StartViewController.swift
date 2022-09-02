@@ -60,9 +60,7 @@ final class StartViewController: UIViewController {
     }
     
     @objc private func mainInstructionButtonPressed() {
-        let rootVC = MainlInstructionViewController()
-        
-
+        let rootVC = MainInstructionViewController()
         present(rootVC, animated: true)
     }
     
