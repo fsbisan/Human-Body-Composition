@@ -9,14 +9,16 @@
 Использована архитектура MVVM по средствам Boxing
 Верстка без StoryBoard
 
-![Иллюстрация к проекту](https://github.com/fsbisan/DeliveryManeViewTestingTask/raw/main/Screen1.png)
-
-![Иллюстрация к проекту](https://github.com/fsbisan/DeliveryManeViewTestingTask/raw/main/Screen2.png)
-![Иллюстрация к проекту](https://github.com/fsbisan/DeliveryManeViewTestingTask/raw/main/Screen3.png)
-![Иллюстрация к проекту](https://github.com/fsbisan/DeliveryManeViewTestingTask/raw/main/Screen4.png)
-![Иллюстрация к проекту](https://github.com/fsbisan/DeliveryManeViewTestingTask/raw/main/Screen5.png)
-
-![Иллюстрация к проекту](https://github.com/fsbisan/DeliveryManeViewTestingTask/raw/main/Screen6.png)
-
 ## Стэк
 #Swift #MVVM #Boxing #UIKit #CustomTableViewCell #CoreData
+
+![Иллюстрация к проекту](https://github.com/fsbisan/Human-Body-Composition/raw/main/Screen1.png)
+
+![Иллюстрация к проекту](https://github.com/fsbisan/Human-Body-Composition/raw/main/Screen2.png)
+![Иллюстрация к проекту](https://github.com/fsbisan/Human-Body-Composition/raw/main/Screen3.png)
+![Иллюстрация к проекту](https://github.com/fsbisan/Human-Body-Composition/raw/main/Screen4.png)
+![Иллюстрация к проекту](https://github.com/fsbisan/Human-Body-Composition/raw/main/Screen5.png)
+
+![Иллюстрация к проекту](https://github.com/fsbisan/Human-Body-Composition/raw/main/Screen6.png)
+
+
